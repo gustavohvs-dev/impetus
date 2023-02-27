@@ -4,8 +4,9 @@
  * Interpretador CLI para execução de comandos
  */
 
-require "./cmd/cli/cmd.php";
-require "./cmd/cli/init.php";
+require_once "./fws/cmd/cli/cmd.php";
+require_once "./fws/cmd/cli/init.php";
+require_once "./fws/cmd/cli/migrate.php";
 
 $availableCommands = [
     ["init", "Cria a estrutura básica da aplicação"],
@@ -24,6 +25,10 @@ if($command == 'init'){
     }
 }elseif($command == 'cmd'){
     cmd($availableCommands);
+}elseif($command == 'migrate'){
+    echo "\n";
+    migrate();
+    echo "\n\n";
 }else{
     echo "\nComando não encontrado. \n";
     echo "Utilize o comando 'cmd' para verificar os comandos disponíveis. \n";

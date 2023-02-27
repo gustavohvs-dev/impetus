@@ -5,7 +5,7 @@ function databaseSnippet(){
 $snippet = 
 '<?php
 
-require "app/config/config.php";
+require_once "app/config/config.php";
 
 //Conexão
 try {

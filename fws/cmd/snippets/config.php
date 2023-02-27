@@ -6,7 +6,7 @@ $snippet =
 '<?php
 
 $systemConfig = [
-    "status" => "development",
+    "status" => "offline",
     "appName" => "'.$appName.'",
     "version" => "1.0.0",
     "database" => [

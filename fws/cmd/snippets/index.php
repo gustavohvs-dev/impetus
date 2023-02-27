@@ -1,13 +1,14 @@
 <?php
 
-function indexSnippet(){
+function indexSnippet($appName){
 
 $snippet = 
 '<?php
 		
-require "app/routes/routes.php";
-require "app/config/config.php";
+require_once "app/routes/routes.php";
+require_once "app/config/config.php";
 
+//Exibição de erros
 if($systemConfig["status"]=="online"){
 	error_reporting(0);
 }else{
@@ -16,29 +17,47 @@ if($systemConfig["status"]=="online"){
 
 if (isset($_GET["url"])) {
 	$url = explode("/", $_GET["url"]);
-	route($url, $routes, $error401View, $error404View);
+	route($url, $routes);
 }else{
-	require_once $indexView;
+	//Index
+	$response = [
+        "status" => "1",
+        "info" => "Bem-vindo ao sistema '.$appName.'!",
+    ];
+    header("HTTP/1.1 200 OK");
+    header("Content-Type: application/json");
+    echo json_encode($response);
 }
 
 //This function verify the URL and redirect the user
-function route($url, $routes, $error401View, $error404View){
-	$validated = "false";
+function route($url, $routes){
+	$validated = false;
 	foreach($routes as $route) {
 		$exibir = $route[0];
 		$rota = $route[1];
 		if($url[0] == $exibir) {
-			$validated = "true";
+			$validated = true;
 			if(file_exists($rota)){
 				require_once $rota;
 			}else{
-				require_once $error404View;
+				$response = [
+					"status" => "0",
+					"info" => "Rota não encontrada!",
+				];
+				header("HTTP/1.1 404 Not Found");
+				header("Content-Type: application/json");
+				echo json_encode($response);
 			}
-			exit;
 		}
 	}
-	if($validated == "false"){
-		require_once $error401View;
+	if($validated == false){
+		$response = [
+			"status" => "0",
+			"info" => "Rota não encontrada!",
+		];
+		header("HTTP/1.1 404 Not Found");
+		header("Content-Type: application/json");
+		echo json_encode($response);
 	}
 }
 ';
