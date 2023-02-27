@@ -1,0 +1,15 @@
+<?php
+
+function htaccessSnippet(){
+
+$snippet = 
+'RewriteEngine on
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+';
+
+return $snippet;
+
+}
