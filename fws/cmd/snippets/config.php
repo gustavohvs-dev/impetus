@@ -7,13 +7,13 @@ $snippet =
 
 $systemConfig = [
     "status" => "offline",
-    "appName" => "'.$appName.'",
+    "appName" => "teste",
     "version" => "1.0.0",
     "database" => [
         "server" => "localhost",
         "username" => "root",
         "password" => "",
-        "database" => "'.$dbName.'"
+        "database" => "dbteste"
     ]
 ];
 ';

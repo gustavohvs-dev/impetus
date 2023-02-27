@@ -5,14 +5,14 @@ function migrateSnippet(){
 $snippet = 
 '<?php
 
-class migrate
+class DatabaseMigrate
 {
     /**
      * Cria tabelas no banco de dados
      */
     public function migrate(){
 
-        require_once "app/database/database.php";
+        require "app/database/database.php";
 
         /**
          * Cria tabela de usuários
@@ -28,7 +28,7 @@ class migrate
         $stmt = $conn->prepare($table);
         $query = $stmt->execute();
 
-        var_dump($query);
+        var_dump($conn);
 
         return "(200 OK) Banco de dados estruturado com sucesso";
 

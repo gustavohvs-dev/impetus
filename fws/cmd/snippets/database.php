@@ -5,11 +5,16 @@ function databaseSnippet(){
 $snippet = 
 '<?php
 
-require_once "app/config/config.php";
+require "app/config/config.php";
+
+$dbConfigServer = $systemConfig["database"]["server"];
+$dbConfigDatabase = $systemConfig["database"]["database"];
+$dbConfigUsername = $systemConfig["database"]["username"];
+$dbConfigPassword = $systemConfig["database"]["password"];
 
 //Conexão
 try {
-    $conn = new PDO("mysql:host=".$systemConfig["database"]["server"].";dbname=".$systemConfig["database"]["database"]."", $systemConfig["database"]["username"], $systemConfig["database"]["password"]);
+    $conn = new PDO("mysql:host=$dbConfigServer;dbname=$dbConfigDatabase", $dbConfigUsername, $dbConfigPassword);
 } catch (PDOException $e) {
     die("Connection Failed: " . $e->getMessage());
 }

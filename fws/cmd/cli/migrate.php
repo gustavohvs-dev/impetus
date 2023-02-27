@@ -1,8 +1,8 @@
 <?php
 
 function migrate(){
-    require_once "app/database/migrate.php";
-    $migrateClass = new migrate;
+    require "app/database/migrate.php";
+    $migrateClass = new DatabaseMigrate;
     echo ($migrateClass->migrate());
 }
 
