@@ -8,6 +8,8 @@ require_once "./impetus/cmd/cli/cmd.php";
 require_once "./impetus/cmd/cli/init.php";
 require_once "./impetus/cmd/cli/migrate.php";
 require_once "./impetus/cmd/cli/build.php";
+require_once "./impetus/cmd/cli/controller.php";
+require_once "./impetus/cmd/cli/model.php";
 
 $availableCommands = [
     ["init", "Cria a estrutura básica da aplicação"],

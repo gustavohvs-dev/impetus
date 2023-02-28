@@ -1,6 +1,6 @@
 <?php 
 
-class JsonWebTokenFWS extends UtilsFWS
+class ImpetusJWT extends ImpetusUtils
 {
     /**
      * Cria um JWT (Json Web Token)

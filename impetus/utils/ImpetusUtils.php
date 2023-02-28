@@ -1,6 +1,6 @@
 <?php 
 
-class UtilsFWS
+class ImpetusUtils
 {
     /**
      * urlParams

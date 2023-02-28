@@ -28,15 +28,15 @@ class Migrate
             )";
         $stmt = $conn->prepare($table);
         if($stmt->execute()){
-            echo "\nTabela users criada com sucesso.";
+            echo "\nTabela *users* criada com sucesso.";
         }else{
             $error = $stmt->errorInfo();
             $error = $error[2];
             echo "\n" .$error;
-            return "\n(500 Internal Server Error) Falha ao criar tabela users";
+            echo "\n(500 Internal Server Error) Falha ao criar tabela *users*";
         }
 
-        return "\n(200 OK) Banco de dados estruturado com sucesso";
+        return "\n(200 OK) Banco de dados estruturado";
 
     }
 
@@ -69,10 +69,10 @@ class Migrate
             $error = $stmt->errorInfo();
             $error = $error[2];
             echo "\n" . $error;
-            return "\n(500 Internal Server Error) Falha ao criar usuário admin";
+            echo "\n(500 Internal Server Error) Falha ao criar usuário admin";
         }
 
-        return "\n(200 OK) Banco de dados populado com sucesso";
+        return "\n(200 OK) Banco de dados populado";
     }
 
     /**
@@ -105,10 +105,10 @@ class Migrate
             $error = $stmt->errorInfo();
             $error = $error[2];
             echo "\n" . $error;
-            return "\n(500 Internal Server Error) Falha ao criar view log";
+            echo "\n(500 Internal Server Error) Falha ao criar view log";
         }
 
-        return "\n(200 OK) Views estruturadas com sucesso";*/
+        return "\n(200 OK) Views estruturadas";*/
 
     }
 

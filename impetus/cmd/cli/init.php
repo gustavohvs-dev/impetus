@@ -63,6 +63,19 @@ function init($argv){
         }
     }
 
+    if(!is_dir("app/models")){
+        echo "Error: Falha ao criar pasta models. \n";
+        $qntError++;
+        return null;
+    }else{
+        if(!is_dir("app/models/impetus")){
+            mkdir("app/models/impetus", 0751);
+            echo "Pasta 'impetus' criada. \n";
+        }else{
+            echo "Pasta 'impetus' já existente. \n";
+        }
+    }
+
     /**
      * Criando arquivos básicos
      */
@@ -194,8 +207,27 @@ function init($argv){
         } 
     }
 
+    /** 
+     * Copiando arquivos utilitários
+     */
+    if(!copy("impetus/utils/ImpetusJWT.php", "app/models/impetus/ImpetusJWT.php")){
+        echo "Error: Falha ao copiar arquivo 'ImpetusJWT'. \n";
+        $qntError++;
+        return null;
+    }else{
+        echo "Arquivo utilitário 'ImpetusJWT' criado com sucesso. \n";
+    }
+
+    if(!copy("impetus/utils/ImpetusUtils.php", "app/models/impetus/ImpetusUtils.php")){
+        echo "Error: Falha ao copiar arquivo 'ImpetusUtils'. \n";
+        $qntError++;
+        return null;
+    }else{
+        echo "Arquivo utilitário 'ImpetusUtils' criado com sucesso. \n";
+    }
+
     if($qntError == 0){
-        echo "Dica: Para seguir com a configuração, siga os passos abaixo: \n";
+        echo "\nDica: Para seguir com a configuração, siga os passos abaixo: \n";
         echo "1 - Crie o banco de dados, com o nome '".$argv[3]."'. \n";
         echo "2 - Vá em 'app/config' e abra o arquivo de configuração. \n";
         echo "3 - Preencha os dados necessários para configuração do banco de dados. \n";
