@@ -1,0 +1,27 @@
+<?php
+
+function tables(){
+    require "app/database/migrate.php";
+    $migrateClass = new Migrate;
+    echo ($migrateClass->tables());
+}
+
+function populate(){
+    require "app/database/migrate.php";
+    $migrateClass = new Migrate;
+    echo ($migrateClass->populate());
+}
+
+function views(){
+    require "app/database/migrate.php";
+    $migrateClass = new Migrate;
+    echo ($migrateClass->views());
+}
+
+function migrate(){
+    require "app/database/migrate.php";
+    $migrateClass = new Migrate;
+    echo ($migrateClass->tables());
+    echo ($migrateClass->populate());
+    echo ($migrateClass->views());
+}
