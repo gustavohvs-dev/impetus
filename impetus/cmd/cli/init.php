@@ -196,10 +196,10 @@ function init($argv){
 
     if($qntError == 0){
         echo "Dica: Para seguir com a configuração, siga os passos abaixo: \n";
-        echo "1 - Crie o banco de dados, com o nome informado no comando 'init'. \n";
-        echo "2 - Vá em app/config/ e abra o arquivo de configuração. \n";
+        echo "1 - Crie o banco de dados, com o nome '".$argv[3]."'. \n";
+        echo "2 - Vá em 'app/config' e abra o arquivo de configuração. \n";
         echo "3 - Preencha os dados necessários para configuração do banco de dados. \n";
-        echo "4 - Execute o comando 'php impetus.php migrate' para criar a tabela de usuários e o primeiro usuário do webservice. \n";
+        echo "4 - Execute o comando 'php impetus.php migrate all' para criar a tabela de usuários e o primeiro usuário do webservice. \n";
         echo "5 - Pronto! O web service está pronto a ser utilizado. \n";
     }else{
         echo "Verifique os erros, em caso de problemas, verifique a documentação em https://github.com/gustavohvs-dev/impetus. \n";

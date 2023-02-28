@@ -28,15 +28,15 @@ class Migrate
             )";
         $stmt = $conn->prepare($table);
         if($stmt->execute()){
-            echo "Tabela users criada com sucesso.\n";
+            echo "\nTabela users criada com sucesso.";
         }else{
             $error = $stmt->errorInfo();
             $error = $error[2];
-            echo $error . "\n";
-            return "(500 Internal Server Error) Falha ao criar tabela users";
+            echo "\n" .$error;
+            return "\n(500 Internal Server Error) Falha ao criar tabela users";
         }
 
-        return "(200 OK) Banco de dados estruturado com sucesso";
+        return "\n(200 OK) Banco de dados estruturado com sucesso";
 
     }
 
@@ -64,15 +64,15 @@ class Migrate
         $stmt->bindParam(":PASS", $password, PDO::PARAM_STR);
         $stmt->bindParam(":PERMISSION", $data["permission"], PDO::PARAM_STR);
         if($stmt->execute()){
-            echo "Usuário admin criado com sucesso.\n";
+            echo "\nUsuário admin criado com sucesso.";
         }else{
             $error = $stmt->errorInfo();
             $error = $error[2];
-            echo $error . "\n";
-            return "(500 Internal Server Error) Falha ao criar usuário admin";
+            echo "\n" . $error;
+            return "\n(500 Internal Server Error) Falha ao criar usuário admin";
         }
 
-        return "(200 OK) Banco de dados populado com sucesso";
+        return "\n(200 OK) Banco de dados populado com sucesso";
     }
 
     /**
@@ -100,15 +100,15 @@ class Migrate
             ;";
         $stmt = $conn->prepare($view);
         if($stmt->execute()){
-            echo "View log criada com sucesso.\n";
+            echo "\nView log criada com sucesso.";
         }else{
             $error = $stmt->errorInfo();
             $error = $error[2];
-            echo $error . "\n";
-            return "(500 Internal Server Error) Falha ao criar view log";
-        }*/
+            echo "\n" . $error;
+            return "\n(500 Internal Server Error) Falha ao criar view log";
+        }
 
-        return "(200 OK) Views estruturadas com sucesso";
+        return "\n(200 OK) Views estruturadas com sucesso";*/
 
     }
 
