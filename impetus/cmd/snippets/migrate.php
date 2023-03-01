@@ -23,8 +23,8 @@ class Migrate
             username VARCHAR(256) NOT NULL UNIQUE,
             password VARCHAR(256) NOT NULL,
             permission VARCHAR(256) NOT NULL,
-            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-            updated_at DATETIME
+            createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+            updatedAt DATETIME
             )";
         $stmt = $conn->prepare($table);
         if($stmt->execute()){
