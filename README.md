@@ -8,7 +8,7 @@ Impetus.php - Framework minimalista para criação de web services RESTful utili
 - Agilizar a implentação de autenticação com JWT Bearer em web services.
 
 ### Lista de comandos - CLI
-- php impetus.php init ProjectName DatabaseName
+- <b>php impetus.php init ProjectName DatabaseName</b>
 <br> -> Cria a estrutura básica do projeto.
 - php impetus.php migrate all
 <br> -> Monta toda a estrutura do banco de dados.
