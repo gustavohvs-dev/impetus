@@ -10,21 +10,21 @@ Impetus.php - Framework minimalista para criação de web services RESTful utili
 ### Lista de comandos - CLI
 - <b>php impetus.php init ProjectName DatabaseName</b>
 <br> -> Cria a estrutura básica do projeto.
-- php impetus.php migrate all
+- <b>php impetus.php migrate all</b>
 <br> -> Monta toda a estrutura do banco de dados.
-- php impetus.php migrate tables
+- <b>php impetus.php migrate tables</b>
 <br> -> Cria as tabelas no banco de dados.
-- php impetus.php migrate views
+- <b>php impetus.php migrate views</b>
 <br> -> Cria as views no banco de dados.
-- php impetus.php migrate populate
+- <b>php impetus.php migrate populate</b>
 <br> -> Popula as tabelas com dados pré-definidos.
-- php impetus.php build all TableName
+- <b>php impetus.php build all TableName</b>
 <br> -> Cria toda a estrutura de model, controllers e routes com base em uma tabela.
-- php impetus.php build model TableName
+- <b>php impetus.php build model TableName</b>
 <br> -> Cria uma model com base em uma tabela.
-- php impetus.php build controller TableName
+- <b>php impetus.php build controller TableName</b>
 <br> -> Cria um controller com base em uma tabela.
-- php impetus.php build route TableName
+- <b>php impetus.php build route TableName</b>
 <br> -> Cria as rotas com base em uma tabela.
 
 ### Quick Start
