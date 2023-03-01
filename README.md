@@ -9,8 +9,6 @@ Impetus.php - Framework minimalista para criação de web services RESTful utili
 
 ### Lista de comandos - CLI
 - php impetus.php init ProjectName DatabaseName
-teste
-
 - php impetus.php migrate all
 - php impetus.php migrate tables
 - php impetus.php migrate views
