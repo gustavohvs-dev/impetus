@@ -7,8 +7,8 @@ $snippet =
 
 $routes = [
 
-	//Teste de aplicação
-	["test", "app/controllers/test.php"],
+	["login", "app/controllers/login/login.php"],
+	["createUser", "app/controllers/users/createUser.php"],
 
 ];
 ';

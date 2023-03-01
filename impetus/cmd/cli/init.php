@@ -76,10 +76,60 @@ function init($argv){
         }
     }
 
+    if(!is_dir("app/controllers")){
+        echo "Error: Falha ao criar pasta controllers. \n";
+        $qntError++;
+        return null;
+    }else{
+        if(!is_dir("app/controllers/login")){
+            mkdir("app/controllers/login", 0751);
+            echo "Pasta 'login' criada. \n";
+        }else{
+            echo "Pasta 'login' já existente. \n";
+        }
+    }
+
+    if(!is_dir("app/controllers")){
+        echo "Error: Falha ao criar pasta models. \n";
+        $qntError++;
+        return null;
+    }else{
+        if(!is_dir("app/controllers/users")){
+            mkdir("app/controllers/users", 0751);
+            echo "Pasta 'users' criada. \n";
+        }else{
+            echo "Pasta 'users' já existente. \n";
+        }
+    }
+
     /**
      * Criando arquivos básicos
      */
     echo "Criando arquivos... \n";
+
+    if(!is_dir("app/middlewares")){
+        echo "Error: Falha ao encontrar pasta de middlewares. \n";
+        $qntError++;
+        return null;
+    }else{
+        $arquivo = fopen("app/middlewares/Auth.php", 'w');
+        if($arquivo == false){
+            echo "Error: Falha ao criar arquivo de Auth. \n";
+            $qntError++;
+            return null;
+        }else{
+            require "./impetus/cmd/snippets/auth.php";
+            $texto = authSnippet();
+            $escrever = fwrite($arquivo, $texto);
+            if($escrever == false){
+                echo "Error: Falha ao preencher middleware 'Auth'. \n";
+                $qntError++;
+                return null;
+            }else{
+                echo "Arquivo 'Auth' criado com sucesso. \n";
+            }
+        } 
+    }
 
     if(!is_dir("app/config")){
         echo "Error: Falha ao encontrar pasta de configuração. \n";
@@ -203,6 +253,54 @@ function init($argv){
                 return null;
             }else{
                 echo "Arquivo 'routes' criado com sucesso. \n";
+            }
+        } 
+    }
+
+    if(!is_dir("app/controllers/login")){
+        echo "Error: Falha ao encontrar pasta raiz. \n";
+        $qntError++;
+        return null;
+    }else{
+        $arquivo = fopen("app/controllers/login/login.php", 'w');
+        if($arquivo == false){
+            echo "Error: Falha ao criar arquivo de login. \n";
+            $qntError++;
+            return null;
+        }else{
+            require "./impetus/cmd/snippets/login.php";
+            $texto = loginSnippet();
+            $escrever = fwrite($arquivo, $texto);
+            if($escrever == false){
+                echo "Error: Falha ao preencher arquivo de login. \n";
+                $qntError++;
+                return null;
+            }else{
+                echo "Arquivo 'login' criado com sucesso. \n";
+            }
+        } 
+    }
+
+    if(!is_dir("app/controllers/users")){
+        echo "Error: Falha ao encontrar pasta raiz. \n";
+        $qntError++;
+        return null;
+    }else{
+        $arquivo = fopen("app/controllers/users/createUser.php", 'w');
+        if($arquivo == false){
+            echo "Error: Falha ao criar arquivo 'createUser'. \n";
+            $qntError++;
+            return null;
+        }else{
+            require "./impetus/cmd/snippets/createUser.php";
+            $texto = createUserSnippet();
+            $escrever = fwrite($arquivo, $texto);
+            if($escrever == false){
+                echo "Error: Falha ao preencher arquivo 'createUser'. \n";
+                $qntError++;
+                return null;
+            }else{
+                echo "Arquivo 'createUser' criado com sucesso. \n";
             }
         } 
     }

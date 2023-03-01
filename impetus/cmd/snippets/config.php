@@ -14,6 +14,9 @@ $systemConfig = [
         "username" => "root",
         "password" => "",
         "database" => "dbteste"
+    ],
+    "api" => [
+        "token" => "E5Z!h_Ugv+X26{832Pg9Gzefhd!IHgs&r"
     ]
 ];
 ';

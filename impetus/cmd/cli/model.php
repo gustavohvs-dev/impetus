@@ -53,9 +53,14 @@ function model($tableName)
                 $queryCreateColumns .= $comma . $columnNameCreate[$i];
                 $queryCreateBindsTags .= $comma . ":" . strtoupper($columnNameCreate[$i]);
                 $queryCreateBindsParams .= '$stmt->bindParam(":'.strtoupper($columnNameCreate[$i]).'", $data["'.$columnNameCreate[$i].'"], '.$typeCreate[$i].');' . "\n\t\t";
+
+                $queryUpdateColumns .= $comma . $columnNameCreate[$i] . " = :" . strtoupper($columnNameCreate[$i]);
+                $queryUpdateBindsParams .= '$stmt->bindParam(":'.strtoupper($columnNameCreate[$i]).'", $data["'.$columnNameCreate[$i].'"], '.$typeCreate[$i].');' . "\n\t\t";
                 $comma = ", ";
             }else{
-
+                $queryUpdateColumns .= $comma . $columnNameCreate[$i] . " = :" . strtoupper($columnNameCreate[$i]);
+                $queryUpdateBindsParams .= '$stmt->bindParam(":'.strtoupper($columnNameCreate[$i]).'", $data["'.$columnNameCreate[$i].'"], '.$typeCreate[$i].');' . "\n\t\t";
+                $comma = ", ";
             }
         }
 
@@ -131,9 +136,24 @@ class '.$functionName.'
         }
     }
 
-    static function uptade'.$functionName.'($data)
+    static function update'.$functionName.'($data)
     {
-
+        $stmt = $conn->prepare("UPDATE '.$tableName.' SET '.$queryUpdateColumns.' WHERE '.$primaryKey.' = :ID");
+        $stmt->bindParam(":ID", $data["'.$primaryKey.'"]);
+        '.$queryUpdateBindsParams.'
+        if ($stmt->execute()) {
+            $response = [
+                "status" => 1,
+                "code" => 200,
+                "info" => "Registro atualizado com sucesso"
+            ];
+        }else{
+            $response = [
+                "status" => 1,
+                "code" => 500,
+                "info" => "Falha ao atualizar registro"
+            ];
+        }
     }
 
     static function delete'.$functionName.'($id)
