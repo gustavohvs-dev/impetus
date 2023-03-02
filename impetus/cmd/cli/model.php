@@ -45,6 +45,8 @@ function model($tableName)
         $queryCreateColumns = "";
         $queryCreateBindsTags = "";
         $queryCreateBindsParams = "";
+        $queryUpdateColumns = "";
+        $queryUpdateBindsParams = "";
         $comma = "";
 
         for($i = 0; $i < $pointerCreate; $i++)
@@ -93,7 +95,7 @@ class '.$functionName.'
                 "info" => "Nenhum resultado encontrado"
             ];  
         }
-        return $response;
+        return (object)$response;
     }
 
     static function list'.$functionName.'()
@@ -114,7 +116,7 @@ class '.$functionName.'
                 "info" => "Nenhum resultado encontrado"
             ];  
         }
-        return $response;
+        return (object)$response;
     }
 
     static function create'.$functionName.'($data)
@@ -134,12 +136,13 @@ class '.$functionName.'
                 "info" => "Falha ao criar registro"
             ];
         }
+        return (object)$response;
     }
 
     static function update'.$functionName.'($data)
     {
         $stmt = $conn->prepare("UPDATE '.$tableName.' SET '.$queryUpdateColumns.' WHERE '.$primaryKey.' = :ID");
-        $stmt->bindParam(":ID", $data["'.$primaryKey.'"]);
+        $stmt->bindParam(":ID", $data["'.$primaryKey.'"], PDO::PARAM_INT);
         '.$queryUpdateBindsParams.'
         if ($stmt->execute()) {
             $response = [
@@ -154,6 +157,7 @@ class '.$functionName.'
                 "info" => "Falha ao atualizar registro"
             ];
         }
+        return (object)$response;
     }
 
     static function delete'.$functionName.'($id)
@@ -173,7 +177,7 @@ class '.$functionName.'
                 "info" => "Falha ao deletar registro"
             ];  
         }
-        return $response;
+        return (object)$response;
     }
 
 }

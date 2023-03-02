@@ -90,15 +90,15 @@ function init($argv){
     }
 
     if(!is_dir("app/controllers")){
-        echo "Error: Falha ao criar pasta models. \n";
+        echo "Error: Falha ao criar pasta controllers. \n";
         $qntError++;
         return null;
     }else{
-        if(!is_dir("app/controllers/users")){
-            mkdir("app/controllers/users", 0751);
-            echo "Pasta 'users' criada. \n";
+        if(!is_dir("app/controllers/test")){
+            mkdir("app/controllers/test", 0751);
+            echo "Pasta 'test' criada. \n";
         }else{
-            echo "Pasta 'users' já existente. \n";
+            echo "Pasta 'test' já existente. \n";
         }
     }
 
@@ -281,26 +281,26 @@ function init($argv){
         } 
     }
 
-    if(!is_dir("app/controllers/users")){
+    if(!is_dir("app/controllers/test")){
         echo "Error: Falha ao encontrar pasta raiz. \n";
         $qntError++;
         return null;
     }else{
-        $arquivo = fopen("app/controllers/users/createUser.php", 'w');
+        $arquivo = fopen("app/controllers/test/test.php", 'w');
         if($arquivo == false){
-            echo "Error: Falha ao criar arquivo 'createUser'. \n";
+            echo "Error: Falha ao criar arquivo 'test'. \n";
             $qntError++;
             return null;
         }else{
-            require "./impetus/cmd/snippets/createUser.php";
-            $texto = createUserSnippet();
+            require "./impetus/cmd/snippets/test.php";
+            $texto = testSnippet();
             $escrever = fwrite($arquivo, $texto);
             if($escrever == false){
-                echo "Error: Falha ao preencher arquivo 'createUser'. \n";
+                echo "Error: Falha ao preencher arquivo 'test'. \n";
                 $qntError++;
                 return null;
             }else{
-                echo "Arquivo 'createUser' criado com sucesso. \n";
+                echo "Arquivo 'test' criado com sucesso. \n";
             }
         } 
     }

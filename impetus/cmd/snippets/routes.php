@@ -8,9 +8,10 @@ $snippet =
 $routes = [
 
 	["login", "app/controllers/login/login.php"],
-	["createUser", "app/controllers/users/createUser.php"],
+	["test", "app/controllers/test/test.php"],
 
 ];
+
 ';
 
 return $snippet;

@@ -1,11 +1,13 @@
 <?php 
 
+namespace app\models\impetus;
+
 class ImpetusUtils
 {
     /**
      * urlParams
      */
-    public function urlParams()
+    static public function urlParams()
     {
         $urlComponents = parse_url($_SERVER['REQUEST_URI']);
         if(isset($urlComponents['query'])){
@@ -19,7 +21,7 @@ class ImpetusUtils
     /**
      * token
      */
-    public function token($tamanho = 10, $id = "", $up = false)
+    static public function token($tamanho = 10, $id = "", $up = false)
     {
         $characters = $id . 'abcdefghijklmnopqrstuvwxyz0123456789';
         $charactersLength = strlen($characters);
@@ -37,7 +39,7 @@ class ImpetusUtils
     /**
      * isEmpty
      */
-    public function isEmpty($string)
+    static public function isEmpty($string)
     {
         $string = trim($string);
         if ($string <> null && !empty($string)) {
@@ -50,7 +52,7 @@ class ImpetusUtils
     /**
      * isLongString
      */
-    public function isLongString($string, $limit)
+    static public function isLongString($string, $limit)
     {
         if (strlen($string) > $limit) {
             return true;
@@ -62,7 +64,7 @@ class ImpetusUtils
     /**
      * isNumber
      */
-    public function isNumber($number)
+    static public function isNumber($number)
     {
         if (is_numeric($number)) {
         $response = true;
@@ -75,7 +77,7 @@ class ImpetusUtils
     /**
      * purifyString 
      */
-    public function purifyString($string, $config = null)
+    static public function purifyString($string, $config = null)
     {
         $string = trim($string);
         if ($config <> null) {
