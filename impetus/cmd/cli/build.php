@@ -2,7 +2,8 @@
 
 function build($tableName)
 {
-    require "app/database/database.php";
-    echo "\nComando build em desenvolvimento... {$tableName}";
+    model($tableName);
+    controller($tableName);
+    route($tableName);
     echo "\n\n";
 }

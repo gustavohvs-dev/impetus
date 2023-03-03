@@ -18,6 +18,20 @@ function webserviceMethod(){
 
     switch($_SERVER["REQUEST_METHOD"]){
 
+        default:
+    
+            $response = [
+                "code" => "401 Unauthorized",
+                "response" => [
+                    "status" => 0,
+                    "code" => 401,
+                    "info" => "Método não encontrado",
+                ]
+            ];
+            return (object)$response;
+
+        break;
+
         case "POST":
 
             //Coletar bearer token
@@ -47,37 +61,17 @@ function webserviceMethod(){
                     ];
                     return (object)$response;
                 }else{
-
-                    //Coleta dados enviados via JSON
-                    $data = json_decode(file_get_contents("php://input"),false);
-
                     $response = [
                         "code" => "200 OK",
                         "response" => [
                             "status" => 1,
-                            "info" => "Autenticação JWT funcionando perfeitamente",
-                            "data" => $data
+                            "info" => "Autenticação JWT funcionando perfeitamente"
                         ]
                     ];
                     return (object)$response;
-                    
                 }
             }
             
-        break;
-    
-        default:
-    
-            $response = [
-                "code" => "401 Unauthorized",
-                "response" => [
-                    "status" => 0,
-                    "code" => 401,
-                    "info" => "Método não encontrado",
-                ]
-            ];
-            return (object)$response;
-    
         break;
     
     }
