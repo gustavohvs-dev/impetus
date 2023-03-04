@@ -4,6 +4,6 @@ function build($tableName)
 {
     model($tableName);
     controller($tableName);
-    route($tableName);
+    routes($tableName);
     echo "\n\n";
 }

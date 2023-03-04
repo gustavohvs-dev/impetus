@@ -10,9 +10,7 @@ $routes = [
 	["login", "app/controllers/login/login.php"],
 	["test", "app/controllers/test/test.php"],
 
-];
-
-';
+];';
 
 return $snippet;
 
