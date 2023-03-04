@@ -10,7 +10,7 @@ require_once "./impetus/cmd/cli/migrate.php";
 require_once "./impetus/cmd/cli/build.php";
 require_once "./impetus/cmd/cli/controller.php";
 require_once "./impetus/cmd/cli/model.php";
-require_once "./impetus/cmd/cli/route.php";
+require_once "./impetus/cmd/cli/routes.php";
 
 $availableCommands = [
     ["init", "Cria a estrutura básica da aplicação"],
@@ -56,8 +56,8 @@ if(!isset($argv[1])){
                 model($argv[3]);
             }elseif($argv[2] == 'controller'){
                 controller($argv[3]);
-            }elseif($argv[2] == 'route'){
-                route($argv[3]);
+            }elseif($argv[2] == 'routes'){
+                routes($argv[3]);
             }elseif($argv[2] == 'all'){
                 build($argv[3]);
             }else{
