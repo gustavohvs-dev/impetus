@@ -82,8 +82,12 @@ $snippet= '<?php
 
 //Importando models e middlewares
 include_once "app/models/impetus/ImpetusJWT.php";
+include_once "app/models/impetus/ImpetusUtils.php";
+include_once "app/models/'.$functionName.'.php";
 include_once "app/middlewares/Auth.php";
 use app\models\impetus\ImpetusJWT;
+use app\models\impetus\ImpetusUtils;
+use app\models\\'.$functionName.';
 use app\middlewares\Auth;
 
 function webserviceMethod(){
@@ -136,15 +140,61 @@ function webserviceMethod(){
                     ];
                     return (object)$response;
                 }else{
-                    //Regra de negócio do método
-                    $response = [
-                        "code" => "200 OK",
-                        "response" => [
-                            "status" => 1,
-                            "info" => "Método funcionando (GET)"
-                        ]
-                    ];
-                    return (object)$response;
+                    /**
+                     * Regra de negócio do método
+                     */
+                    
+                    //Validar permissão de usuário
+                    if($auth->data["permission"] != "admin"){
+                        $response = [
+                            "code" => "401 Unauthorized",
+                            "response" => [
+                                "status" => 1,
+                                "info" => "Usuário não possui permissão para realizar ação"
+                            ]
+                        ];
+                        return (object)$response;
+                    }
+
+                    //Validar ID informado
+                    $urlParams = ImpetusUtils::urlParams();
+                    if(!isset($urlParams["id"])){
+                        $response = [
+                            "code" => "400 Bad Request",
+                            "response" => [
+                                "status" => 1,
+                                "info" => "Parâmetro (id) não informado"
+                            ]
+                        ];
+                        return (object)$response;
+                    }
+
+                    $validate = ImpetusUtils::validator("id", $urlParams["id"], ["type(int)"]);
+                    if($validate["status"] == 0){
+                        $response = [
+                            "code" => "400 Bad Request",
+                            "response" => $validate
+                        ];
+                        return (object)$response;
+                    }
+
+                    //Realizar busca
+                    $buscar = '.$functionName.'::get'.$functionName.'($urlParams["id"]);
+                    if($buscar->status == 0){
+                        $response = [
+                            "code" => "404 Not found",
+                            "response" => $buscar
+                        ];
+                        return (object)$response;
+                    }else{
+                        $response = [
+                            "code" => "200 OK",
+                            "response" => $buscar
+                        ];
+                        return (object)$response;
+                    }
+
+                    
                 }
             }
             
@@ -158,6 +208,7 @@ $response = webserviceMethod();
 header("HTTP/1.1 " . $response->code);
 header("Content-Type: application/json");
 echo json_encode($response->response);
+
 ';
 
     $arquivo = fopen("app/controllers/$tableName/get$functionName.php", 'w');

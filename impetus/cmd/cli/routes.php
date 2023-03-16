@@ -23,7 +23,7 @@ function routes($tableName)
             $snippet.= $line[0];
         }
 
-$snippet .= '//'.$tableName.' routes
+$snippet .= '    //'.$tableName.' routes
     ["get'.$functionName.'", "app/controllers/'.$functionName.'/get'.$functionName.'.php"],
     ["list'.$functionName.'", "app/controllers/'.$functionName.'/list'.$functionName.'.php"],
     ["create'.$functionName.'", "app/controllers/'.$functionName.'/create'.$functionName.'.php"],

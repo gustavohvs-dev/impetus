@@ -78,14 +78,16 @@ class '.$functionName.'
 {
     static function get'.$functionName.'($id)
     {
+        require "app/database/database.php";
         $stmt = $conn->prepare("SELECT * FROM '.$tableName.' WHERE '.$primaryKey.' = :ID");
-        $stmt->bindParam(":ID", $id, PDO::PARAM_INT);
+        $stmt->bindParam(":ID", $id, \PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
         if ($result <> null) {
             $response = [
                 "status" => 1,
                 "code" => 200,
+                "info" => "Registro encontrado",
                 "data" => $result
             ];
         } else {
@@ -100,6 +102,7 @@ class '.$functionName.'
 
     static function list'.$functionName.'()
     {
+        require "app/database/database.php";
         $stmt = $conn->prepare("SELECT * FROM '.$tableName.'");
         $stmt->execute();
         $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -121,6 +124,7 @@ class '.$functionName.'
 
     static function create'.$functionName.'($data)
     {
+        require "app/database/database.php";
         $stmt = $conn->prepare("INSERT INTO '.$tableName.' ('.$queryCreateColumns.') VALUES('.$queryCreateBindsTags.')");
         '.$queryCreateBindsParams.' 
         if ($stmt->execute()) {
@@ -141,8 +145,9 @@ class '.$functionName.'
 
     static function update'.$functionName.'($data)
     {
+        require "app/database/database.php";
         $stmt = $conn->prepare("UPDATE '.$tableName.' SET '.$queryUpdateColumns.' WHERE '.$primaryKey.' = :ID");
-        $stmt->bindParam(":ID", $data["'.$primaryKey.'"], PDO::PARAM_INT);
+        $stmt->bindParam(":ID", $data["'.$primaryKey.'"], \PDO::PARAM_INT);
         '.$queryUpdateBindsParams.'
         if ($stmt->execute()) {
             $response = [
@@ -162,8 +167,9 @@ class '.$functionName.'
 
     static function delete'.$functionName.'($id)
     {
+        require "app/database/database.php";
         $stmt = $conn->prepare("DELETE FROM '.$tableName.' WHERE '.$primaryKey.' = :ID");
-        $stmt->bindParam(":ID", $id, PDO::PARAM_INT);
+        $stmt->bindParam(":ID", $id, \PDO::PARAM_INT);
         if ($stmt->execute()) {
             $response = [
                 "status" => 1,

@@ -49,7 +49,7 @@ class Auth
     static function validate($id, $user)
     {
         require "app/database/database.php";
-        $stmt = $conn->prepare("SELECT id, username FROM users WHERE username = :USER AND id = :ID");
+        $stmt = $conn->prepare("SELECT id, username, permission FROM users WHERE username = :USER AND id = :ID");
         $stmt->bindParam(":USER", $user, \PDO::PARAM_STR);
         $stmt->bindParam(":ID", $id, \PDO::PARAM_STR);
         $stmt->execute();

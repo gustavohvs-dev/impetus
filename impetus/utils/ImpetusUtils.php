@@ -91,12 +91,15 @@ class ImpetusUtils
      */
     static public function isInt($number)
     {
-        if (is_int($number)) {
-            $response = true;
-        } else {
-            $response = false;
+        $isNumber = ImpetusUtils::isNumber($number);
+        if($isNumber == false){
+            return false;
         }
-        return $response;
+        $intNumber = (int)$number;
+        if($number != $intNumber){
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -166,23 +169,23 @@ class ImpetusUtils
     }
 
     /**
-     * isSecurePassword
+     * isPassword
      */
-    static public function isSecurePassword($string) 
+    static public function isPassword($string) 
     {
-        $isSecurePassword = true;
+        $isPassword = true;
 
         if (strlen($string) < 8) {
-            $isSecurePassword = false;
+            $isPassword = false;
         }
         if (!preg_match("#[0-9]+#", $string)) {
-            $isSecurePassword = false;
+            $isPassword = false;
         }
         if (!preg_match("#[a-zA-Z]+#", $string)) {
-            $isSecurePassword = false;
+            $isPassword = false;
         }     
     
-        return $isSecurePassword;
+        return $isPassword;
     }
 
     /**
@@ -190,22 +193,62 @@ class ImpetusUtils
      */
     static public function isStrongPassword($string) 
     {
-        $isSecurePassword = true;
+        $isStrongPassword = true;
 
         if (strlen($string) < 8) {
-            $isSecurePassword = false;
+            $isStrongPassword = false;
         }
         if (!preg_match("#[0-9]+#", $string)) {
-            $isSecurePassword = false;
+            $isStrongPassword = false;
         }
         if (!preg_match("#[a-zA-Z]+#", $string)) {
-            $isSecurePassword = false;
+            $isStrongPassword = false;
         }   
         if (preg_match('/^[a-zA-Z0-9]+/', $string)) {
-            $isSecurePassword = false;
+            $isStrongPassword = false;
         }  
     
-        return $isSecurePassword;
+        return $isStrongPassword;
+    }
+
+    /**
+     * isGreaterThan
+     */
+    static public function isGreaterThan($n1, $n2)
+    {
+        return $n1 > $n2 ? true : false;
+    }
+
+    /**
+     * isGreaterThanOrEqual
+     */
+    static public function isGreaterThanOrEqual($n1, $n2)
+    {
+        return $n1 >= $n2 ? true : false;
+    }
+
+    /**
+     * isLessThan
+     */
+    static public function isLessThan($n1, $n2)
+    {
+        return $n1 < $n2 ? true : false;
+    }
+
+    /**
+     * isLessThanOrEqual
+     */
+    static public function isLessThanOrEqual($n1, $n2)
+    {
+        return $n1 <= $n2 ? true : false;
+    }
+
+    /**
+     * isBetween
+     */
+    static public function isBetween($number, $low, $high)
+    {
+        return ($number>=$low && $number<=$high) ? true : false;
     }
 
     /**
@@ -217,17 +260,17 @@ class ImpetusUtils
         if ($config <> null) {
         if (isset($config['accentuation'])) {
             if ($config['accentuation'] == false) {
-            $string = preg_replace(array("/(á|à|ã|â|ä)/", "/(Á|À|Ã|Â|Ä)/", "/(é|è|ê|ë)/", "/(É|È|Ê|Ë)/", "/(í|ì|î|ï)/", "/(Í|Ì|Î|Ï)/", "/(ó|ò|õ|ô|ö)/", "/(Ó|Ò|Õ|Ô|Ö)/", "/(ú|ù|û|ü)/", "/(Ú|Ù|Û|Ü)/", "/(ñ)/", "/(Ñ)/"), explode(" ", "a A e E i I o O u U n N"), $string);
+                $string = preg_replace(array("/(á|à|ã|â|ä)/", "/(Á|À|Ã|Â|Ä)/", "/(é|è|ê|ë)/", "/(É|È|Ê|Ë)/", "/(í|ì|î|ï)/", "/(Í|Ì|Î|Ï)/", "/(ó|ò|õ|ô|ö)/", "/(Ó|Ò|Õ|Ô|Ö)/", "/(ú|ù|û|ü)/", "/(Ú|Ù|Û|Ü)/", "/(ñ)/", "/(Ñ)/"), explode(" ", "a A e E i I o O u U n N"), $string);
             }
         }
         if (isset($config['specialChars'])) {
             if ($config['specialChars'] == false) {
-            $string = preg_replace('/[^a-z0-9 ]/i', '', $string);
+                $string = preg_replace('/[^a-z0-9 ]/i', '', $string);
             }
         }
         if (isset($config['lowerCase'])) {
             if ($config['lowerCase'] == false) {
-            $string = strtoupper($string);
+                $string = strtoupper($string);
             }
         }
         $string = trim($string);
@@ -250,6 +293,11 @@ class ImpetusUtils
         $specialCharParam = false;
         $uppercaseParam = false;
         $lowercaseParam = false;
+        $greaterThan = false;
+        $greaterThanOrEqual = false;
+        $lessThan = false;
+        $lessThanOrEqual = false;
+        $between = false;
 
         //Verificar parâmetros passados
         foreach($config as $param){
@@ -291,6 +339,33 @@ class ImpetusUtils
             }
             if($paramName == "lowercase"){
                 $lowercaseParam = true;
+            }
+            if($paramName == "greaterThan"){
+                $greaterThan = true;
+                $greaterThanParamValue = $paramValue;
+            }
+            if($paramName == "greaterThanOrEqual"){
+                $greaterThanOrEqual = true;
+                $greaterThanOrEqualParamValue = $paramValue;
+            }
+            if($paramName == "lessThan"){
+                $lessThan = true;
+                $lessThanParamValue = $paramValue;
+            }
+            if($paramName == "lessThanOrEqual"){
+                $lessThanOrEqual = true;
+                $lessThanOrEqualParamValue = $paramValue;
+            }
+            if($paramName == "between"){
+                $between = true;
+                $betweenParamValue = explode("-", $paramValue);
+                if(isset($betweenParamValue[1])){
+                    $betweenParamMinValue = $betweenParamValue[0];
+                    $betweenParamMaxValue = $betweenParamValue[1];
+                }else{
+                    $betweenParamMinValue = $betweenParamValue[0];
+                    $betweenParamMaxValue = $betweenParamValue[0];
+                }
             }
         }
 
@@ -381,7 +456,7 @@ class ImpetusUtils
                     ];
                 }
             }elseif($typeParamValue == "password"){
-                $validate = ImpetusUtils::isSecurePassword($string);
+                $validate = ImpetusUtils::isPassword($string);
                 if($validate == false){
                     return [
                         "status" => 0,
@@ -435,6 +510,56 @@ class ImpetusUtils
                 return [
                     "status" => 0,
                     "info" => "Valor '" . $name . "' não disponível nas opções (Opções disponíveis: " . $itens . ")"
+                ];
+            }
+        }
+
+        if($greaterThan == true && ($typeParamValue=="number" || $typeParamValue=="int")){
+            $validate = ImpetusUtils::isGreaterThan($string, $greaterThanParamValue);
+            if($validate == false){
+                return [
+                    "status" => 0,
+                    "info" => "Campo '" . $name . "' deve ser maior que (" . $greaterThanParamValue . ")."
+                ];
+            }
+        }
+
+        if($greaterThanOrEqual == true && ($typeParamValue=="number" || $typeParamValue=="int")){
+            $validate = ImpetusUtils::isGreaterThanOrEqual($string, $greaterThanOrEqualParamValue);
+            if($validate == false){
+                return [
+                    "status" => 0,
+                    "info" => "Campo '" . $name . "' deve ser maior ou igual a (" . $greaterThanOrEqualParamValue . ")."
+                ];
+            }
+        }
+
+        if($lessThan == true && ($typeParamValue=="number" || $typeParamValue=="int")){
+            $validate = ImpetusUtils::isLessThan($string, $lessThanParamValue);
+            if($validate == false){
+                return [
+                    "status" => 0,
+                    "info" => "Campo '" . $name . "' deve ser menor que (" . $lessThanParamValue . ")."
+                ];
+            }
+        }
+
+        if($lessThanOrEqual == true && ($typeParamValue=="number" || $typeParamValue=="int")){
+            $validate = ImpetusUtils::isLessThanOrEqual($string, $lessThanOrEqualParamValue);
+            if($validate == false){
+                return [
+                    "status" => 0,
+                    "info" => "Campo '" . $name . "' deve ser menor ou igual a (" . $lessThanOrEqualParamValue . ")."
+                ];
+            }
+        }
+
+        if($between == true && ($typeParamValue=="number" || $typeParamValue=="int")){
+            $validate = ImpetusUtils::isBetween($string, $betweenParamMinValue, $betweenParamMaxValue);
+            if($validate == false){
+                return [
+                    "status" => 0,
+                    "info" => "Campo '" . $name . "' deve estar entre (" . $betweenParamMinValue . ") e (" . $betweenParamMaxValue . ")."
                 ];
             }
         }
