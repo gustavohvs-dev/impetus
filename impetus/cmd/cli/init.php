@@ -16,7 +16,7 @@ function init($argv){
     }
 
     if(!is_dir("app")){
-        echo "Error: Falha ao criar pasta app. \n";
+        echo "(500 Internal Server Error) Falha ao criar pasta app. \n";
         $qntError++;
         return null;
     }else{
@@ -64,7 +64,7 @@ function init($argv){
     }
 
     if(!is_dir("app/models")){
-        echo "Error: Falha ao criar pasta models. \n";
+        echo "(500 Internal Server Error) Falha ao criar pasta models. \n";
         $qntError++;
         return null;
     }else{
@@ -77,7 +77,7 @@ function init($argv){
     }
 
     if(!is_dir("app/controllers")){
-        echo "Error: Falha ao criar pasta controllers. \n";
+        echo "(500 Internal Server Error) Falha ao criar pasta controllers. \n";
         $qntError++;
         return null;
     }else{
@@ -90,7 +90,7 @@ function init($argv){
     }
 
     if(!is_dir("app/controllers")){
-        echo "Error: Falha ao criar pasta controllers. \n";
+        echo "(500 Internal Server Error) Falha ao criar pasta controllers. \n";
         $qntError++;
         return null;
     }else{
@@ -108,13 +108,13 @@ function init($argv){
     echo "Criando arquivos... \n";
 
     if(!is_dir("app/middlewares")){
-        echo "Error: Falha ao encontrar pasta de middlewares. \n";
+        echo "(500 Internal Server Error) Falha ao encontrar pasta de middlewares. \n";
         $qntError++;
         return null;
     }else{
         $arquivo = fopen("app/middlewares/Auth.php", 'w');
         if($arquivo == false){
-            echo "Error: Falha ao criar arquivo de Auth. \n";
+            echo "(500 Internal Server Error) Falha ao criar arquivo de Auth. \n";
             $qntError++;
             return null;
         }else{
@@ -122,7 +122,7 @@ function init($argv){
             $texto = authSnippet();
             $escrever = fwrite($arquivo, $texto);
             if($escrever == false){
-                echo "Error: Falha ao preencher middleware 'Auth'. \n";
+                echo "(500 Internal Server Error) Falha ao preencher middleware 'Auth'. \n";
                 $qntError++;
                 return null;
             }else{
@@ -132,13 +132,13 @@ function init($argv){
     }
 
     if(!is_dir("app/config")){
-        echo "Error: Falha ao encontrar pasta de configuração. \n";
+        echo "(500 Internal Server Error) Falha ao encontrar pasta de configuração. \n";
         $qntError++;
         return null;
     }else{
         $arquivo = fopen("app/config/config.php", 'w');
         if($arquivo == false){
-            echo "Error: Falha ao criar arquivo de configuração. \n";
+            echo "(500 Internal Server Error) Falha ao criar arquivo de configuração. \n";
             $qntError++;
             return null;
         }else{
@@ -146,7 +146,7 @@ function init($argv){
             $texto = configSnippet($argv[2], $argv[3]);
             $escrever = fwrite($arquivo, $texto);
             if($escrever == false){
-                echo "Error: Falha ao preencher arquivo de configuração. \n";
+                echo "(500 Internal Server Error) Falha ao preencher arquivo de configuração. \n";
                 $qntError++;
                 return null;
             }else{
@@ -156,13 +156,13 @@ function init($argv){
     }
 
     if(!is_dir("app/database")){
-        echo "Error: Falha ao encontrar pasta de banco de dados. \n";
+        echo "(500 Internal Server Error) Falha ao encontrar pasta de banco de dados. \n";
         $qntError++;
         return null;
     }else{
         $arquivo = fopen("app/database/database.php", 'w');
         if($arquivo == false){
-            echo "Error: Falha ao criar arquivo de banco de dados. \n";
+            echo "(500 Internal Server Error) Falha ao criar arquivo de banco de dados. \n";
             $qntError++;
             return null;
         }else{
@@ -170,7 +170,7 @@ function init($argv){
             $texto = databaseSnippet();
             $escrever = fwrite($arquivo, $texto);
             if($escrever == false){
-                echo "Error: Falha ao preencher arquivo de banco de dados. \n";
+                echo "(500 Internal Server Error) Falha ao preencher arquivo de banco de dados. \n";
                 $qntError++;
                 return null;
             }else{
@@ -180,7 +180,7 @@ function init($argv){
 
         $arquivo = fopen("app/database/migrate.php", 'w');
         if($arquivo == false){
-            echo "Error: Falha ao criar arquivo migrate. \n";
+            echo "(500 Internal Server Error) Falha ao criar arquivo migrate. \n";
             $qntError++;
             return null;
         }else{
@@ -188,7 +188,7 @@ function init($argv){
             $texto = migrateSnippet();
             $escrever = fwrite($arquivo, $texto);
             if($escrever == false){
-                echo "Error: Falha ao preencher arquivo migrate. \n";
+                echo "(500 Internal Server Error) Falha ao preencher arquivo migrate. \n";
                 $qntError++;
                 return null;
             }else{
@@ -199,7 +199,7 @@ function init($argv){
 
     $arquivo = fopen(".htaccess", 'w');
     if($arquivo == false){
-        echo "Error: Falha ao criar arquivo htacess. \n";
+        echo "(500 Internal Server Error) Falha ao criar arquivo htacess. \n";
         $qntError++;
         return null;
     }else{
@@ -207,7 +207,7 @@ function init($argv){
         $texto = htaccessSnippet();
         $escrever = fwrite($arquivo, $texto);
         if($escrever == false){
-            echo "Error: Falha ao preencher arquivo htaccess. \n";
+            echo "(500 Internal Server Error) Falha ao preencher arquivo htaccess. \n";
             $qntError++;
             return null;
         }else{
@@ -217,7 +217,7 @@ function init($argv){
 
     $arquivo = fopen("index.php", 'w');
     if($arquivo == false){
-        echo "Error: Falha ao criar arquivo index. \n";
+        echo "(500 Internal Server Error) Falha ao criar arquivo index. \n";
         $qntError++;
         return null;
     }else{
@@ -225,7 +225,7 @@ function init($argv){
         $texto = indexSnippet($argv[2]);
         $escrever = fwrite($arquivo, $texto);
         if($escrever == false){
-            echo "Error: Falha ao preencher arquivo index. \n";
+            echo "(500 Internal Server Error) Falha ao preencher arquivo index. \n";
             $qntError++;
             return null;
         }else{
@@ -234,13 +234,13 @@ function init($argv){
     } 
 
     if(!is_dir("app/routes")){
-        echo "Error: Falha ao encontrar pasta raiz. \n";
+        echo "(500 Internal Server Error) Falha ao encontrar pasta raiz. \n";
         $qntError++;
         return null;
     }else{
         $arquivo = fopen("app/routes/routes.php", 'w');
         if($arquivo == false){
-            echo "Error: Falha ao criar arquivo de rotas. \n";
+            echo "(500 Internal Server Error) Falha ao criar arquivo de rotas. \n";
             $qntError++;
             return null;
         }else{
@@ -248,7 +248,7 @@ function init($argv){
             $texto = routesSnippet();
             $escrever = fwrite($arquivo, $texto);
             if($escrever == false){
-                echo "Error: Falha ao preencher arquivo de rotas. \n";
+                echo "(500 Internal Server Error) Falha ao preencher arquivo de rotas. \n";
                 $qntError++;
                 return null;
             }else{
@@ -258,13 +258,13 @@ function init($argv){
     }
 
     if(!is_dir("app/controllers/login")){
-        echo "Error: Falha ao encontrar pasta raiz. \n";
+        echo "(500 Internal Server Error) Falha ao encontrar pasta raiz. \n";
         $qntError++;
         return null;
     }else{
         $arquivo = fopen("app/controllers/login/login.php", 'w');
         if($arquivo == false){
-            echo "Error: Falha ao criar arquivo de login. \n";
+            echo "(500 Internal Server Error) Falha ao criar arquivo de login. \n";
             $qntError++;
             return null;
         }else{
@@ -272,7 +272,7 @@ function init($argv){
             $texto = loginSnippet();
             $escrever = fwrite($arquivo, $texto);
             if($escrever == false){
-                echo "Error: Falha ao preencher arquivo de login. \n";
+                echo "(500 Internal Server Error) Falha ao preencher arquivo de login. \n";
                 $qntError++;
                 return null;
             }else{
@@ -282,13 +282,13 @@ function init($argv){
     }
 
     if(!is_dir("app/controllers/test")){
-        echo "Error: Falha ao encontrar pasta raiz. \n";
+        echo "(500 Internal Server Error) Falha ao encontrar pasta raiz. \n";
         $qntError++;
         return null;
     }else{
         $arquivo = fopen("app/controllers/test/test.php", 'w');
         if($arquivo == false){
-            echo "Error: Falha ao criar arquivo 'test'. \n";
+            echo "(500 Internal Server Error) Falha ao criar arquivo 'test'. \n";
             $qntError++;
             return null;
         }else{
@@ -296,7 +296,7 @@ function init($argv){
             $texto = testSnippet();
             $escrever = fwrite($arquivo, $texto);
             if($escrever == false){
-                echo "Error: Falha ao preencher arquivo 'test'. \n";
+                echo "(500 Internal Server Error) Falha ao preencher arquivo 'test'. \n";
                 $qntError++;
                 return null;
             }else{
@@ -309,7 +309,7 @@ function init($argv){
      * Copiando arquivos utilitários
      */
     if(!copy("impetus/utils/ImpetusJWT.php", "app/models/impetus/ImpetusJWT.php")){
-        echo "Error: Falha ao copiar arquivo 'ImpetusJWT'. \n";
+        echo "(500 Internal Server Error) Falha ao copiar arquivo 'ImpetusJWT'. \n";
         $qntError++;
         return null;
     }else{
@@ -317,7 +317,7 @@ function init($argv){
     }
 
     if(!copy("impetus/utils/ImpetusUtils.php", "app/models/impetus/ImpetusUtils.php")){
-        echo "Error: Falha ao copiar arquivo 'ImpetusUtils'. \n";
+        echo "(500 Internal Server Error) Falha ao copiar arquivo 'ImpetusUtils'. \n";
         $qntError++;
         return null;
     }else{
@@ -325,6 +325,7 @@ function init($argv){
     }
 
     if($qntError == 0){
+        echo "(200 OK) Projeto configurado com sucesso. \n";
         echo "\nDica: Para seguir com a configuração, siga os passos abaixo: \n";
         echo "1 - Crie o banco de dados, com o nome '".$argv[3]."'. \n";
         echo "2 - Vá em 'app/config' e abra o arquivo de configuração. \n";

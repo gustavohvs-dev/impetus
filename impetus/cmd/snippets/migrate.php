@@ -29,7 +29,7 @@ class Migrate
             )";
         $stmt = $conn->prepare($table);
         if($stmt->execute()){
-            echo "\nTabela *".$tableName."* criada com sucesso.";
+            echo "\n(200 OK) Tabela *".$tableName."* criada com sucesso.";
         }else{
             $error = $stmt->errorInfo();
             $error = $error[2];
@@ -37,7 +37,7 @@ class Migrate
             echo "\n(500 Internal Server Error) Falha ao criar tabela *".$tableName."*";
         }
 
-        return "\n(200 OK) Banco de dados estruturado";
+        return "\n";
 
     }
 
@@ -65,7 +65,7 @@ class Migrate
         $stmt->bindParam(":PASS", $password, PDO::PARAM_STR);
         $stmt->bindParam(":PERMISSION", $data["permission"], PDO::PARAM_STR);
         if($stmt->execute()){
-            echo "\nUsuário admin criado com sucesso.";
+            echo "\n(200 OK) Usuário admin criado com sucesso.";
         }else{
             $error = $stmt->errorInfo();
             $error = $error[2];
@@ -73,7 +73,7 @@ class Migrate
             echo "\n(500 Internal Server Error) Falha ao criar usuário admin";
         }
 
-        return "\n(200 OK) Banco de dados populado";
+        return "\n";
     }
 
     /**
@@ -101,7 +101,7 @@ class Migrate
             ;";
         $stmt = $conn->prepare($view);
         if($stmt->execute()){
-            echo "\nView log criada com sucesso.";
+            echo "\n(200 OK) View log criada com sucesso.";
         }else{
             $error = $stmt->errorInfo();
             $error = $error[2];
@@ -109,7 +109,7 @@ class Migrate
             echo "\n(500 Internal Server Error) Falha ao criar view log";
         }
 
-        return "\n(200 OK) Views estruturadas";*/
+        return "\n";*/
 
     }
 

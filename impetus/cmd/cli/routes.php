@@ -35,15 +35,15 @@ $snippet .= '    //'.$tableName.' routes
 
         $arquivo = fopen("app/routes/routes.php", 'w');
         if($arquivo == false){
-            echo "\n(500 Server Internal Error) Falha ao criar arquivo de todas \n\n";
+            echo "\n(500 Server Internal Error) Falha ao criar arquivo de todas \n";
             return null;
         }else{
             $escrever = fwrite($arquivo, $snippet);
             if($escrever == false){
-                echo "\n(500 Server Internal Error) Falha ao preencher arquivo de rotas \n\n";
+                echo "\n(500 Server Internal Error) Falha ao preencher arquivo de rotas \n";
                 return null;
             }else{
-                echo "\n(200 OK) Rotas criadas com sucesso\n\n";
+                echo "\n(200 OK) Rotas criadas com sucesso\n";
                 return null;
             }
         } 

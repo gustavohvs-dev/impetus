@@ -3,7 +3,7 @@
 function controller($tableName)
 {
     require "app/database/database.php";
-    echo "\nCriando controller ({$tableName})";
+    echo "\nCriando controllers ({$tableName})...";
 
     //Busca tabela
     $query = "DESC $tableName";
@@ -11,7 +11,7 @@ function controller($tableName)
     if($stmt->execute())
     {
         $table = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        echo "\nTabela encontrada.";
+        echo "\nTabela encontrada...";
 
         $functionName = ucfirst(strtolower($tableName));
 
@@ -213,13 +213,13 @@ echo json_encode($response->response);
 
     $arquivo = fopen("app/controllers/$tableName/get$functionName.php", 'w');
     if($arquivo == false){
-        return "\nError: Falha ao criar controller (get".$functionName.") \n";
+        return "\n(500 Internal Server Error) Falha ao criar controller (get".$functionName.") \n";
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            return "\nError: Falha ao preencher controller (get".$functionName.") \n";
+            return "\n(500 Internal Server Error) Falha ao preencher controller (get".$functionName.") \n";
         }else{
-            echo "\nController get'".$functionName."' criado com sucesso. \n";
+            echo "\n(200 OK) Controller get'".$functionName."' criado com sucesso. \n";
         }
     } 
 
@@ -315,13 +315,13 @@ echo json_encode($response->response);
 
     $arquivo = fopen("app/controllers/$tableName/list$functionName.php", 'w');
     if($arquivo == false){
-        return "\nError: Falha ao criar controller (list".$functionName.") \n";
+        return "\n(500 Internal Server Error) Falha ao criar controller (list".$functionName.") \n";
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            return "\nError: Falha ao preencher controller (list".$functionName.") \n";
+            return "\n(500 Internal Server Error) Falha ao preencher controller (list".$functionName.") \n";
         }else{
-            echo "\nController list'".$functionName."' criado com sucesso. \n";
+            echo "\n(200 OK) Controller list'".$functionName."' criado com sucesso. \n";
         }
     } 
 
@@ -417,13 +417,13 @@ echo json_encode($response->response);
 
     $arquivo = fopen("app/controllers/$tableName/create$functionName.php", 'w');
     if($arquivo == false){
-        return "\nError: Falha ao criar controller (create".$functionName.") \n";
+        return "\n(500 Internal Server Error) Falha ao criar controller (create".$functionName.") \n";
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            return "\nError: Falha ao preencher controller (create".$functionName.") \n";
+            return "\n(500 Internal Server Error) Falha ao preencher controller (create".$functionName.") \n";
         }else{
-            echo "\nController create'".$functionName."' criado com sucesso. \n";
+            echo "\n(200 OK) Controller create'".$functionName."' criado com sucesso. \n";
         }
     } 
 
@@ -519,13 +519,13 @@ echo json_encode($response->response);
 
     $arquivo = fopen("app/controllers/$tableName/update$functionName.php", 'w');
     if($arquivo == false){
-        return "\nError: Falha ao criar controller (update".$functionName.") \n";
+        return "\n(500 Internal Server Error) Falha ao criar controller (update".$functionName.") \n";
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            return "\nError: Falha ao preencher controller (update".$functionName.") \n";
+            return "\n(500 Internal Server Error) Falha ao preencher controller (update".$functionName.") \n";
         }else{
-            echo "\nController update'".$functionName."' criado com sucesso. \n";
+            echo "\n(200 OK) Controller update'".$functionName."' criado com sucesso. \n";
         }
     } 
 
@@ -541,8 +541,12 @@ $snippet= '<?php
 
 //Importando models e middlewares
 include_once "app/models/impetus/ImpetusJWT.php";
+include_once "app/models/impetus/ImpetusUtils.php";
+include_once "app/models/'.$functionName.'.php";
 include_once "app/middlewares/Auth.php";
 use app\models\impetus\ImpetusJWT;
+use app\models\impetus\ImpetusUtils;
+use app\models\\'.$functionName.';
 use app\middlewares\Auth;
 
 function webserviceMethod(){
@@ -595,15 +599,61 @@ function webserviceMethod(){
                     ];
                     return (object)$response;
                 }else{
-                    //Regra de negócio do método
-                    $response = [
-                        "code" => "200 OK",
-                        "response" => [
-                            "status" => 1,
-                            "info" => "Método funcionando (DELETE)"
-                        ]
-                    ];
-                    return (object)$response;
+                    /**
+                     * Regra de negócio do método
+                    */
+                    
+                    //Validar permissão de usuário
+                    if($auth->data["permission"] != "admin"){
+                        $response = [
+                            "code" => "401 Unauthorized",
+                            "response" => [
+                                "status" => 1,
+                                "info" => "Usuário não possui permissão para realizar ação"
+                            ]
+                        ];
+                        return (object)$response;
+                    }
+
+                    //Validar ID informado
+                    $urlParams = ImpetusUtils::urlParams();
+                    if(!isset($urlParams["id"])){
+                        $response = [
+                            "code" => "400 Bad Request",
+                            "response" => [
+                                "status" => 1,
+                                "info" => "Parâmetro (id) não informado"
+                            ]
+                        ];
+                        return (object)$response;
+                    }
+
+                    $validate = ImpetusUtils::validator("id", $urlParams["id"], ["type(int)"]);
+                    if($validate["status"] == 0){
+                        $response = [
+                            "code" => "400 Bad Request",
+                            "response" => $validate
+                        ];
+                        return (object)$response;
+                    }
+
+                    //Realizar busca
+                    $deletar = '.$functionName.'::delete'.$functionName.'($urlParams["id"]);
+                    if($deletar->status == 0){
+                        $response = [
+                            "code" => "400 Bad request",
+                            "response" => $deletar
+                        ];
+                        return (object)$response;
+                    }else{
+                        $response = [
+                            "code" => "200 OK",
+                            "response" => $deletar
+                        ];
+                        return (object)$response;
+                    }
+
+                    
                 }
             }
             
@@ -617,17 +667,18 @@ $response = webserviceMethod();
 header("HTTP/1.1 " . $response->code);
 header("Content-Type: application/json");
 echo json_encode($response->response);
+
 ';
 
     $arquivo = fopen("app/controllers/$tableName/delete$functionName.php", 'w');
     if($arquivo == false){
-        return "\nError: Falha ao criar controller (delete".$functionName.") \n";
+        return "\n(500 Internal Server Error) Falha ao criar controller (delete".$functionName.") \n";
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            return "\nError: Falha ao preencher controller (delete".$functionName.") \n";
+            return "\n(500 Internal Server Error) Falha ao preencher controller (delete".$functionName.") \n";
         }else{
-            echo "\nController delete'".$functionName."' criado com sucesso. \n";
+            echo "\n(200 OK) Controller delete'".$functionName."' criado com sucesso. \n";
         }
     } 
 
@@ -642,7 +693,5 @@ echo json_encode($response->response);
         return "\n(500 Internal Server Error) Falha ao encontrar tabela";
     }
 
-    echo "\n(200 OK) Controller criado com sucesso";
-
-    echo "\n\n";
+    echo "\n";
 }

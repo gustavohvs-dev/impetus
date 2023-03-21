@@ -13,7 +13,7 @@ $systemConfig = [
         "server" => "localhost",
         "username" => "root",
         "password" => "",
-        "database" => "dbteste"
+        "database" => "'.$dbName.'"
     ],
     "api" => [
         "token" => "E5Z!h_Ugv+X26{832Pg9Gzefhd!IHgs&r"
