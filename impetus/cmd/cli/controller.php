@@ -235,8 +235,12 @@ $snippet= '<?php
 
 //Importando models e middlewares
 include_once "app/models/impetus/ImpetusJWT.php";
+include_once "app/models/impetus/ImpetusUtils.php";
+include_once "app/models/'.$functionName.'.php";
 include_once "app/middlewares/Auth.php";
 use app\models\impetus\ImpetusJWT;
+use app\models\impetus\ImpetusUtils;
+use app\models\\'.$functionName.';
 use app\middlewares\Auth;
 
 function webserviceMethod(){
@@ -289,13 +293,14 @@ function webserviceMethod(){
                     ];
                     return (object)$response;
                 }else{
-                    //Regra de negócio do método
+                    /**
+                     * Regra de negócio do método
+                     */
+                    $urlParams = ImpetusUtils::urlParams();
+                    $buscar = '.$functionName.'::list'.$functionName.'($urlParams);
                     $response = [
                         "code" => "200 OK",
-                        "response" => [
-                            "status" => 1,
-                            "info" => "Método funcionando (LIST)"
-                        ]
+                        "response" => $buscar
                     ];
                     return (object)$response;
                 }

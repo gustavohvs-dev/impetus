@@ -7,7 +7,7 @@ $snippet =
 
 $systemConfig = [
     "status" => "offline",
-    "appName" => "teste",
+    "appName" => "'.$appName.'",
     "version" => "1.0.0",
     "database" => [
         "server" => "localhost",

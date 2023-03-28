@@ -100,26 +100,66 @@ class '.$functionName.'
         return (object)$response;
     }
 
-    static function list'.$functionName.'()
+    static function list'.$functionName.'($data)
     {
         require "app/database/database.php";
-        $stmt = $conn->prepare("SELECT * FROM '.$tableName.'");
+
+        //Quantidade de dados
+        $stmt = $conn->prepare("SELECT COUNT(id) count FROM '.$tableName.'");
         $stmt->execute();
-        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        if ($result <> null) {
+        $rowCount = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        //Quantidade de páginas
+        if (isset($data["dataPerPage"]) && !empty($data["dataPerPage"])){
+            $rowsPerPage = $data["dataPerPage"];
+        }else{
+            $rowsPerPage = 10;
+        }
+        $numberOfPages = ceil($rowCount["count"]/$rowsPerPage);
+        
+        //Requisição
+        $query = "SELECT * FROM '.$tableName.' ";
+
+        /*if(isset($data["status"]) && !empty($data["status"])) {
+            $clausule = "WHERE ";
+            $query .= $clausule . "status = `'.$data["status"].'`";
+            $clausule = " AND ";
+        }*/
+
+        if (isset($data["currentPage"]) && !empty($data["currentPage"]) && $data["currentPage"]>0) {
+            $query .= " ORDER BY id LIMIT ".($data["currentPage"]-1)*$rowsPerPage.", " . $rowsPerPage;
+            $currentPage = $data["currentPage"];
+        }else{
+            $query .= " ORDER BY id LIMIT 0, " . $rowsPerPage;
+            $currentPage = 1;
+        }
+
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+
+        $results = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        if ($results <> null) {
             $response = [
                 "status" => 1,
                 "code" => 200,
-                "data" => $result
+                "currentPage" => (INT)$currentPage,
+                "numberOfPages" => (INT)$numberOfPages,
+                "dataPerPage" => (INT)$rowsPerPage,
+                "data" => $results
             ];
+            return $response;
         } else {
             $response = [
                 "status" => 0,
                 "code" => 404,
+                "currentPage" => (INT)$currentPage,
+                "numberOfPages" => (INT)$numberOfPages,
+                "dataPerPage" => (INT)$rowsPerPage,
                 "info" => "Nenhum resultado encontrado"
-            ];  
+            ];
+            return (object)$response;
         }
-        return (object)$response;
     }
 
     static function create'.$functionName.'($data)
