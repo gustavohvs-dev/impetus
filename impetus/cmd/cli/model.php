@@ -33,9 +33,9 @@ function model($tableName)
                 $columnType = explode("(" , $column["Type"]);
                 $columnType = $columnType[0];
                 if($columnType == "int"){
-                    $typeCreate[$pointerCreate] = "PDO::PARAM_INT";
+                    $typeCreate[$pointerCreate] = "\PDO::PARAM_INT";
                 }else{
-                    $typeCreate[$pointerCreate] = "PDO::PARAM_STR";
+                    $typeCreate[$pointerCreate] = "\PDO::PARAM_STR";
                 }
 
                 $pointerCreate++;
@@ -174,10 +174,13 @@ class '.$functionName.'
                 "info" => "Registro criado com sucesso"
             ];
         }else{
+            $error = $stmt->errorInfo();
+            $error = $error[2];
             $response = [
                 "status" => 1,
                 "code" => 500,
-                "info" => "Falha ao criar registro"
+                "info" => "Falha ao criar registro",
+                "error" => $error
             ];
         }
         return (object)$response;
@@ -196,10 +199,13 @@ class '.$functionName.'
                 "info" => "Registro atualizado com sucesso"
             ];
         }else{
+            $error = $stmt->errorInfo();
+            $error = $error[2];
             $response = [
                 "status" => 1,
                 "code" => 500,
-                "info" => "Falha ao atualizar registro"
+                "info" => "Falha ao atualizar registro",
+                "error" => $error
             ];
         }
         return (object)$response;
@@ -211,16 +217,28 @@ class '.$functionName.'
         $stmt = $conn->prepare("DELETE FROM '.$tableName.' WHERE '.$primaryKey.' = :ID");
         $stmt->bindParam(":ID", $id, \PDO::PARAM_INT);
         if ($stmt->execute()) {
-            $response = [
-                "status" => 1,
-                "code" => 200,
-                "info" => "Registro deletado com sucesso"
-            ];
+            if($stmt->rowCount() != 0){
+                $response = [
+                    "status" => 1,
+                    "code" => 200,
+                    "info" => "Registro deletado com sucesso",
+                ];
+            }else{
+                $response = [
+                    "status" => 1,
+                    "code" => 404,
+                    "info" => "Falha ao deletar registro",
+                    "error" => "Not found entry (".$id.") for key (id)"
+                ];
+            }
         } else {
+            $error = $stmt->errorInfo();
+            $error = $error[2];
             $response = [
                 "status" => 0,
                 "code" => 404,
-                "info" => "Falha ao deletar registro"
+                "info" => "Falha ao deletar registro",
+                "error" => $error
             ];  
         }
         return (object)$response;

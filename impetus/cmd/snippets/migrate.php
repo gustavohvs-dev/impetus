@@ -15,9 +15,7 @@ class Migrate
 
         require "app/database/database.php";
 
-        /**
-         * Cria tabela de usuários
-         */
+        //Criar tabela
         $tableName = "users";
         $table = "CREATE TABLE ".$tableName." (
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -36,6 +34,7 @@ class Migrate
             echo "\n" .$error;
             echo "\n(500 Internal Server Error) Falha ao criar tabela *".$tableName."*";
         }
+        //Criar tabela
 
         return "\n";
 
@@ -49,9 +48,7 @@ class Migrate
 
         require "app/database/database.php";
 
-        /**
-         * Cria um usuário padrão para autenticação no webservice
-         */
+        // Cria um usuário padrão para autenticação no webservice
         $data = [
             "username" => "admin",
             "password" => "admin",
@@ -72,6 +69,7 @@ class Migrate
             echo "\n" . $error;
             echo "\n(500 Internal Server Error) Falha ao criar usuário admin";
         }
+        // Fim
 
         return "\n";
     }

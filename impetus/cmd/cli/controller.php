@@ -18,6 +18,8 @@ function controller($tableName)
         $pointerCreate = 0;
         $columnNameCreate = [];
         $typeCreate = [];
+        $createParams = "";
+        $createTabs = "";
 
         foreach($table as $column)
         {
@@ -38,6 +40,12 @@ function controller($tableName)
 
                 $pointerCreate++;
             }
+
+            if($column['Field']<>"id" && $column['Field']<>"createdAt" && $column['Field']<>"updatedAt"){
+                $createParams .= $createTabs . '"'.$column['Field'].'" => $jsonParams->'.$column['Field'].',';
+                $createTabs = "\n\t\t\t\t\t\t";
+            }
+
         }
 
         $queryCreateColumns = "";
@@ -342,8 +350,12 @@ $snippet= '<?php
 
 //Importando models e middlewares
 include_once "app/models/impetus/ImpetusJWT.php";
+include_once "app/models/impetus/ImpetusUtils.php";
+include_once "app/models/'.$functionName.'.php";
 include_once "app/middlewares/Auth.php";
 use app\models\impetus\ImpetusJWT;
+use app\models\impetus\ImpetusUtils;
+use app\models\\'.$functionName.';
 use app\middlewares\Auth;
 
 function webserviceMethod(){
@@ -396,15 +408,47 @@ function webserviceMethod(){
                     ];
                     return (object)$response;
                 }else{
-                    //Regra de negócio do método
-                    $response = [
-                        "code" => "200 OK",
-                        "response" => [
-                            "status" => 1,
-                            "info" => "Método funcionando (CREATE)"
-                        ]
+                    /**
+                     * Regra de negócio do método
+                     */
+                    
+                    //Validar permissão de usuário
+                    if($auth->data["permission"] != "admin"){
+                        $response = [
+                            "code" => "401 Unauthorized",
+                            "response" => [
+                                "status" => 1,
+                                "info" => "Usuário não possui permissão para realizar ação"
+                            ]
+                        ];
+                        return (object)$response;
+                    }
+
+                    //Coletar params do body (JSON)
+                    $jsonParams = json_decode(file_get_contents("php://input"),false);
+
+                    //Organizando dados para a request
+                    $data = [
+                        '.$createParams.'
                     ];
-                    return (object)$response;
+
+                    //Criar dados
+                    $request = '.$functionName.'::create'.$functionName.'($data);
+                    if($request->status == 0){
+                        $response = [
+                            "code" => "400 Bad request",
+                            "response" => $request
+                        ];
+                        return (object)$response;
+                    }else{
+                        $response = [
+                            "code" => "200 OK",
+                            "response" => $request
+                        ];
+                        return (object)$response;
+                    }
+
+
                 }
             }
             
@@ -444,8 +488,12 @@ $snippet= '<?php
 
 //Importando models e middlewares
 include_once "app/models/impetus/ImpetusJWT.php";
+include_once "app/models/impetus/ImpetusUtils.php";
+include_once "app/models/'.$functionName.'.php";
 include_once "app/middlewares/Auth.php";
 use app\models\impetus\ImpetusJWT;
+use app\models\impetus\ImpetusUtils;
+use app\models\\'.$functionName.';
 use app\middlewares\Auth;
 
 function webserviceMethod(){
@@ -498,15 +546,52 @@ function webserviceMethod(){
                     ];
                     return (object)$response;
                 }else{
-                    //Regra de negócio do método
-                    $response = [
-                        "code" => "200 OK",
-                        "response" => [
-                            "status" => 1,
-                            "info" => "Método funcionando (UPDATE)"
-                        ]
+                    /**
+                     * Regra de negócio do método
+                     */
+                    
+                    //Validar permissão de usuário
+                    if($auth->data["permission"] != "admin"){
+                        $response = [
+                            "code" => "401 Unauthorized",
+                            "response" => [
+                                "status" => 1,
+                                "info" => "Usuário não possui permissão para realizar ação"
+                            ]
+                        ];
+                        return (object)$response;
+                    }
+
+                    //Coletar params do body (JSON)
+                    $jsonParams = json_decode(file_get_contents("php://input"),false);
+
+                    //Coleta data/hora atual
+                    $datetime = ImpetusUtils::datetime();
+
+                    //Organizando dados para a request
+                    $data = [
+                        "'.$primaryKey.'" => $jsonParams->'.$primaryKey.',
+                        '.$createParams.'
+                        "updatedAt" => $datetime
                     ];
-                    return (object)$response;
+
+                    //Atualiza dados
+                    $request = '.$functionName.'::update'.$functionName.'($data);
+                    if($request->status == 0){
+                        $response = [
+                            "code" => "400 Bad request",
+                            "response" => $request
+                        ];
+                        return (object)$response;
+                    }else{
+                        $response = [
+                            "code" => "200 OK",
+                            "response" => $request
+                        ];
+                        return (object)$response;
+                    }
+
+
                 }
             }
             

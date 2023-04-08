@@ -618,7 +618,13 @@ class ImpetusUtils
         return null;
     }
 
-}
+    /**
+     * datetime
+     */
+    static public function datetime($format = 'Y-m-d H:i:s', $timezone = 'America/Sao_Paulo') {
+        date_default_timezone_set($timezone);
+        $datetime = date($format, time());
+        return $datetime;
+    }
 
-//$validate = ImpetusUtils::validator("var", "@Ab123456", ['type(strongPassword)']);
-//var_dump($validate);
+}
