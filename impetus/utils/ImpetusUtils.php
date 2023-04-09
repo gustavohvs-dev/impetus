@@ -283,7 +283,7 @@ class ImpetusUtils
      */
     static function validator($name, $request, $config)
     {
-        //config [type(date), lenght(15), enum(list), specialChar, uppercase, nullable]
+        //config [type(number, date, int, email, boolean, datetime, password, strongPassword, string), lenght(15), enum(list), specialChar, uppercase, nullable]
 
         //Parâmetros
         $typeParam = false;

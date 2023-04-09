@@ -122,7 +122,7 @@ class '.$functionName.'
 
         /*if(isset($data["status"]) && !empty($data["status"])) {
             $clausule = "WHERE ";
-            $query .= $clausule . "status = `'.$data["status"].'`";
+            $query .= $clausule . "status = `$data["status"]`";
             $clausule = " AND ";
         }*/
 

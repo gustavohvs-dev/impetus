@@ -324,6 +324,14 @@ function init($argv){
         echo "Arquivo utilitário 'ImpetusUtils' criado com sucesso. \n";
     }
 
+    if(!copy("impetus/utils/ImpetusMaths.php", "app/models/impetus/ImpetusMaths.php")){
+        echo "(500 Internal Server Error) Falha ao copiar arquivo 'ImpetusMaths'. \n";
+        $qntError++;
+        return null;
+    }else{
+        echo "Arquivo utilitário 'ImpetusMaths' criado com sucesso. \n";
+    }
+
     if($qntError == 0){
         echo "(200 OK) Projeto configurado com sucesso. \n";
         echo "\nDica: Para seguir com a configuração, siga os passos abaixo: \n";
