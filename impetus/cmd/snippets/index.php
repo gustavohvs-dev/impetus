@@ -22,7 +22,7 @@ if (isset($_GET["url"])) {
 	//Index
 	$response = [
         "status" => "1",
-        "info" => "Bem-vindo ao sistema '.$appName.'!",
+        "info" => "Bem-vindo ao '.$appName.'!",
     ];
     header("HTTP/1.1 200 OK");
     header("Content-Type: application/json");

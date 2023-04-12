@@ -11,7 +11,7 @@ class Auth
 {
     static function login($user, $pass)
     {
-        require "app/database/database.php";
+        require "app/config/config.php";
         $stmt = $conn->prepare("SELECT id, username, password FROM users WHERE username = :USER");
         $stmt->bindParam(":USER", $user, \PDO::PARAM_STR);
         $stmt->execute();
@@ -48,7 +48,7 @@ class Auth
 
     static function validate($id, $user)
     {
-        require "app/database/database.php";
+        require "app/config/config.php";
         $stmt = $conn->prepare("SELECT id, username, permission FROM users WHERE username = :USER AND id = :ID");
         $stmt->bindParam(":USER", $user, \PDO::PARAM_STR);
         $stmt->bindParam(":ID", $id, \PDO::PARAM_STR);

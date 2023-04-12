@@ -177,24 +177,6 @@ function init($argv){
                 echo "Arquivo 'database' criado com sucesso. \n";
             }
         } 
-
-        $arquivo = fopen("app/database/migrate.php", 'w');
-        if($arquivo == false){
-            echo "(500 Internal Server Error) Falha ao criar arquivo migrate. \n";
-            $qntError++;
-            return null;
-        }else{
-            require "./impetus/cmd/snippets/migrate.php";
-            $texto = migrateSnippet();
-            $escrever = fwrite($arquivo, $texto);
-            if($escrever == false){
-                echo "(500 Internal Server Error) Falha ao preencher arquivo migrate. \n";
-                $qntError++;
-                return null;
-            }else{
-                echo "Arquivo 'migrate' criado com sucesso. \n";
-            }
-        } 
     }
 
     $arquivo = fopen(".htaccess", 'w');

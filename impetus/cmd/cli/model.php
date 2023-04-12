@@ -2,7 +2,7 @@
 
 function model($tableName)
 {
-    require "app/database/database.php";
+    require "app/config/config.php";
     echo "\nCriando model ({$tableName})";
 
     $snippet = "";
@@ -78,7 +78,7 @@ class '.$functionName.'
 {
     static function get'.$functionName.'($id)
     {
-        require "app/database/database.php";
+        require "app/config/config.php";
         $stmt = $conn->prepare("SELECT * FROM '.$tableName.' WHERE '.$primaryKey.' = :ID");
         $stmt->bindParam(":ID", $id, \PDO::PARAM_INT);
         $stmt->execute();
@@ -102,7 +102,7 @@ class '.$functionName.'
 
     static function list'.$functionName.'($data)
     {
-        require "app/database/database.php";
+        require "app/config/config.php";
 
         //Quantidade de dados
         $stmt = $conn->prepare("SELECT COUNT(id) count FROM '.$tableName.'");
@@ -164,7 +164,7 @@ class '.$functionName.'
 
     static function create'.$functionName.'($data)
     {
-        require "app/database/database.php";
+        require "app/config/config.php";
         $stmt = $conn->prepare("INSERT INTO '.$tableName.' ('.$queryCreateColumns.') VALUES('.$queryCreateBindsTags.')");
         '.$queryCreateBindsParams.' 
         if ($stmt->execute()) {
@@ -188,7 +188,7 @@ class '.$functionName.'
 
     static function update'.$functionName.'($data)
     {
-        require "app/database/database.php";
+        require "app/config/config.php";
         $stmt = $conn->prepare("UPDATE '.$tableName.' SET '.$queryUpdateColumns.' WHERE '.$primaryKey.' = :ID");
         $stmt->bindParam(":ID", $data["'.$primaryKey.'"], \PDO::PARAM_INT);
         '.$queryUpdateBindsParams.'
@@ -213,7 +213,7 @@ class '.$functionName.'
 
     static function delete'.$functionName.'($id)
     {
-        require "app/database/database.php";
+        require "app/config/config.php";
         $stmt = $conn->prepare("DELETE FROM '.$tableName.' WHERE '.$primaryKey.' = :ID");
         $stmt->bindParam(":ID", $id, \PDO::PARAM_INT);
         if ($stmt->execute()) {

@@ -2,7 +2,7 @@
 
 function controller($tableName)
 {
-    require "app/database/database.php";
+    require "app/config/config.php";
     echo "\nCriando controllers ({$tableName})...";
 
     //Busca tabela
