@@ -27,7 +27,8 @@ class Database
             fk_user INT NOT NULL,
             method VARCHAR(512) NOT NULL,
             comment TEXT(1000) NOT NULL,
-            createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP()
+            createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+            FOREIGN KEY (fk_user) REFERENCES users(id)
             )";
         return $table;
     }
