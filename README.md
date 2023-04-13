@@ -15,7 +15,7 @@ Impetus.php - Framework minimalista para criação de web services RESTful utili
 <br> -> Cria as tabelas no banco de dados.
 - <b>php impetus.php migrate views</b>
 <br> -> Cria as views no banco de dados.
-- <b>php impetus.php migrate populate</b>
+- <b>php impetus.php migrate data</b>
 <br> -> Popula as tabelas com dados pré-definidos.
 - <b>php impetus.php build all TableName</b>
 <br> -> Cria toda a estrutura de model, controllers e routes com base em uma tabela.

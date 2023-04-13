@@ -42,7 +42,8 @@ class Database
 
     public function logView()
     {
-
+        $view = "LOG.id, LOG.fk_user, USER.username, LOG.method, LOG.comment, LOG.createdAt FROM log LOG LEFT JOIN users USER ON fk_user = USER.id;";
+        return $view;
     }
 
 }

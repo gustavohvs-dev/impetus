@@ -52,7 +52,7 @@ function views(){
         if(substr($method, -4) == "View"){
             $viewName = substr($method, 0, -4);
             $viewData = $databaseClass->$method();
-            $view = "CREATE VIEW ".$viewName." AS SELECT " . $viewData;
+            $view = "CREATE VIEW vw_".$viewName." AS SELECT " . $viewData;
             $stmt = $conn->prepare($view);
             if($stmt->execute()){
                 echo "\n(200 OK) View '".$viewName."' created successfuly\n";
