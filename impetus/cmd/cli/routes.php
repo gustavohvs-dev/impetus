@@ -7,7 +7,7 @@ function routes($tableName)
     echo "\nCriando rotas ({$tableName})";
 
     if(!is_dir("app/routes/") && !file_exists("app/routes/routes.php")){
-        echo "\n(404 Not found) Arquivo de rotas não encontrado\n\n";
+        echo "\n(404 Not found) Arquivo de rotas não encontrado";
         return null;
     }else{
         $arquivo = fopen ('app/routes/routes.php', 'r');
@@ -35,15 +35,15 @@ $snippet .= '    //'.$tableName.' routes
 
         $arquivo = fopen("app/routes/routes.php", 'w');
         if($arquivo == false){
-            echo "\n(500 Server Internal Error) Falha ao criar arquivo de todas \n";
+            echo "\n(500 Server Internal Error) Falha ao criar arquivo de todas";
             return null;
         }else{
             $escrever = fwrite($arquivo, $snippet);
             if($escrever == false){
-                echo "\n(500 Server Internal Error) Falha ao preencher arquivo de rotas \n";
+                echo "\n(500 Server Internal Error) Falha ao preencher arquivo de rotas";
                 return null;
             }else{
-                echo "\n(200 OK) Rotas criadas com sucesso\n";
+                echo "\n(200 OK) Rotas criadas com sucesso";
                 return null;
             }
         } 

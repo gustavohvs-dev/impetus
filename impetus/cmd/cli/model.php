@@ -249,13 +249,13 @@ class '.$functionName.'
 
     $arquivo = fopen("app/models/$functionName.php", 'w');
     if($arquivo == false){
-        return "\n(500 Internal Server Error) Falha ao criar model (".$functionName.") \n";
+        return "\n(500 Internal Server Error) Falha ao criar model (".$functionName.")";
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            return "\n(500 Internal Server Error) Falha ao preencher model (".$functionName.") \n";
+            return "\n(500 Internal Server Error) Falha ao preencher model (".$functionName.")";
         }else{
-            echo "\n(200 OK) Model '".$functionName."' criada com sucesso. \n";
+            echo "\n(200 OK) Model '".$functionName."' criada com sucesso.";
         }
     } 
   
@@ -265,7 +265,5 @@ class '.$functionName.'
         echo "\n" .$error;
         return "\n(500 Internal Server Error) Falha ao encontrar tabela";
     }
-
-    echo "\n";
 
 }

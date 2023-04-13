@@ -126,9 +126,9 @@ function controller($tableName)
          */
         if(!is_dir("app/controllers/$tableName")){
             mkdir("app/controllers/$tableName", 0751);
-            echo "Pasta 'app/controllers/$tableName' criada. \n";
+            echo "\nPasta 'app/controllers/$tableName' criada.";
         }else{
-            echo "Pasta 'app/controllers/$tableName' já existente. \n";
+            echo "\nPasta 'app/controllers/$tableName' já existente.";
         }
 
         /**
@@ -270,13 +270,13 @@ echo json_encode($response->response);
 
     $arquivo = fopen("app/controllers/$tableName/get$functionName.php", 'w');
     if($arquivo == false){
-        return "\n(500 Internal Server Error) Falha ao criar controller (get".$functionName.") \n";
+        return "\n(500 Internal Server Error) Falha ao criar controller (get".$functionName.")";
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            return "\n(500 Internal Server Error) Falha ao preencher controller (get".$functionName.") \n";
+            return "\n(500 Internal Server Error) Falha ao preencher controller (get".$functionName.")";
         }else{
-            echo "\n(200 OK) Controller get'".$functionName."' criado com sucesso. \n";
+            echo "\n(200 OK) Controller get'".$functionName."' criado com sucesso.";
         }
     } 
 
@@ -377,13 +377,13 @@ echo json_encode($response->response);
 
     $arquivo = fopen("app/controllers/$tableName/list$functionName.php", 'w');
     if($arquivo == false){
-        return "\n(500 Internal Server Error) Falha ao criar controller (list".$functionName.") \n";
+        return "\n(500 Internal Server Error) Falha ao criar controller (list".$functionName.")";
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            return "\n(500 Internal Server Error) Falha ao preencher controller (list".$functionName.") \n";
+            return "\n(500 Internal Server Error) Falha ao preencher controller (list".$functionName.")";
         }else{
-            echo "\n(200 OK) Controller list'".$functionName."' criado com sucesso. \n";
+            echo "\n(200 OK) Controller list'".$functionName."' criado com sucesso.";
         }
     } 
 
@@ -518,13 +518,13 @@ echo json_encode($response->response);
 
     $arquivo = fopen("app/controllers/$tableName/create$functionName.php", 'w');
     if($arquivo == false){
-        return "\n(500 Internal Server Error) Falha ao criar controller (create".$functionName.") \n";
+        return "\n(500 Internal Server Error) Falha ao criar controller (create".$functionName.")";
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            return "\n(500 Internal Server Error) Falha ao preencher controller (create".$functionName.") \n";
+            return "\n(500 Internal Server Error) Falha ao preencher controller (create".$functionName.")";
         }else{
-            echo "\n(200 OK) Controller create'".$functionName."' criado com sucesso. \n";
+            echo "\n(200 OK) Controller create'".$functionName."' criado com sucesso.";
         }
     } 
 
@@ -672,13 +672,13 @@ echo json_encode($response->response);
 
     $arquivo = fopen("app/controllers/$tableName/update$functionName.php", 'w');
     if($arquivo == false){
-        return "\n(500 Internal Server Error) Falha ao criar controller (update".$functionName.") \n";
+        return "\n(500 Internal Server Error) Falha ao criar controller (update".$functionName.")";
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            return "\n(500 Internal Server Error) Falha ao preencher controller (update".$functionName.") \n";
+            return "\n(500 Internal Server Error) Falha ao preencher controller (update".$functionName.")";
         }else{
-            echo "\n(200 OK) Controller update'".$functionName."' criado com sucesso. \n";
+            echo "\n(200 OK) Controller update'".$functionName."' criado com sucesso.";
         }
     } 
 
@@ -825,13 +825,13 @@ echo json_encode($response->response);
 
     $arquivo = fopen("app/controllers/$tableName/delete$functionName.php", 'w');
     if($arquivo == false){
-        return "\n(500 Internal Server Error) Falha ao criar controller (delete".$functionName.") \n";
+        return "\n(500 Internal Server Error) Falha ao criar controller (delete".$functionName.")";
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            return "\n(500 Internal Server Error) Falha ao preencher controller (delete".$functionName.") \n";
+            return "\n(500 Internal Server Error) Falha ao preencher controller (delete".$functionName.")";
         }else{
-            echo "\n(200 OK) Controller delete'".$functionName."' criado com sucesso. \n";
+            echo "\n(200 OK) Controller delete'".$functionName."' criado com sucesso.";
         }
     } 
 
@@ -846,5 +846,4 @@ echo json_encode($response->response);
         return "\n(500 Internal Server Error) Falha ao encontrar tabela";
     }
 
-    echo "\n";
 }
