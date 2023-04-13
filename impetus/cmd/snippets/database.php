@@ -20,39 +20,29 @@ class Database
         return $table;
     }
 
-    /**
-     * Preenche tabelas no banco de dados com dados padrão
-     */
-    /*public function populate()
+    public function logTable()
+    {
+        $table = "(
+            id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            fk_user INT NOT NULL,
+            method VARCHAR(512) NOT NULL,
+            comment TEXT(1000) NOT NULL,
+            createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP()
+            )";
+        return $table;
+    }
+
+    public function adminUserData()
+    {
+        $password = password_hash("admin", PASSWORD_BCRYPT);
+        $data = "INSERT INTO users (username, password, permission) VALUES(\'admin\', \'$password\', \'admin\')";
+        return $data;
+    }
+
+    public function logView()
     {
 
-        require "app/database/database.php";
-
-        // Cria um usuário padrão para autenticação no webservice
-        $data = [
-            "username" => "admin",
-            "password" => "admin",
-            "permission" => "admin",
-        ];
-        $query = "INSERT INTO users (username, password, permission) 
-        VALUES(:USERNAME, :PASS, :PERMISSION)";
-        $stmt = $conn->prepare($query);
-        $stmt->bindParam(":USERNAME", $data["username"], PDO::PARAM_STR);
-        $password = password_hash($data["password"], PASSWORD_BCRYPT);
-        $stmt->bindParam(":PASS", $password, PDO::PARAM_STR);
-        $stmt->bindParam(":PERMISSION", $data["permission"], PDO::PARAM_STR);
-        if($stmt->execute()){
-            echo "\n(200 OK) Usuário admin criado com sucesso.";
-        }else{
-            $error = $stmt->errorInfo();
-            $error = $error[2];
-            echo "\n" . $error;
-            echo "\n(500 Internal Server Error) Falha ao criar usuário admin";
-        }
-        // Fim
-
-        return "\n";
-    }*/
+    }
 
 }
 ';
