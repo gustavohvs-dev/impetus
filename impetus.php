@@ -36,12 +36,16 @@ if(!isset($argv[1])){
         if($argc == 3){
             if($argv[2] == 'tables'){
                 tables();
+                echo "\n";
             }elseif($argv[2] == 'views'){
                 views();
-            }elseif($argv[2] == 'populate'){
-                populate();
+                echo "\n";
+            }elseif($argv[2] == 'data'){
+                data();
+                echo "\n";
             }elseif($argv[2] == 'all'){ 
                 migrate();
+                echo "\n";
             }else{
                 echo "Tipo de comando migrate inexistente. \n\n";
             }
