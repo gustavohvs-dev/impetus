@@ -5,7 +5,7 @@ Impetus.php - Framework minimalista para criação de web services RESTful utili
 Após a instalação do composer, execute os seguintes comandos:
 
 ```shell
-composer create-project laravel/laravel {directory} 1.0.0 --prefer-dist
+composer create-project impetus/framework appName
 ```
 ```shell
 composer install
