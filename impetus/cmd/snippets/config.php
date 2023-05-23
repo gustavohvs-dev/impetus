@@ -1,12 +1,17 @@
 <?php
 
+include_once "impetus/utils/ImpetusUtils.php";
+use app\models\impetus\ImpetusUtils;
+
 function configSnippet($appName, $dbName){
+
+    $token = ImpetusUtils::token(30, ["charType" => "special"]);
 
 $snippet = 
 '<?php
 
 $systemConfig = [
-    "status" => "offline",
+    "status" => "debug",
     "appName" => "'.$appName.'",
     "version" => "1.0.0",
     "database" => [
@@ -16,7 +21,7 @@ $systemConfig = [
         "database" => "'.$dbName.'"
     ],
     "api" => [
-        "token" => "E5Z!h_Ugv+X26{832Pg9Gzefhd!IHgs&r"
+        "token" => "'.$token.'"
     ]
 ];
 

@@ -7,18 +7,18 @@ include_once "app/models/impetus/ImpetusUtils.php";
 class ImpetusJWT extends ImpetusUtils
 {
     /**
-     * Cria um JWT (Json Web Token)
+     * Creates a JWT (Json Web Token)
      */
     static public function encode($sub, $name, $params, $time, $secret)
     {
         /**
-         * Palavras reservadas
-         * sub: ID de sessão ou do usuário
-         * name: Nome do usuário
-         * iat: Momento em que foi gerado o token (time())
-         * exp: Momento em que o token será expirado (time() * (24 * 60 * 60)), um dia por exemplo
-         * time: Parâmetro que define quantas horas o token irá durar
-         * secret: Chave única utilizada para criptografar
+         * Reserved words
+         * sub: Session or user ID
+         * name: User's name
+         * iat: Token generation time (time())
+         * exp: Token expiration time (time() * (24 * 60 * 60)), for example, one day
+         * time: Parameter that defines how many hours the token will last
+         * secret: Unique key used for encryption
          */
         $data = "";
         $operator = "";
@@ -36,7 +36,7 @@ class ImpetusJWT extends ImpetusUtils
     }
 
     /**
-     * Valida e exibe informações contidas em um JWT
+     * Validates and displays information contained in a JWT (JSON Web Token).
      */
     static public function decode($token, $secret)
     {

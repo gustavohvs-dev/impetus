@@ -1,9 +1,11 @@
 <?php
 
 function cmd($availableCommands){
-    echo "\n### Comandos disponíveis \n";
+    echo "\n### Available commands \n";
     foreach($availableCommands as $availableCommand){
-        echo $availableCommand[0] . " - " . $availableCommand[1] . "\n";
+        echo "\033[1;36m" . $availableCommand[0] . "\033[0m";
+        echo " - " . $availableCommand[1] . "\n";
+        echo "\033[1;30m" . "Example: " . $availableCommand[2] . "\033[0m" . "\n";
     }
     echo "\n";
 }

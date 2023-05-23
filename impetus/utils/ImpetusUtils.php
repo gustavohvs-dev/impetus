@@ -21,18 +21,36 @@ class ImpetusUtils
     /**
      * token
      */
-    static public function token($tamanho = 10, $id = "", $up = false)
+    static public function token($size = 10, $config = null)
     {
-        $characters = $id . 'abcdefghijklmnopqrstuvwxyz0123456789';
+        $prefix = '';
+        $uppercase = false;
+        $chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        if($config != null){
+            $prefix = isset($config['prefix']) ? $config['prefix'] : '';
+            $uppercase = isset($config['uppercase']) ? $config['uppercase'] : false;
+            if(isset($config['charType'])){
+                if($config['charType'] == "numbers"){
+                    $chars = '0123456789';
+                }elseif($config['charType'] == "letters"){
+                    $chars = 'abcdefghijklmnopqrstuvwxyz';
+                }elseif($config['charType'] == "default"){
+                    $chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+                }elseif($config['charType'] == "special"){
+                    $chars = 'abcdefghijklmnopqrstuvwxyz0123456789{}[]+=@#()_';
+                }
+            }
+        }
+        $characters = $prefix . $chars;
         $charactersLength = strlen($characters);
         $randomString = '';
-        for ($i = 0; $i < $tamanho; $i++) {
+        for ($i = 0; $i < $size; $i++) {
         $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
-        if ($up === true) {
-        return strtoupper($id . $randomString);
+        if ($uppercase === true) {
+            return strtoupper($prefix . $randomString);
         } else {
-        return $id . $randomString;
+            return $prefix . $randomString;
         }
     }
 

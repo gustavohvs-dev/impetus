@@ -1,8 +1,8 @@
 <?php
 
 function tables(){
-    require_once "app/database/database.php";
-    require "app/config/config.php";
+    require_once "src/app/database/database.php";
+    require "src/app/config/config.php";
     $databaseClass = new Database;
     $databaseMethods = get_class_methods($databaseClass);
     foreach($databaseMethods as $method){
@@ -12,19 +12,19 @@ function tables(){
             $table = "CREATE TABLE ".$tableName." ".$tableData;
             $stmt = $conn->prepare($table);
             if($stmt->execute()){
-                echo "\n(200 OK) Table '".$tableName."' created successfuly\n";
+                echo "\033[1;32m" . "(200 OK) Table '".$tableName."' created successfuly\n" . "\033[0m";
             }else{
                 $error = $stmt->errorInfo();
                 $error = $error[2];
-                echo "\n(500 Internal Server Error) ".$error."\n";
+                echo "\033[1;33m" . "(500 Internal Server Error) ".$error."\n" . "\033[0m";
             }
         }
     }
 }
 
 function data(){
-    require_once "app/database/database.php";
-    require "app/config/config.php";
+    require_once "src/app/database/database.php";
+    require "src/app/config/config.php";
     $databaseClass = new Database;
     $databaseMethods = get_class_methods($databaseClass);
     foreach($databaseMethods as $method){
@@ -33,19 +33,19 @@ function data(){
             $data = $databaseClass->$method();
             $stmt = $conn->prepare($data);
             if($stmt->execute()){
-                echo "\n(200 OK) ".$dataName." created successfuly\n";
+                echo "\033[1;32m" . "(200 OK) ".$dataName." created successfuly\n" . "\033[0m";
             }else{
                 $error = $stmt->errorInfo();
                 $error = $error[2];
-                echo "\n(500 Internal Server Error) ".$error."\n";
+                echo "\033[1;33m" . "(500 Internal Server Error) ".$error."\n" . "\033[0m";
             }
         }
     }
 }
 
 function views(){
-    require_once "app/database/database.php";
-    require "app/config/config.php";
+    require_once "src/app/database/database.php";
+    require "src/app/config/config.php";
     $databaseClass = new Database;
     $databaseMethods = get_class_methods($databaseClass);
     foreach($databaseMethods as $method){
@@ -55,11 +55,11 @@ function views(){
             $view = "CREATE VIEW vw_".$viewName." AS SELECT " . $viewData;
             $stmt = $conn->prepare($view);
             if($stmt->execute()){
-                echo "\n(200 OK) View '".$viewName."' created successfuly\n";
+                echo "\033[1;32m" . "(200 OK) View '".$viewName."' created successfuly\n" . "\033[0m";
             }else{
                 $error = $stmt->errorInfo();
                 $error = $error[2];
-                echo "\n(500 Internal Server Error) ".$error."\n";
+                echo "\033[1;33m" . "(500 Internal Server Error) ".$error."\n" . "\033[0m";
             }
         }
     }

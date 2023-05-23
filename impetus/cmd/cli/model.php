@@ -2,7 +2,7 @@
 
 function model($tableName)
 {
-    require "app/config/config.php";
+    require "src/app/config/config.php";
     echo "\nCriando model ({$tableName})";
 
     $snippet = "";
@@ -171,6 +171,7 @@ class '.$functionName.'
             $response = [
                 "status" => 1,
                 "code" => 200,
+                "id" => (int)$conn->lastInsertId(),
                 "info" => "Registro criado com sucesso"
             ];
         }else{
@@ -247,23 +248,22 @@ class '.$functionName.'
 }
 ';
 
-    $arquivo = fopen("app/models/$functionName.php", 'w');
+    $arquivo = fopen("src/app/models/$functionName.php", 'w');
     if($arquivo == false){
-        return "\n(500 Internal Server Error) Falha ao criar model (".$functionName.")";
+        return "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar model (".$functionName.")" . "\033[0m";
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            return "\n(500 Internal Server Error) Falha ao preencher model (".$functionName.")";
+            return "\033[1;31m"."\n(500 Internal Server Error) Falha ao preencher model (".$functionName.")" . "\033[0m";
         }else{
-            echo "\n(200 OK) Model '".$functionName."' criada com sucesso.";
+            echo "\033[1;32m"."\n(200 OK) Model '".$functionName."' criada com sucesso." . "\033[0m";
         }
     } 
   
     }else{
         $error = $stmt->errorInfo();
         $error = $error[2];
-        echo "\n" .$error;
-        return "\n(500 Internal Server Error) Falha ao encontrar tabela";
+        echo "\033[1;31m"."\n(500 Internal Server Error) ". $error ."\033[0m";
     }
 
 }

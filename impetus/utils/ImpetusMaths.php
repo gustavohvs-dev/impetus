@@ -5,7 +5,7 @@ namespace app\models\impetus;
 class ImpetusMaths
 {
     /**
-     * Fatorial
+     * Calculates the fatorial of a number
      */
     static public function factorial($number)
     {
@@ -18,7 +18,7 @@ class ImpetusMaths
     }
 
     /**
-     * Número primo
+     * Verify if the number is prime or not
      */
     static public function isPrime($number)
     {

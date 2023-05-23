@@ -3,7 +3,9 @@
 function build($tableName)
 {
     model($tableName);
-    controller($tableName);
-    routes($tableName);
+    $controllerStatus = controller($tableName);
+    if($controllerStatus){
+        routes($tableName);
+    }
     echo "\n\n";
 }

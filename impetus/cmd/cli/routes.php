@@ -6,11 +6,11 @@ function routes($tableName)
 
     echo "\nCriando rotas ({$tableName})";
 
-    if(!is_dir("app/routes/") && !file_exists("app/routes/routes.php")){
+    if(!is_dir("src/app/routes/") && !file_exists("src/app/routes/routes.php")){
         echo "\n(404 Not found) Arquivo de rotas não encontrado";
         return null;
     }else{
-        $arquivo = fopen ('app/routes/routes.php', 'r');
+        $arquivo = fopen ('src/app/routes/routes.php', 'r');
         $result = [];
         while(!feof($arquivo)){
             $result[] = explode("];",fgets($arquivo));
@@ -23,7 +23,7 @@ function routes($tableName)
             $snippet.= $line[0];
         }
 
-$snippet .= '    //'.$tableName.' routes
+$snippet .= '    //'.$functionName.' routes
     ["get'.$functionName.'", "app/controllers/'.$functionName.'/get'.$functionName.'.php"],
     ["list'.$functionName.'", "app/controllers/'.$functionName.'/list'.$functionName.'.php"],
     ["create'.$functionName.'", "app/controllers/'.$functionName.'/create'.$functionName.'.php"],
@@ -33,17 +33,17 @@ $snippet .= '    //'.$tableName.' routes
 ];
 ';
 
-        $arquivo = fopen("app/routes/routes.php", 'w');
+        $arquivo = fopen("src/app/routes/routes.php", 'w');
         if($arquivo == false){
-            echo "\n(500 Server Internal Error) Falha ao criar arquivo de todas";
+            echo "\033[1;31m" . "\n(500 Server Internal Error) Falha ao criar arquivo de rotas" . "\033[0m" ;
             return null;
         }else{
             $escrever = fwrite($arquivo, $snippet);
             if($escrever == false){
-                echo "\n(500 Server Internal Error) Falha ao preencher arquivo de rotas";
+                echo "\033[1;31m" . "\n(500 Server Internal Error) Falha ao preencher arquivo de rotas" . "\033[0m";
                 return null;
             }else{
-                echo "\n(200 OK) Rotas criadas com sucesso";
+                echo "\033[1;32m" . "\n(200 OK) Rotas criadas com sucesso" . "\033[0m";
                 return null;
             }
         } 
