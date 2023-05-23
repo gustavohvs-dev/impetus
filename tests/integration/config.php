@@ -1,5 +1,5 @@
 <?php
 
 $config = [
-    "path" => "http://localhost/impetusBackup/"
+    "path" => "http://localhost/impetus/"
 ];

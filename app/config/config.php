@@ -2,16 +2,19 @@
 
 $systemConfig = [
     "status" => "debug",
-    "appName" => "AppName",
+    "appName" => "Impetus",
     "version" => "1.0.0",
     "database" => [
         "server" => "localhost",
         "username" => "root",
         "password" => "",
         "database" => "impetus"
-    ],
+        ],
     "api" => [
         "token" => "_jp[xovd[+({jnop12@p(5n1]930go"
+        ],
+    "test" => [
+        "path" => "http://localhost/impetus/"
     ]
 ];
 
