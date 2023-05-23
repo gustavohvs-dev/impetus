@@ -1,6 +1,11 @@
 # 🛠️ Impetus.php
 Impetus.php - Framework minimalista para criação de web services RESTful utilizando a linguagem PHP.
 
+### Instalação
+```shell
+composer require impetus/framework
+```
+
 ### Proposta
 - Facilitar a construção de rotas, controllers e models, utilizando command-line interface (CLI);
 - Agilizar a implentação de autenticação com Json Web Token (JWT) em web services.
