@@ -3,7 +3,7 @@ Impetus.php - Framework minimalista para criação de web services RESTful utili
 
 ### Instalação
 ```shell
-composer require impetus/framework
+composer require impetus/framework:dev-main
 ```
 
 ### Proposta
