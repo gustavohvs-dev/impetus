@@ -7,7 +7,6 @@ function run($scriptName){
     foreach($impetusJsonDecoded->scripts as $key => $value){
         if($key == $scriptName){
             $founded = true;
-            chdir('src');
             $output = shell_exec($value);
             print_r($output);
         }

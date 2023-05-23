@@ -2,8 +2,13 @@
 Impetus.php - Framework minimalista para criação de web services RESTful utilizando a linguagem PHP.
 
 ### Instalação
+Após a instalação do composer, execute os seguintes comandos:
+
 ```shell
 composer require impetus/framework:dev-main
+```
+```shell
+composer install
 ```
 
 ### Proposta
@@ -12,32 +17,28 @@ composer require impetus/framework:dev-main
 - Oferecer diversas funções para tratar dados, gerenciar erros, garantir a segurança e agilizar a produção de web services em PHP.
 
 ### Lista de comandos - CLI
-- <b>php impetus.php init ProjectName DatabaseName</b>
-<br> -> Cria a estrutura básica do projeto.
-- <b>php impetus.php migrate all</b>
+- <b>php impetus.php migrate --all</b>
 <br> -> Monta toda a estrutura do banco de dados.
-- <b>php impetus.php migrate tables</b>
+- <b>php impetus.php migrate --tables</b>
 <br> -> Cria as tabelas no banco de dados.
-- <b>php impetus.php migrate views</b>
+- <b>php impetus.php migrate --views</b>
 <br> -> Cria as views no banco de dados.
-- <b>php impetus.php migrate data</b>
+- <b>php impetus.php migrate --data</b>
 <br> -> Popula as tabelas com dados pré-definidos.
-- <b>php impetus.php build all TableName</b>
+- <b>php impetus.php build TableName --all</b>
 <br> -> Cria toda a estrutura de model, controllers e routes com base em uma tabela.
-- <b>php impetus.php build model TableName</b>
+- <b>php impetus.php build TableName --model </b>
 <br> -> Cria uma model com base em uma tabela.
-- <b>php impetus.php build controller TableName</b>
+- <b>php impetus.php build TableName --controller</b>
 <br> -> Cria um controller com base em uma tabela.
-- <b>php impetus.php build route TableName</b>
+- <b>php impetus.php build TableName --route</b>
 <br> -> Cria a rota com base em uma tabela.
 
 ### Quick Start
 
-- Utilize o comando 'php impetus.php init ProjectName DatabaseName' para criar a estrutura básica do projeto.
 - Vá em seu SGDB e crie a tabela 'DatabaseName' conforme informado no comando 'init'.
-- Utilize o comando 'php impetus.php migrate all' para criar a tabela de usuários e o usuário admin (username = 'admin, password = 'admin') que será utilizado na autenticação dos métodos do web service.
+- Utilize o comando 'php impetusy migrate all' para criar a tabela de usuários e o usuário admin (username = 'admin, password = 'admin') que será utilizado na autenticação dos métodos do web service.
 - Pronto! O web service já está pré-montado e pronto para ser testado.
-
 
 ### Testando web service
 

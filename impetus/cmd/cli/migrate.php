@@ -1,8 +1,8 @@
 <?php
 
 function tables(){
-    require_once "src/app/database/database.php";
-    require "src/app/config/config.php";
+    require_once "app/database/database.php";
+    require "app/config/config.php";
     $databaseClass = new Database;
     $databaseMethods = get_class_methods($databaseClass);
     foreach($databaseMethods as $method){
@@ -23,8 +23,8 @@ function tables(){
 }
 
 function data(){
-    require_once "src/app/database/database.php";
-    require "src/app/config/config.php";
+    require_once "app/database/database.php";
+    require "app/config/config.php";
     $databaseClass = new Database;
     $databaseMethods = get_class_methods($databaseClass);
     foreach($databaseMethods as $method){
@@ -44,8 +44,8 @@ function data(){
 }
 
 function views(){
-    require_once "src/app/database/database.php";
-    require "src/app/config/config.php";
+    require_once "app/database/database.php";
+    require "app/config/config.php";
     $databaseClass = new Database;
     $databaseMethods = get_class_methods($databaseClass);
     foreach($databaseMethods as $method){

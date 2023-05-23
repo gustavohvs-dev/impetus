@@ -2,7 +2,7 @@
 
 function controller($tableName)
 {
-    require "src/app/config/config.php";
+    require "app/config/config.php";
     echo "\nCriando controllers ({$tableName})";
 
     //Busca tabela
@@ -124,8 +124,8 @@ function controller($tableName)
         /**
          * Criar pasta do controller
          */
-        if(!is_dir("src/app/controllers/$tableName")){
-            mkdir("src/app/controllers/$tableName", 0751);
+        if(!is_dir("app/controllers/$tableName")){
+            mkdir("app/controllers/$tableName", 0751);
             echo "\nPasta 'app/controllers/$tableName' criada.";
         }else{
             echo "\nPasta 'app/controllers/$tableName' já existente.";
@@ -258,7 +258,7 @@ echo json_encode($response->response);
 
 ';
 
-    $arquivo = fopen("src/app/controllers/$tableName/get$functionName.php", 'w');
+    $arquivo = fopen("app/controllers/$tableName/get$functionName.php", 'w');
     if($arquivo == false){
         echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar controller (get".$functionName.")". "\033[0m";
         return false;
@@ -357,7 +357,7 @@ header("Content-Type: application/json");
 echo json_encode($response->response);
 ';
 
-    $arquivo = fopen("src/app/controllers/$tableName/list$functionName.php", 'w');
+    $arquivo = fopen("app/controllers/$tableName/list$functionName.php", 'w');
     if($arquivo == false){
         echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar controller (list".$functionName.")". "\033[0m";
         return false;
@@ -490,7 +490,7 @@ header("Content-Type: application/json");
 echo json_encode($response->response);
 ';
 
-    $arquivo = fopen("src/app/controllers/$tableName/create$functionName.php", 'w');
+    $arquivo = fopen("app/controllers/$tableName/create$functionName.php", 'w');
     if($arquivo == false){
         echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar controller (create".$functionName.")". "\033[0m";
         return false;
@@ -636,7 +636,7 @@ header("Content-Type: application/json");
 echo json_encode($response->response);
 ';
 
-    $arquivo = fopen("src/app/controllers/$tableName/update$functionName.php", 'w');
+    $arquivo = fopen("app/controllers/$tableName/update$functionName.php", 'w');
     if($arquivo == false){
         echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar controller (update".$functionName.")". "\033[0m";
         return false;
@@ -781,7 +781,7 @@ echo json_encode($response->response);
 
 ';
 
-    $arquivo = fopen("src/app/controllers/$tableName/delete$functionName.php", 'w');
+    $arquivo = fopen("app/controllers/$tableName/delete$functionName.php", 'w');
     if($arquivo == false){
         echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar controller (delete".$functionName.")". "\033[0m";
         return false;

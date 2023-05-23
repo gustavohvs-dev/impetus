@@ -6,11 +6,11 @@ function routes($tableName)
 
     echo "\nCriando rotas ({$tableName})";
 
-    if(!is_dir("src/app/routes/") && !file_exists("src/app/routes/routes.php")){
+    if(!is_dir("app/routes/") && !file_exists("app/routes/routes.php")){
         echo "\n(404 Not found) Arquivo de rotas não encontrado";
         return null;
     }else{
-        $arquivo = fopen ('src/app/routes/routes.php', 'r');
+        $arquivo = fopen ('app/routes/routes.php', 'r');
         $result = [];
         while(!feof($arquivo)){
             $result[] = explode("];",fgets($arquivo));
@@ -33,7 +33,7 @@ $snippet .= '    //'.$functionName.' routes
 ];
 ';
 
-        $arquivo = fopen("src/app/routes/routes.php", 'w');
+        $arquivo = fopen("app/routes/routes.php", 'w');
         if($arquivo == false){
             echo "\033[1;31m" . "\n(500 Server Internal Error) Falha ao criar arquivo de rotas" . "\033[0m" ;
             return null;

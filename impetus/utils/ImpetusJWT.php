@@ -1,6 +1,6 @@
 <?php 
 
-namespace Impetus\Framework;
+namespace app\models\impetus;
 
 include_once "app/models/impetus/ImpetusUtils.php";
 

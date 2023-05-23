@@ -14,81 +14,81 @@ function init($argv){
     }else{
         mkdir("src", 0751);
         echo "Pasta 'src' criada. \n";
-        if(!is_dir("src/app")){
-            mkdir("src/app", 0751);
+        if(!is_dir("app")){
+            mkdir("app", 0751);
             echo "Pasta 'app' criada. \n";
         }else{
             echo "Pasta 'app' já existente. \n";
         }
     
-        if(!is_dir("src/app")){
+        if(!is_dir("app")){
             echo "(500 Internal Server Error) Falha ao criar pasta app. \n";
             $qntError++;
             return null;
         }else{
-            if(!is_dir("src/app/routes")){
-                mkdir("src/app/routes", 0751);
+            if(!is_dir("app/routes")){
+                mkdir("app/routes", 0751);
                 echo "Pasta 'routes' criada. \n";
             }else{
                 echo "Pasta 'routes' já existente. \n";
             }
     
-            if(!is_dir("src/app/models")){
-                mkdir("src/app/models", 0751);
+            if(!is_dir("app/models")){
+                mkdir("app/models", 0751);
                 echo "Pasta 'models' criada. \n";
             }else{
                 echo "Pasta 'models' já existente. \n";
             }
     
-            if(!is_dir("src/app/controllers")){
-                mkdir("src/app/controllers", 0751);
+            if(!is_dir("app/controllers")){
+                mkdir("app/controllers", 0751);
                 echo "Pasta 'controllers' criada. \n";
             }else{
                 echo "Pasta 'controllers' já existente. \n";
             }
     
-            if(!is_dir("src/app/config")){
-                mkdir("src/app/config", 0751);
+            if(!is_dir("app/config")){
+                mkdir("app/config", 0751);
                 echo "Pasta 'config' criada. \n";
             }else{
                 echo "Pasta 'config' já existente. \n";
             }
     
-            if(!is_dir("src/app/database")){
-                mkdir("src/app/database", 0751);
+            if(!is_dir("app/database")){
+                mkdir("app/database", 0751);
                 echo "Pasta 'database' criada. \n";
             }else{
                 echo "Pasta 'database' já existente. \n";
             }
     
-            if(!is_dir("src/app/middlewares")){
-                mkdir("src/app/middlewares", 0751);
+            if(!is_dir("app/middlewares")){
+                mkdir("app/middlewares", 0751);
                 echo "Pasta 'middlewares' criada. \n";
             }else{
                 echo "Pasta 'middlewares' já existente. \n";
             }
         }
     
-        if(!is_dir("src/app/models")){
+        if(!is_dir("app/models")){
             echo "(500 Internal Server Error) Falha ao criar pasta models. \n";
             $qntError++;
             return null;
         }else{
-            if(!is_dir("src/app/models/impetus")){
-                mkdir("src/app/models/impetus", 0751);
+            if(!is_dir("app/models/impetus")){
+                mkdir("app/models/impetus", 0751);
                 echo "Pasta 'impetus' criada. \n";
             }else{
                 echo "Pasta 'impetus' já existente. \n";
             }
         }
     
-        if(!is_dir("src/app/controllers")){
+        if(!is_dir("app/controllers")){
             echo "(500 Internal Server Error) Falha ao criar pasta controllers. \n";
             $qntError++;
             return null;
         }else{
-            if(!is_dir("src/app/controllers/login")){
-                mkdir("src/app/controllers/login", 0751);
+            if(!is_dir("app/controllers/login")){
+                mkdir("app/controllers/login", 0751);
                 echo "Pasta 'login' criada. \n";
             }else{
                 echo "Pasta 'login' já existente. \n";
@@ -100,12 +100,12 @@ function init($argv){
          */
         echo "Criando arquivos... \n";
     
-        if(!is_dir("src/app/middlewares")){
+        if(!is_dir("app/middlewares")){
             echo "(500 Internal Server Error) Falha ao encontrar pasta de middlewares. \n";
             $qntError++;
             return null;
         }else{
-            $arquivo = fopen("src/app/middlewares/Auth.php", 'w');
+            $arquivo = fopen("app/middlewares/Auth.php", 'w');
             if($arquivo == false){
                 echo "(500 Internal Server Error) Falha ao criar arquivo de Auth. \n";
                 $qntError++;
@@ -124,12 +124,12 @@ function init($argv){
             } 
         }
     
-        if(!is_dir("src/app/config")){
+        if(!is_dir("app/config")){
             echo "(500 Internal Server Error) Falha ao encontrar pasta de configuração. \n";
             $qntError++;
             return null;
         }else{
-            $arquivo = fopen("src/app/config/config.php", 'w');
+            $arquivo = fopen("app/config/config.php", 'w');
             if($arquivo == false){
                 echo "(500 Internal Server Error) Falha ao criar arquivo de configuração. \n";
                 $qntError++;
@@ -152,7 +152,7 @@ function init($argv){
                 }
             } 
     
-            $arquivo = fopen("src/server.php", 'w');
+            $arquivo = fopen("server.php", 'w');
             if($arquivo == false){
                 echo "(500 Internal Server Error) Falha ao criar arquivo de servidor. \n";
                 $qntError++;
@@ -171,12 +171,12 @@ function init($argv){
             } 
         }
     
-        if(!is_dir("src/app/database")){
+        if(!is_dir("app/database")){
             echo "(500 Internal Server Error) Falha ao encontrar pasta de banco de dados. \n";
             $qntError++;
             return null;
         }else{
-            $arquivo = fopen("src/app/database/database.php", 'w');
+            $arquivo = fopen("app/database/database.php", 'w');
             if($arquivo == false){
                 echo "(500 Internal Server Error) Falha ao criar arquivo de banco de dados. \n";
                 $qntError++;
@@ -195,7 +195,7 @@ function init($argv){
             } 
         }
     
-        $arquivo = fopen("src/.htaccess", 'w');
+        $arquivo = fopen(".htaccess", 'w');
         if($arquivo == false){
             echo "(500 Internal Server Error) Falha ao criar arquivo htacess. \n";
             $qntError++;
@@ -213,7 +213,7 @@ function init($argv){
             }
         } 
     
-        $arquivo = fopen("src/index.php", 'w');
+        $arquivo = fopen("index.php", 'w');
         if($arquivo == false){
             echo "(500 Internal Server Error) Falha ao criar arquivo index. \n";
             $qntError++;
@@ -231,12 +231,12 @@ function init($argv){
             }
         } 
     
-        if(!is_dir("src/app/routes")){
+        if(!is_dir("app/routes")){
             echo "(500 Internal Server Error) Falha ao encontrar pasta raiz. \n";
             $qntError++;
             return null;
         }else{
-            $arquivo = fopen("src/app/routes/routes.php", 'w');
+            $arquivo = fopen("app/routes/routes.php", 'w');
             if($arquivo == false){
                 echo "(500 Internal Server Error) Falha ao criar arquivo de rotas. \n";
                 $qntError++;
@@ -255,12 +255,12 @@ function init($argv){
             } 
         }
     
-        if(!is_dir("src/app/controllers/login")){
+        if(!is_dir("app/controllers/login")){
             echo "(500 Internal Server Error) Falha ao encontrar pasta raiz. \n";
             $qntError++;
             return null;
         }else{
-            $arquivo = fopen("src/app/controllers/login/login.php", 'w');
+            $arquivo = fopen("app/controllers/login/login.php", 'w');
             if($arquivo == false){
                 echo "(500 Internal Server Error) Falha ao criar arquivo de login. \n";
                 $qntError++;
@@ -282,7 +282,7 @@ function init($argv){
         /** 
          * Copiando arquivos utilitários
          */
-        if(!copy("impetus/utils/ImpetusJWT.php", "src/app/models/impetus/ImpetusJWT.php")){
+        if(!copy("impetus/utils/ImpetusJWT.php", "app/models/impetus/ImpetusJWT.php")){
             echo "(500 Internal Server Error) Falha ao copiar arquivo 'ImpetusJWT'. \n";
             $qntError++;
             return null;
@@ -290,7 +290,7 @@ function init($argv){
             echo "Arquivo utilitário 'ImpetusJWT' criado com sucesso. \n";
         }
     
-        if(!copy("impetus/utils/ImpetusUtils.php", "src/app/models/impetus/ImpetusUtils.php")){
+        if(!copy("impetus/utils/ImpetusUtils.php", "app/models/impetus/ImpetusUtils.php")){
             echo "(500 Internal Server Error) Falha ao copiar arquivo 'ImpetusUtils'. \n";
             $qntError++;
             return null;
@@ -298,7 +298,7 @@ function init($argv){
             echo "Arquivo utilitário 'ImpetusUtils' criado com sucesso. \n";
         }
     
-        if(!copy("impetus/utils/ImpetusMaths.php", "src/app/models/impetus/ImpetusMaths.php")){
+        if(!copy("impetus/utils/ImpetusMaths.php", "app/models/impetus/ImpetusMaths.php")){
             echo "(500 Internal Server Error) Falha ao copiar arquivo 'ImpetusMaths'. \n";
             $qntError++;
             return null;
@@ -309,7 +309,7 @@ function init($argv){
 
     if($qntError == 0){
         echo "\nDica: Para seguir com a configuração, siga os passos abaixo: \n";
-        echo "1 - Vá em 'src/app/config.php' e abra o arquivo de configuração. \n";
+        echo "1 - Vá em 'app/config.php' e abra o arquivo de configuração. \n";
         echo "2 - Preencha os dados necessários para configuração do banco de dados e crie o database. \n";
         echo "3 - Execute o comando 'php impetus.php migrate --all' para criar a tabela de usuários e o primeiro usuário do webservice. \n";
         echo "4 - Pronto! O web service está pronto a ser utilizado. \n";
