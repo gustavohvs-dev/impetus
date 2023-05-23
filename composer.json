@@ -1,0 +1,39 @@
+{
+    "name": "impetus/framework",
+    "description": "RESTAPI Framework PHP",
+    "keywords": [
+        "framework",
+        "rest",
+        "web service"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gustavo Soares",
+            "email": "gustavohvs.dev@gmail.com",
+            "homepage": "https://github.com/gustavohvs-dev"
+        }
+    ],
+    "require": {
+        "php": "^7.2.5 || ^8.0",
+        "phpunit/phpunit": "^8.5.29 || ^9.5.23",
+        "guzzlehttp/promises": "^1.5.3 || ^2.0",
+        "guzzlehttp/psr7": "^1.9.1 || ^2.4.5"
+    },
+    "require-dev": {
+        "ext-curl": "*",
+        "phpunit/phpunit": "^8.5.29 || ^9.5.23",
+        "guzzlehttp/promises": "^1.5.3 || ^2.0",
+        "guzzlehttp/psr7": "^1.9.1 || ^2.4.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Impetus\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Impetus\\": "src/"
+        }
+    }
+}
