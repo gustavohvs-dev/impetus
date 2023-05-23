@@ -22,5 +22,8 @@
     },
     "require": {
         "php": ">=7.0"
+    },
+    "require-dev": {
+        "php": ">=7.0"
     }
 }
