@@ -5,7 +5,7 @@ Impetus.php - Framework minimalista para criação de web services RESTful utili
 Após a instalação do composer, execute os seguintes comandos:
 
 ```shell
-composer require impetus/framework:dev-main
+composer require impetus/framework
 ```
 ```shell
 composer install
