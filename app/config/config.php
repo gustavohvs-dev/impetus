@@ -12,10 +12,7 @@ $systemConfig = [
         ],
     "api" => [
         "token" => "_jp[xovd[+({jnop12@p(5n1]930go"
-        ],
-    "test" => [
-        "path" => "http://localhost/impetus/"
-    ]
+        ]
 ];
 
 //Configuração de banco de dados

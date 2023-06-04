@@ -1,85 +1,13 @@
 <?php
 
-function model($tableName)
+namespace Impetus\App\Models;
+
+class Users
 {
-    require "app/config/config.php";
-    echo "\nCriando model ({$tableName})";
-
-    $snippet = "";
-
-    //Busca tabela
-    $query = "DESC $tableName";
-    $stmt = $conn->prepare($query);
-    if($stmt->execute())
-    {
-        $table = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        echo "\nTabela encontrada.";
-
-        $functionName = ucfirst(strtolower($tableName));
-
-        $pointerCreate = 0;
-        $columnNameCreate = [];
-        $typeCreate = [];
-
-        foreach($table as $column)
-        {
-            if($column['Key'] == "PRI"){
-                $primaryKey = $column['Field'];
-            }
-
-            if($column['Field']<>"id" && $column['Field']<>"createdAt"){
-                $columnNameCreate[$pointerCreate] = $column["Field"];
-
-                $columnType = explode("(" , $column["Type"]);
-                $columnType = $columnType[0];
-                if($columnType == "int"){
-                    $typeCreate[$pointerCreate] = "\PDO::PARAM_INT";
-                }else{
-                    $typeCreate[$pointerCreate] = "\PDO::PARAM_STR";
-                }
-
-                $pointerCreate++;
-            }
-        }
-
-        $queryCreateColumns = "";
-        $queryCreateBindsTags = "";
-        $queryCreateBindsParams = "";
-        $queryUpdateColumns = "";
-        $queryUpdateBindsParams = "";
-        $comma = "";
-
-        for($i = 0; $i < $pointerCreate; $i++)
-        {
-            if($columnNameCreate[$i] <> "updatedAt"){
-                $queryCreateColumns .= $comma . $columnNameCreate[$i];
-                $queryCreateBindsTags .= $comma . ":" . strtoupper($columnNameCreate[$i]);
-                $queryCreateBindsParams .= '$stmt->bindParam(":'.strtoupper($columnNameCreate[$i]).'", $data["'.$columnNameCreate[$i].'"], '.$typeCreate[$i].');' . "\n\t\t";
-
-                $queryUpdateColumns .= $comma . $columnNameCreate[$i] . " = :" . strtoupper($columnNameCreate[$i]);
-                $queryUpdateBindsParams .= '$stmt->bindParam(":'.strtoupper($columnNameCreate[$i]).'", $data["'.$columnNameCreate[$i].'"], '.$typeCreate[$i].');' . "\n\t\t";
-                $comma = ", ";
-            }else{
-                $queryUpdateColumns .= $comma . $columnNameCreate[$i] . " = :" . strtoupper($columnNameCreate[$i]);
-                $queryUpdateBindsParams .= '$stmt->bindParam(":'.strtoupper($columnNameCreate[$i]).'", $data["'.$columnNameCreate[$i].'"], '.$typeCreate[$i].');' . "\n\t\t";
-                $comma = ", ";
-            }
-        }
-
-        /**
-         * Criando model
-         */
-
-$snippet.= '<?php
-
-namespace app\models;
-
-class '.$functionName.'
-{
-    static function get'.$functionName.'($id)
+    static function getUsers($id)
     {
         require "app/config/config.php";
-        $stmt = $conn->prepare("SELECT * FROM '.$tableName.' WHERE '.$primaryKey.' = :ID");
+        $stmt = $conn->prepare("SELECT * FROM users WHERE id = :ID");
         $stmt->bindParam(":ID", $id, \PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
@@ -100,12 +28,12 @@ class '.$functionName.'
         return (object)$response;
     }
 
-    static function list'.$functionName.'($data)
+    static function listUsers($data)
     {
         require "app/config/config.php";
 
         //Quantidade de dados
-        $stmt = $conn->prepare("SELECT COUNT(id) count FROM '.$tableName.'");
+        $stmt = $conn->prepare("SELECT COUNT(id) count FROM users");
         $stmt->execute();
         $rowCount = $stmt->fetch(\PDO::FETCH_ASSOC);
 
@@ -118,7 +46,7 @@ class '.$functionName.'
         $numberOfPages = ceil($rowCount["count"]/$rowsPerPage);
         
         //Requisição
-        $query = "SELECT * FROM '.$tableName.' ";
+        $query = "SELECT * FROM users ";
 
         /*if(isset($data["status"]) && !empty($data["status"])) {
             $clausule = "WHERE ";
@@ -162,11 +90,14 @@ class '.$functionName.'
         }
     }
 
-    static function create'.$functionName.'($data)
+    static function createUsers($data)
     {
         require "app/config/config.php";
-        $stmt = $conn->prepare("INSERT INTO '.$tableName.' ('.$queryCreateColumns.') VALUES('.$queryCreateBindsTags.')");
-        '.$queryCreateBindsParams.' 
+        $stmt = $conn->prepare("INSERT INTO users (username, password, permission) VALUES(:USERNAME, :PASSWORD, :PERMISSION)");
+        $stmt->bindParam(":USERNAME", $data["username"], \PDO::PARAM_STR);
+		$stmt->bindParam(":PASSWORD", $data["password"], \PDO::PARAM_STR);
+		$stmt->bindParam(":PERMISSION", $data["permission"], \PDO::PARAM_STR);
+		 
         if ($stmt->execute()) {
             $response = [
                 "status" => 1,
@@ -187,12 +118,16 @@ class '.$functionName.'
         return (object)$response;
     }
 
-    static function update'.$functionName.'($data)
+    static function updateUsers($data)
     {
         require "app/config/config.php";
-        $stmt = $conn->prepare("UPDATE '.$tableName.' SET '.$queryUpdateColumns.' WHERE '.$primaryKey.' = :ID");
-        $stmt->bindParam(":ID", $data["'.$primaryKey.'"], \PDO::PARAM_INT);
-        '.$queryUpdateBindsParams.'
+        $stmt = $conn->prepare("UPDATE users SET username = :USERNAME, password = :PASSWORD, permission = :PERMISSION, updatedAt = :UPDATEDAT WHERE id = :ID");
+        $stmt->bindParam(":ID", $data["id"], \PDO::PARAM_INT);
+        $stmt->bindParam(":USERNAME", $data["username"], \PDO::PARAM_STR);
+		$stmt->bindParam(":PASSWORD", $data["password"], \PDO::PARAM_STR);
+		$stmt->bindParam(":PERMISSION", $data["permission"], \PDO::PARAM_STR);
+		$stmt->bindParam(":UPDATEDAT", $data["updatedAt"], \PDO::PARAM_STR);
+		
         if ($stmt->execute()) {
             $response = [
                 "status" => 1,
@@ -212,10 +147,10 @@ class '.$functionName.'
         return (object)$response;
     }
 
-    static function delete'.$functionName.'($id)
+    static function deleteUsers($id)
     {
         require "app/config/config.php";
-        $stmt = $conn->prepare("DELETE FROM '.$tableName.' WHERE '.$primaryKey.' = :ID");
+        $stmt = $conn->prepare("DELETE FROM users WHERE id = :ID");
         $stmt->bindParam(":ID", $id, \PDO::PARAM_INT);
         if ($stmt->execute()) {
             if($stmt->rowCount() != 0){
@@ -243,27 +178,6 @@ class '.$functionName.'
             ];  
         }
         return (object)$response;
-    }
-
-}
-';
-
-    $arquivo = fopen("app/models/$functionName.php", 'w');
-    if($arquivo == false){
-        return "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar model (".$functionName.")" . "\033[0m";
-    }else{
-        $escrever = fwrite($arquivo, $snippet);
-        if($escrever == false){
-            return "\033[1;31m"."\n(500 Internal Server Error) Falha ao preencher model (".$functionName.")" . "\033[0m";
-        }else{
-            echo "\033[1;32m"."\n(200 OK) Model '".$functionName."' criada com sucesso." . "\033[0m";
-        }
-    } 
-  
-    }else{
-        $error = $stmt->errorInfo();
-        $error = $error[2];
-        echo "\033[1;31m"."\n(500 Internal Server Error) ". $error ."\033[0m";
     }
 
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "252d078dbc29312a9bc9dc062174fd65",
+    "content-hash": "7b60e11d6575646186b4d089cc213b13",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -330,6 +330,43 @@
                 }
             ],
             "time": "2023-04-17T16:11:26+00:00"
+        },
+        {
+            "name": "impetus/framework",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gustavohvs-dev/impetusSDK.git",
+                "reference": "5de3d8d003c3278c8aeea50170bf990a638992f1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gustavohvs-dev/impetusSDK/zipball/5de3d8d003c3278c8aeea50170bf990a638992f1",
+                "reference": "5de3d8d003c3278c8aeea50170bf990a638992f1",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Impetus\\Framework\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gustavo Soares",
+                    "email": "gustavohvs.dev@gmail.com"
+                }
+            ],
+            "description": "Impetus Framework SDK",
+            "support": {
+                "issues": "https://github.com/gustavohvs-dev/impetusSDK/issues",
+                "source": "https://github.com/gustavohvs-dev/impetusSDK/tree/1.0.0"
+            },
+            "time": "2023-06-04T13:08:30+00:00"
         },
         {
             "name": "psr/http-client",
@@ -2341,11 +2378,7 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": {
-        "php": ">=7.0"
-    },
-    "platform-dev": {
-        "php": ">=7.0"
-    },
+    "platform": [],
+    "platform-dev": [],
     "plugin-api-version": "2.3.0"
 }

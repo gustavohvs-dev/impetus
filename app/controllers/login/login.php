@@ -1,10 +1,7 @@
 <?php
 
-//Importando models e middlewares
-include_once "app/models/impetus/ImpetusJWT.php";
-include_once "app/middlewares/Auth.php";
-use app\models\impetus\ImpetusJWT;
-use app\middlewares\Auth;
+use Impetus\Framework\ImpetusJWT;
+use Impetus\App\Models\Auth;
 
 function wsmethod(){
 

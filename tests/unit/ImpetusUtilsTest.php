@@ -1,9 +1,7 @@
 <?php
 
-use app\models\impetus\ImpetusUtils;
+use Impetus\Framework\ImpetusUtils;
 use PHPUnit\Framework\TestCase;
-
-include_once "app/models/impetus/ImpetusUtils.php";
 
 class UtilsTest extends TestCase
 {
