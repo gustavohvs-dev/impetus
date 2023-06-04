@@ -21,7 +21,7 @@ class ServerTest extends TestCase
      */
     public function testStatusServer()
     {
-        require "config.php";
+        require dirname(__FILE__, 2) . "/config.php";
         $response = $this->http->request('GET', $config['path']);
         $this->assertEquals(200, $response->getStatusCode());
         $body = json_decode($response->getBody()->getContents());

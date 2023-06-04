@@ -6,7 +6,6 @@ require_once "./vendor/impetus/framework/src/impetusy/Build.php";
 require_once "./vendor/impetus/framework/src/impetusy/Controller.php";
 require_once "./vendor/impetus/framework/src/impetusy/Model.php";
 require_once "./vendor/impetus/framework/src/impetusy/Route.php";
-require_once "./vendor/impetus/framework/src/impetusy/Run.php";
 
 use Impetus\Framework\Impetusy\ImpetusCommands;
 

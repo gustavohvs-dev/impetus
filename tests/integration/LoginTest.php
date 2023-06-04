@@ -17,7 +17,7 @@ class LoginTest extends TestCase
 
     public function testLoginSuccess()
     {
-        require "config.php";
+        require dirname(__FILE__, 2) . "/config.php";
         $data = [
             'username' => "admin",
             'password' => 'admin'
@@ -30,7 +30,7 @@ class LoginTest extends TestCase
 
     public function testLoginErrorWrongCredentials()
     {
-        require "config.php";
+        require dirname(__FILE__, 2) . "/config.php";
         $data = [
             'username' => '#non-existUsername',
             'password' => 'FHA*(!&#asdf7819'
@@ -43,7 +43,7 @@ class LoginTest extends TestCase
 
     public function testLoginErrorWithoutCredentials()
     {
-        require "config.php";
+        require dirname(__FILE__, 2) . "/config.php";
         $response = $this->http->post($config['path']."login");
         $this->assertEquals(401, $response->getStatusCode());
     }

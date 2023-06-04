@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7b60e11d6575646186b4d089cc213b13",
+    "content-hash": "bf6f9771835e23805799213c041a2534",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -333,16 +333,16 @@
         },
         {
             "name": "impetus/framework",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/gustavohvs-dev/impetusSDK.git",
-                "reference": "5de3d8d003c3278c8aeea50170bf990a638992f1"
+                "reference": "c1a08f635df09045ac511a92a70cbfdd0eb930d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gustavohvs-dev/impetusSDK/zipball/5de3d8d003c3278c8aeea50170bf990a638992f1",
-                "reference": "5de3d8d003c3278c8aeea50170bf990a638992f1",
+                "url": "https://api.github.com/repos/gustavohvs-dev/impetusSDK/zipball/c1a08f635df09045ac511a92a70cbfdd0eb930d8",
+                "reference": "c1a08f635df09045ac511a92a70cbfdd0eb930d8",
                 "shasum": ""
             },
             "type": "library",
@@ -364,9 +364,9 @@
             "description": "Impetus Framework SDK",
             "support": {
                 "issues": "https://github.com/gustavohvs-dev/impetusSDK/issues",
-                "source": "https://github.com/gustavohvs-dev/impetusSDK/tree/1.0.0"
+                "source": "https://github.com/gustavohvs-dev/impetusSDK/tree/1.0.1"
             },
-            "time": "2023-06-04T13:08:30+00:00"
+            "time": "2023-06-04T20:09:58+00:00"
         },
         {
             "name": "psr/http-client",
