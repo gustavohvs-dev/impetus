@@ -1,6 +1,6 @@
 <?php
 
-require_once "./vendor/impetus/framework/src/impetusy/Cmd.php";
+require_once "./vendor/impetus/framework/src/impetusy/ImpetusCommands.php";
 require_once "./vendor/impetus/framework/src/impetusy/Migrate.php";
 require_once "./vendor/impetus/framework/src/impetusy/Build.php";
 require_once "./vendor/impetus/framework/src/impetusy/Controller.php";

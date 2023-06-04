@@ -1,14 +1,10 @@
 <?php
 
-/*Router::use($routes);
-$routes = [
-    Route::post(["/users"], [$middleware]),
-    Route::post(["/users"], [$middleware]),
-    Route::post(["/users"], [$middleware])
-];*/
+use Impetus\Framework\Router;
 
 $routes = [
-
-	["login", "app/controllers/login/login.php"],
-
+    //Authentication route
+	"login" => fn() => Router::post("app/controllers/login/login.php"),
 ];
+
+Router::ImpetusRouter($routes);
