@@ -1,6 +1,6 @@
 <?php
 
-namespace Impetus\App\Models;
+namespace app\models;
 
 class Auth
 {

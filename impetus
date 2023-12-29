@@ -7,7 +7,7 @@ require_once "./vendor/impetus/framework/src/impetusy/Controller.php";
 require_once "./vendor/impetus/framework/src/impetusy/Model.php";
 require_once "./vendor/impetus/framework/src/impetusy/Route.php";
 
-use Impetus\Framework\Impetusy\ImpetusCommands;
+use Impetus\Framework\impetusy\ImpetusCommands;
 
 $availableCommands = [
     ["migrate", "Realiza a criação do banco de dados e migração de dados", "php impetus migrate --all"],
@@ -19,7 +19,7 @@ if(!isset($argv[1])){
 }else{
     $command = $argv[1];
 
-    if($command == 'cmd'){
+    if($command == 'cmd' || $command == 'help'){
         ImpetusCommands::available($availableCommands);
     }elseif($command == 'migrate'){
         if($argc == 3){
@@ -67,7 +67,7 @@ if(!isset($argv[1])){
         }
     }else{
         echo "\nComando não encontrado. \n";
-        echo "Utilize o comando 'cmd' para verificar os comandos disponíveis. \n";
+        echo "Utilize o comando 'help' para verificar os comandos disponíveis. \n";
         echo "Em caso de dúvidas, confira a documentação em https://github.com/gustavohvs-dev/impetus \n\n";
     }
 }

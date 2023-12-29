@@ -1,6 +1,6 @@
 <?php
 
-use Impetus\Framework\Router;
+use app\routes\Router;
 
 $routes = [
     //Authentication route

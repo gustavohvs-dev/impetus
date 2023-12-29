@@ -1,9 +1,9 @@
 <?php
 
 use Impetus\Framework\ImpetusJWT;
-use Impetus\App\Models\Auth;
+use app\models\Auth;
 
-function wsmethod()
+function webserviceMethod()
 {
 
     require "app/config/config.php";
@@ -38,7 +38,7 @@ function wsmethod()
 
 }
 
-$response = wsmethod();
+$response = webserviceMethod();
 header("HTTP/1.1 " . $response->code);
 header("Content-Type: application/json");
 echo json_encode($response->response);
