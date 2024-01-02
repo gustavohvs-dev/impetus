@@ -19,7 +19,7 @@
     },
     "require": {
         "guzzlehttp/guzzle": "^7.7",
-        "impetus/framework": "^1.0.1"
+        "impetus/framework": "^1.2.0"
     },
     "scripts": {
         "test": "vendor\\bin\\phpunit"
