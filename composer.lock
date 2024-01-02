@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bf6f9771835e23805799213c041a2534",
+    "content-hash": "d1de84ea6d4e12804882a953bd68cf1a",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -333,16 +333,16 @@
         },
         {
             "name": "impetus/framework",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/gustavohvs-dev/impetusSDK.git",
-                "reference": "775684a4550111e36dfc75f69e90a2088a955dfb"
+                "reference": "73c33faa09343a95fdf81dd41679fdb79b16e09a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gustavohvs-dev/impetusSDK/zipball/775684a4550111e36dfc75f69e90a2088a955dfb",
-                "reference": "775684a4550111e36dfc75f69e90a2088a955dfb",
+                "url": "https://api.github.com/repos/gustavohvs-dev/impetusSDK/zipball/73c33faa09343a95fdf81dd41679fdb79b16e09a",
+                "reference": "73c33faa09343a95fdf81dd41679fdb79b16e09a",
                 "shasum": ""
             },
             "type": "library",
@@ -364,9 +364,9 @@
             "description": "Impetus Framework SDK",
             "support": {
                 "issues": "https://github.com/gustavohvs-dev/impetusSDK/issues",
-                "source": "https://github.com/gustavohvs-dev/impetusSDK/tree/1.1.0"
+                "source": "https://github.com/gustavohvs-dev/impetusSDK/tree/1.2.0"
             },
-            "time": "2023-06-04T23:38:27+00:00"
+            "time": "2023-12-29T19:06:47+00:00"
         },
         {
             "name": "psr/http-client",
@@ -2381,5 +2381,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
