@@ -12,5 +12,5 @@ $systemConfig = [
 if($systemConfig['status'] == 'online'){
     $systemConfig = array_merge($systemConfig, ["endPoint" => "https://www.website.com/backend/"]);
 }else{
-    $systemConfig = array_merge($systemConfig, ["endPoint" => "http://localhost/ImpetusPHP/build/backend/"]);
+    $systemConfig = array_merge($systemConfig, ["endPoint" => "http://localhost/impetus/build/backend/"]);
 }
