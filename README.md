@@ -10,8 +10,11 @@ Impetus.php - Framework minimalista para criação de web services RESTful utili
 Após a instalação do composer, execute os seguintes comandos:
 
 ```shell
-composer create-project impetus/impetus {appName}
+git clone https://github.com/gustavohvs-dev/impetus
 ```
+
+Dentro da pasta "./build/backend" e "./build/frontend" instale as dependências do composer
+
 ```shell
 composer install
 ```
@@ -30,3 +33,9 @@ php impetus build tableName --all
 ```
 Cria toda a estrutura de model, controllers e routes com base em uma tabela.<br>
 Opções disponíveis: --all, --model, --controler, --route.
+
+```shell
+php impetus template fileName --arg
+```
+Cria um template de arquivo para facilitar o desenvolvimento do software.<br>
+Opções disponíveis: --api, --view, --raw-view.

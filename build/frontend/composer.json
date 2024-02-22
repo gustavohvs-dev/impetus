@@ -1,0 +1,17 @@
+{
+    "name": "impetus/frontend",
+    "description": "Frontend Impetus application",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "app\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Gustavo Soares",
+            "email": "gustavohvs.dev@gmail.com"
+        }
+    ],
+    "require": {}
+}

@@ -1,0 +1,39 @@
+/* Extra small */
+@media screen and (max-width: 575px) {
+
+    /* Altera o tamanho da logo na sidebar */
+    .custom-logo {
+        width: 4rem;
+        margin: 1rem auto;
+    }
+}
+
+/* Small */
+@media screen and (min-width: 576px) {
+
+    /* Altera o tamanho da logo na sidebar */
+    .custom-logo {
+        width: 4.5rem;
+        margin: 1rem auto;
+    }
+}
+
+/* Medium */
+@media screen and (min-width: 768px) {}
+
+/* Large */
+@media screen and (min-width: 992px) {}
+
+/* Extra large */
+@media screen and (min-width: 1200px) {
+
+    /* Altera o tamanho da logo com a sidebar aberta */
+    .navbar-nav.bg-gradient-dark.sidebar.sidebar-dark.accordion.toggled .custom-logo {
+        width: 4.9rem !important;
+    }
+
+    /* Altera o tamanho da logo com a sidebar fechada */
+    .custom-logo {
+        width: 6.5rem;
+    }
+}

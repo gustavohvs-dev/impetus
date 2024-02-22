@@ -1,26 +1,30 @@
 <?php
 
-require_once "./vendor/impetus/framework/src/impetusy/ImpetusCommands.php";
-require_once "./vendor/impetus/framework/src/impetusy/Migrate.php";
-require_once "./vendor/impetus/framework/src/impetusy/Build.php";
-require_once "./vendor/impetus/framework/src/impetusy/Controller.php";
-require_once "./vendor/impetus/framework/src/impetusy/Model.php";
-require_once "./vendor/impetus/framework/src/impetusy/Route.php";
-
-use Impetus\Framework\impetusy\ImpetusCommands;
+require_once "./impetusy/cmd/ImpetusCommands.php";
+require_once "./impetusy/cmd/Migrate.php";
+require_once "./impetusy/cmd/Build.php";
+require_once "./impetusy/cmd/Controller.php";
+require_once "./impetusy/cmd/Model.php";
+require_once "./impetusy/cmd/Route.php";
+require_once "./impetusy/cmd/ImpetusCommands.php";
+require_once "./impetusy/cmd/API.php";
+require_once "./impetusy/cmd/RawView.php";
+require_once "./impetusy/cmd/View.php";
+require_once "./impetusy/cmd/EmptyView.php";
 
 $availableCommands = [
-    ["migrate", "Realiza a criação do banco de dados e migração de dados", "php impetus migrate --all"],
-    ["build", "Cria uma estrutura de model, controller e routes com base em uma tabela, assim como todo o CRUD da tabela", "php impetus build tableName --all"],
+    ["migrate", "Realiza a criação do banco de dados e migração de dados", "php impetus migrate --arg", "--all, --tables, --views, --data"],
+    ["build", "Cria uma estrutura de model, controller e routes com base em uma tabela, assim como todo o CRUD da tabela", "php impetus build tableName --arg", "--all, --model, --controller, --routes"],
+    ["template", "Cria um template de arquivo para facilitar o desenvolvimento do software", "php impetus template fileName --arg", "--api, --view, --raw-view"],
 ];
 
 if(!isset($argv[1])){
-    ImpetusCommands::available($availableCommands);
+    available($availableCommands);
 }else{
     $command = $argv[1];
 
     if($command == 'cmd' || $command == 'help'){
-        ImpetusCommands::available($availableCommands);
+        available($availableCommands);
     }elseif($command == 'migrate'){
         if($argc == 3){
             if($argv[2] == '--tables'){
@@ -37,12 +41,12 @@ if(!isset($argv[1])){
                 echo "\n";
             }else{
                 echo "Tipo de comando migrate inexistente. \n\n";
-                echo "Exemplo de comando: php impetus.php migrate --tables. \n";
+                echo "Exemplo de comando: php impetus migrate --tables. \n";
                 echo "Opções de migrate: tables, views, populate e all. \n\n";
             }
         }else{
             echo "\nNúmero de argumentos incorretos. \n";
-            echo "Exemplo de comando: php impetus.php migrate --tables. \n";
+            echo "Exemplo de comando: php impetus migrate --tables. \n";
             echo "Opções de migrate: tables, views, populate e all. \n\n";
         }
     }elseif($command == 'build'){
@@ -57,13 +61,33 @@ if(!isset($argv[1])){
                 build($argv[2]);
             }else{
                 echo "Tipo de comando build inexistente. \n";
-                echo "Exemplo de comando: php impetus.php build tableName --all. \n";
+                echo "Exemplo de comando: php impetus build tableName --all. \n";
                 echo "Opções de migrate: model, controller, routes e all. \n\n";
             }
         }else{
             echo "\nNúmero de argumentos incorretos. \n";
-            echo "Exemplo de comando: php impetus.php build tableName --all. \n";
+            echo "Exemplo de comando: php impetus build tableName --all. \n";
             echo "Opções de migrate: model, controller, routes e all. \n\n";
+        }
+    }elseif($command == 'template'){
+        if($argc == 4){
+            if($argv[3] == '--api'){
+                api($argv[2]);
+            }elseif($argv[3] == '--raw-view'){
+                rawView($argv[2]);
+            }elseif($argv[3] == '--empty-view'){
+                emptyView($argv[2]);
+            }elseif($argv[3] == '--view'){
+                view($argv[2]);
+            }else{
+                echo "Tipo de comando template inexistente. \n";
+                echo "Exemplo de comando: php impetus template fileName --arg. \n";
+                echo "Opções de migrate: --api, --view, --raw-view. \n\n";
+            }
+        }else{
+            echo "\nNúmero de argumentos incorretos. \n";
+            echo "Exemplo de comando: php impetus template fileName --arg. \n";
+            echo "Opções de migrate: --api, --view, --raw-view. \n\n";
         }
     }else{
         echo "\nComando não encontrado. \n";
