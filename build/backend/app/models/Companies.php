@@ -115,7 +115,7 @@ class Companies
             $error = $stmt->errorInfo();
             $error = $error[2];
             $response = [
-                "status" => 1,
+                "status" => 0,
                 "code" => 500,
                 "info" => "Falha ao criar registro",
                 "error" => $error
