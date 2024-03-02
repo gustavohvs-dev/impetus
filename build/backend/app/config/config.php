@@ -5,6 +5,7 @@ $systemConfig = [
     "appName" => "Impetus",
     "version" => "1.0.0",
     "database" => [
+        "type" => "mariadb",
         "server" => "localhost",
         "username" => "root",
         "password" => "",

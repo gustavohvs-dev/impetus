@@ -59,21 +59,21 @@ if(!isset($argv[1])){
                 routes($argv[2]);
             }elseif($argv[3] == '--all'){
                 build($argv[2]);
+            }elseif($argv[3] == '--api'){
+                 api($argv[2]);
             }else{
                 echo "Tipo de comando build inexistente. \n";
                 echo "Exemplo de comando: php impetus build tableName --all. \n";
-                echo "Opções de migrate: model, controller, routes e all. \n\n";
+                echo "Opções de build: model, controller, routes e all. \n\n";
             }
         }else{
             echo "\nNúmero de argumentos incorretos. \n";
             echo "Exemplo de comando: php impetus build tableName --all. \n";
-            echo "Opções de migrate: model, controller, routes e all. \n\n";
+            echo "Opções de build: model, controller, routes e all. \n\n";
         }
     }elseif($command == 'template'){
         if($argc == 4){
-            if($argv[3] == '--api'){
-                api($argv[2]);
-            }elseif($argv[3] == '--raw-view'){
+            if($argv[3] == '--raw-view'){
                 rawView($argv[2]);
             }elseif($argv[3] == '--empty-view'){
                 emptyView($argv[2]);
@@ -82,12 +82,12 @@ if(!isset($argv[1])){
             }else{
                 echo "Tipo de comando template inexistente. \n";
                 echo "Exemplo de comando: php impetus template fileName --arg. \n";
-                echo "Opções de migrate: --api, --view, --raw-view. \n\n";
+                echo "Opções de template: --view, --raw-view, --empty-view. \n\n";
             }
         }else{
             echo "\nNúmero de argumentos incorretos. \n";
             echo "Exemplo de comando: php impetus template fileName --arg. \n";
-            echo "Opções de migrate: --api, --view, --raw-view. \n\n";
+            echo "Opções de template: --view, --raw-view, --empty-view. \n\n";
         }
     }else{
         echo "\nComando não encontrado. \n";
