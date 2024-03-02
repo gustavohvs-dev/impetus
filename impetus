@@ -1,16 +1,16 @@
 <?php
 
-require_once "./impetusy/cmd/ImpetusCommands.php";
-require_once "./impetusy/cmd/Migrate.php";
-require_once "./impetusy/cmd/Build.php";
-require_once "./impetusy/cmd/Controller.php";
-require_once "./impetusy/cmd/Model.php";
-require_once "./impetusy/cmd/Route.php";
-require_once "./impetusy/cmd/ImpetusCommands.php";
-require_once "./impetusy/cmd/API.php";
-require_once "./impetusy/cmd/RawView.php";
-require_once "./impetusy/cmd/View.php";
-require_once "./impetusy/cmd/EmptyView.php";
+require_once "./impetusSDK/cmd/ImpetusCommands.php";
+require_once "./impetusSDK/cmd/Migrate.php";
+require_once "./impetusSDK/cmd/Build.php";
+require_once "./impetusSDK/cmd/Controller.php";
+require_once "./impetusSDK/cmd/Model.php";
+require_once "./impetusSDK/cmd/Route.php";
+require_once "./impetusSDK/cmd/ImpetusCommands.php";
+require_once "./impetusSDK/cmd/API.php";
+require_once "./impetusSDK/cmd/RawView.php";
+require_once "./impetusSDK/cmd/View.php";
+require_once "./impetusSDK/cmd/EmptyView.php";
 
 $availableCommands = [
     ["migrate", "Realiza a criação do banco de dados e migração de dados", "php impetus migrate --arg", "--all, --tables, --views, --data"],
