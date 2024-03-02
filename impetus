@@ -1,6 +1,7 @@
 <?php
 
 require_once "./impetusSDK/cmd/ImpetusCommands.php";
+require_once "./impetusSDK/cmd/Init.php";
 require_once "./impetusSDK/cmd/Migrate.php";
 require_once "./impetusSDK/cmd/Build.php";
 require_once "./impetusSDK/cmd/Controller.php";
@@ -88,6 +89,22 @@ if(!isset($argv[1])){
             echo "\nNúmero de argumentos incorretos. \n";
             echo "Exemplo de comando: php impetus template fileName --arg. \n";
             echo "Opções de template: --view, --raw-view, --empty-view. \n\n";
+        }
+    }elseif($command == 'init'){
+        if($argc == 3){
+            if($argv[2] == '--backend'){
+                initBackend();
+            }elseif($argv[2] == '--frontend'){
+                initFrontend();
+            }else{
+                echo "Tipo de comando init inexistente. \n";
+                echo "Exemplo de comando: php impetus init --arg. \n";
+                echo "Opções de init: --backend, --frontend. \n\n";
+            }
+        }else{
+            echo "\nNúmero de argumentos incorretos. \n";
+            echo "Exemplo de comando: php impetus init --arg. \n";
+            echo "Opções de init: --backend, --frontend. \n\n";
         }
     }else{
         echo "\nComando não encontrado. \n";
