@@ -4,11 +4,13 @@ function initBackend()
 {
     recurseCopy("./impetusSDK/cmd/snippets/storage", "./build/storage");
     recurseCopy("./impetusSDK/cmd/snippets/backend", "./build/backend");
+    echo "Instação do backend concluída. \n";
 }
 
 function initFrontend()
 {
-    recurseCopy("./impetusSDK/cmd/snippets/backend", "./build/backend");
+    recurseCopy("./impetusSDK/cmd/snippets/frontend", "./build/frontend");
+    echo "Instação do frontend concluída. \n";
 }
 
 function recurseCopy(string $sourceDirectory,string $destinationDirectory,string $childFolder = ''): void 
@@ -21,8 +23,6 @@ function recurseCopy(string $sourceDirectory,string $destinationDirectory,string
 
     if (is_dir($destinationDirectory) === false) {
         mkdir($destinationDirectory);
-    }else{
-        echo "ERR1. \n";
     }
 
     if ($childFolder !== '') {
