@@ -66,6 +66,11 @@ function model($tableName)
             }
         }
 
+        if(!isset($primaryKey)){
+            echo "\033[1;31m"."\n(500 Internal Server Error) Tabela '".$tableName."' não possui chave primária" . "\033[0m";
+            return;
+        }
+
         /**
          * Criando model
          */
@@ -255,11 +260,13 @@ class '.$functionName.'
 
     $arquivo = fopen("build/backend/app/models/$functionName.php", 'w');
     if($arquivo == false){
-        return "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar model (".$functionName.")" . "\033[0m";
+        echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar model (".$functionName.")" . "\033[0m";
+        return;
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            return "\033[1;31m"."\n(500 Internal Server Error) Falha ao preencher model (".$functionName.")" . "\033[0m";
+            echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao preencher model (".$functionName.")" . "\033[0m";
+            return;
         }else{
             echo "\033[1;32m"."\n(200 OK) Model '".$functionName."' criada com sucesso." . "\033[0m";
         }
