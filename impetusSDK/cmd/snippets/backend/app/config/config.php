@@ -4,6 +4,7 @@ $systemConfig = [
     "status" => "debug",
     "appName" => "Impetus",
     "version" => "1.0.0",
+    "path" => "http://localhost/impetus/build/backend/",
     "database" => [
         "type" => "mariadb",
         "server" => "localhost",

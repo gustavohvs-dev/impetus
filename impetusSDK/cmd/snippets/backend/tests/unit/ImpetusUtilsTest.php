@@ -1,6 +1,6 @@
 <?php
 
-use Impetus\Framework\ImpetusUtils;
+use app\utils\ImpetusUtils;
 use PHPUnit\Framework\TestCase;
 
 class UtilsTest extends TestCase
