@@ -14,9 +14,9 @@ require_once "./impetusSDK/cmd/View.php";
 require_once "./impetusSDK/cmd/EmptyView.php";
 
 $availableCommands = [
+    ["init", "Realiza a configuração inicial da aplicação", "php impetus init --arg", "--backend, --frontend"],
     ["migrate", "Realiza a criação do banco de dados e migração de dados", "php impetus migrate --arg", "--all, --tables, --views, --data"],
-    ["build", "Cria uma estrutura de model, controller e routes com base em uma tabela, assim como todo o CRUD da tabela", "php impetus build tableName --arg", "--all, --model, --controller, --routes"],
-    ["template", "Cria um template de arquivo para facilitar o desenvolvimento do software", "php impetus template fileName --arg", "--api, --view, --raw-view"],
+    ["build", "Cria uma estrutura de model, controller e routes com base em uma tabela", "php impetus build --arg tablename", "--all, --model, --controller, --routes, --api, --view, --raw-view, --empty-view"],
 ];
 
 if(!isset($argv[1])){
@@ -52,54 +52,43 @@ if(!isset($argv[1])){
         }
     }elseif($command == 'build'){
         if($argc == 4){
-            if($argv[3] == '--model'){
-                model($argv[2]);
-            }elseif($argv[3] == '--controller'){
-                controller($argv[2]);
-            }elseif($argv[3] == '--routes'){
-                routes($argv[2]);
-            }elseif($argv[3] == '--all'){
-                build($argv[2]);
-            }elseif($argv[3] == '--api'){
-                 api($argv[2]);
-            }else{
-                echo "Tipo de comando build inexistente. \n";
-                echo "Exemplo de comando: php impetus build tableName --all. \n";
-                echo "Opções de build: model, controller, routes e all. \n\n";
-            }
-        }else{
-            echo "\nNúmero de argumentos incorretos. \n";
-            echo "Exemplo de comando: php impetus build tableName --all. \n";
-            echo "Opções de build: model, controller, routes e all. \n\n";
-        }
-    }elseif($command == 'template'){
-        if($argc == 4){
-            if($argv[3] == '--raw-view'){
-                rawView($argv[2]);
+            if($argv[2] == '--model'){
+                model($argv[3]);
+            }elseif($argv[2] == '--controller'){
+                controller($argv[3]);
+            }elseif($argv[2] == '--routes'){
+                routes($argv[3]);
+            }elseif($argv[2] == '--all'){
+                build($argv[3]);
+            }elseif($argv[2] == '--api'){
+                 api($argv[3]);
+            }elseif($argv[3] == '--raw-view'){
+                    rawView($argv[2]);
             }elseif($argv[3] == '--empty-view'){
                 emptyView($argv[2]);
             }elseif($argv[3] == '--view'){
                 view($argv[2]);
             }else{
-                echo "Tipo de comando template inexistente. \n";
-                echo "Exemplo de comando: php impetus template fileName --arg. \n";
-                echo "Opções de template: --view, --raw-view, --empty-view. \n\n";
+                echo "Tipo de comando build inexistente. \n";
+                echo "Exemplo de comando: php impetus build --arg tablename. \n";
+                echo "Opções de build: model, controller, routes, all, api, view, raw-view, empty-view. \n\n";
             }
         }else{
             echo "\nNúmero de argumentos incorretos. \n";
-            echo "Exemplo de comando: php impetus template fileName --arg. \n";
-            echo "Opções de template: --view, --raw-view, --empty-view. \n\n";
+            echo "Exemplo de comando: php impetus build --arg tablename. \n";
+            echo "Opções de build: model, controller, routes, all, api, view, raw-view, empty-view. \n\n";
         }
     }elseif($command == 'init'){
-        if($argc == 3){
-            if($argv[2] == '--backend'){
-                initBackend();
-            }elseif($argv[2] == '--frontend'){
-                initFrontend();
+        if($argc == 3 || $argc == 2){
+            if(isset($argv[2])){
+                if($argv[2] == '--backend'){
+                    initBackend();
+                }elseif($argv[2] == '--frontend'){
+                    initFrontend();
+                }
             }else{
-                echo "Tipo de comando init inexistente. \n";
-                echo "Exemplo de comando: php impetus init --arg. \n";
-                echo "Opções de init: --backend, --frontend. \n\n";
+                initBackend();
+                initFrontend();
             }
         }else{
             echo "\nNúmero de argumentos incorretos. \n";
