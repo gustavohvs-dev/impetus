@@ -591,6 +591,25 @@ class ImpetusUtils
 
     }
 
+    /**
+     * bodyCheckFields
+     */
+    static function bodyCheckFields(array $fields)
+    {
+        foreach($fields as $field){
+            $validate = ImpetusUtils::validator($field[0], $field[1], $field[2]);
+            if($validate["status"] == 0){
+                return [
+                    "status" => 0,
+                    "info" => $validate['info']
+                ];
+            }
+        }
+        return [
+            "status" => 1,
+            "info" => "Todos os campos validados com sucesso"
+        ];
+    }
 
     /**
      * base64UrlEncode
