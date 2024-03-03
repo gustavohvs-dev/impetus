@@ -183,7 +183,7 @@ function webserviceMethod(){
                 $response = [
                     "code" => "401 Unauthorized",
                     "response" => [
-                        "status" => 1,
+                        "status" => 0,
                         "info" => "Usuário não possui permissão para realizar ação"
                     ]
                 ];
@@ -196,7 +196,7 @@ function webserviceMethod(){
                 $response = [
                     "code" => "400 Bad Request",
                     "response" => [
-                        "status" => 1,
+                        "status" => 0,
                         "info" => "Parâmetro (id) não informado"
                     ]
                 ];
@@ -394,7 +394,7 @@ function webserviceMethod(){
                 $response = [
                     "code" => "401 Unauthorized",
                     "response" => [
-                        "status" => 1,
+                        "status" => 0,
                         "info" => "Usuário não possui permissão para realizar ação"
                     ]
                 ];
@@ -508,7 +508,7 @@ function webserviceMethod(){
                 $response = [
                     "code" => "401 Unauthorized",
                     "response" => [
-                        "status" => 1,
+                        "status" => 0,
                         "info" => "Usuário não possui permissão para realizar ação"
                     ]
                 ];
@@ -633,7 +633,7 @@ function webserviceMethod(){
         $response = [
             "code" => "401 Unauthorized",
             "response" => [
-                "status" => 1,
+                "status" => 0,
                 "info" => "Usuário não possui permissão para realizar ação"
             ]
         ];
@@ -646,7 +646,7 @@ function webserviceMethod(){
         $response = [
             "code" => "400 Bad Request",
             "response" => [
-                "status" => 1,
+                "status" => 0,
                 "info" => "Parâmetro (id) não informado"
             ]
         ];

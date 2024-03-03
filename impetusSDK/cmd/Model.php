@@ -188,7 +188,7 @@ class '.$functionName.'
             $error = $stmt->errorInfo();
             $error = $error[2];
             $response = [
-                "status" => 1,
+                "status" => 0,
                 "code" => 500,
                 "info" => "Falha ao criar registro",
                 "error" => $error
@@ -213,7 +213,7 @@ class '.$functionName.'
             $error = $stmt->errorInfo();
             $error = $error[2];
             $response = [
-                "status" => 1,
+                "status" => 0,
                 "code" => 500,
                 "info" => "Falha ao atualizar registro",
                 "error" => $error
@@ -236,7 +236,7 @@ class '.$functionName.'
                 ];
             }else{
                 $response = [
-                    "status" => 1,
+                    "status" => 0,
                     "code" => 404,
                     "info" => "Falha ao deletar registro",
                     "error" => "Not found entry (".$id.") for key (id)"
