@@ -397,7 +397,7 @@ class ImpetusUtils
         }
 
         //Realizar verificações
-        if($nullableParam == false && ($typeParamValue != 'boolean' && $typeParamValue != 'number' && $typeParamValue != 'int')){
+        if($nullableParam == false && $string === null){
             $validate = ImpetusUtils::isEmpty($string);
             if($validate == true){
                 return [
