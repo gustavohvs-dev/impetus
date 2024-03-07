@@ -122,6 +122,8 @@ function controller($tableName)
             echo "\nPasta 'build/backend/app/controllers/$tableName' criada.";
         }else{
             echo "\nPasta 'build/backend/app/controllers/$tableName' já existente.";
+            echo "\033[1;31m"."\nOperação cancelada"."\033[0m";
+            return;
         }
 
         /**
@@ -694,12 +696,177 @@ echo json_encode($response->response);
             return false;
         }else{
             echo "\033[1;32m"."\n(200 OK) Controller delete".$functionName." criado com sucesso.". "\033[0m";
-            return true;
         }
     } 
 
     /**
      * FIM - Controller DELETE
+     */
+
+     /**
+     * Documentação - README.md
+     */
+$snippet= '# Documentação de API - '.$functionName.'
+
+## Autenticação
+
+A autenticação ocorre atráves de JSON Web Token. Faça a autenticação em "/login" e informe o bearer token no header da requisição.
+
+## (GET) Buscar registro
+
+#### Endpoint
+
+```shell
+/'.$tableName.'/get?id=1
+```
+
+#### Response
+
+```json
+{
+"status": 1,
+"code": 200,
+"info": "Registro encontrado",
+"data": {
+    "id": "1",
+    "field": "test",
+    "createdAt": "2024-03-03 14:12:39",
+    "updatedAt": null
+    }
+}
+```
+
+## (GET) Listar registros
+
+#### Endpoint
+
+```shell
+/'.$tableName.'/list
+```
+
+#### Parâmetros de URL (opcionais)
+- currentPage = (int) Define a página atual da paginação;
+- dataPerPage = (int) Define a quantidade de dados a serem retornados por página. (Default: 10)
+
+#### Response
+
+```json
+{
+	"status": 1,
+	"code": 200,
+	"currentPage": 1,
+	"numberOfPages": 1,
+	"dataPerPage": 10,
+	"data": [
+		{
+			"id": "1",
+			"field": "test",
+			"createdAt": "2024-03-07 11:26:16",
+			"updatedAt": "2024-03-07 11:27:28"
+		},
+		{
+			"id": "2",
+			"field": "test",
+			"createdAt": "2024-03-03 13:55:25",
+			"updatedAt": null
+		}
+	]
+}
+```
+
+## (POST) Criar novo registro
+
+#### Endpoint
+
+```shell
+/'.$tableName.'/create
+```
+#### Body
+
+```json
+{
+    "teste" : "teste",
+    "teste" : "teste",
+    "teste" : "teste"
+}
+```
+
+#### Response
+
+```json
+{
+    "status": 1,
+    "code": 200,
+    "id" : 2,
+    "info": "Registro criado com sucesso",
+}
+```
+
+## (PUT) Atualizar registro
+
+#### Endpoint
+
+```shell
+/'.$tableName.'/update
+```
+#### Body
+
+```json
+{
+    "id" : 1,
+    "teste" : "teste",
+    "teste" : "teste",
+    "teste" : "teste"
+}
+```
+
+#### Response
+
+```json
+{
+    "status": 1,
+    "code": 200,
+    "info": "Registro atualizado com sucesso",
+}
+```
+
+## (DELETE) Deletar registro
+
+#### Endpoint
+
+```shell
+/'.$tableName.'/delete
+```
+
+#### Response
+
+```json
+{
+    "status": 1,
+    "code": 200,
+    "info": "Registro deletado com sucesso",
+}
+```
+
+';
+
+    $arquivo = fopen("build/backend/app/controllers/$tableName/README.md", 'w');
+    if($arquivo == false){
+        echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar README.md (".$functionName.")". "\033[0m";
+        return false;
+    }else{
+        $escrever = fwrite($arquivo, $snippet);
+        if($escrever == false){
+            echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao preencher README.md (".$functionName.")". "\033[0m";
+            return false;
+        }else{
+            echo "\033[1;32m"."\n(200 OK) Documentação (README.md) criada com sucesso.". "\033[0m";
+            return true;
+        }
+    } 
+
+    /**
+     * FIM - README.md
      */
   
     }else{
