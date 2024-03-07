@@ -85,14 +85,7 @@ function controller($tableName)
                     $ruleArgs .= ", 'nullable'";
                 }
                 
-                $rules .= '$validate = ImpetusUtils::validator("'.$column['Field'].'", $jsonParams->'.$column['Field'].', ['.$ruleArgs.']);
-                    if($validate["status"] == 0){
-                        $response = [
-                            "code" => "400 Bad Request",
-                            "response" => $validate
-                        ];
-                        return (object)$response;
-                    }'.$rulesTab;
+                $rules .= '["'.$column['Field'].'", $jsonParams->'.$column['Field'].', ['.$ruleArgs.']],'.$rulesTab;
             }
 
         }
@@ -190,24 +183,18 @@ function webserviceMethod(){
                 return (object)$response;
             }
 
-            //Validar ID informado
             $urlParams = ImpetusUtils::urlParams();
-            if(!isset($urlParams["id"])){
-                $response = [
-                    "code" => "400 Bad Request",
-                    "response" => [
-                        "status" => 0,
-                        "info" => "Parâmetro (id) não informado"
-                    ]
-                ];
-                return (object)$response;
-            }
 
-            $validate = ImpetusUtils::validator("id", $urlParams["id"], ["type(int)"]);
-            if($validate["status"] == 0){
+            //Validação de campos
+            $bodyCheckFields = ImpetusUtils::bodyCheckFields(
+                [
+                    ["id", $urlParams["id"], ["type(int)"]]
+                ]
+            );
+            if($bodyCheckFields["status"] == 0){
                 $response = [
                     "code" => "400 Bad Request",
-                    "response" => $validate
+                    "response" => $bodyCheckFields
                 ];
                 return (object)$response;
             }
@@ -405,7 +392,18 @@ function webserviceMethod(){
             $jsonParams = json_decode(file_get_contents("php://input"),false);
 
             //Validação de campos
-            '.$rules.'
+            $bodyCheckFields = ImpetusUtils::bodyCheckFields(
+                [
+                    '.$rules.'
+                ]
+            );
+            if($bodyCheckFields["status"] == 0){
+                $response = [
+                    "code" => "400 Bad Request",
+                    "response" => $bodyCheckFields
+                ];
+                return (object)$response;
+            }
 
             //Organizando dados para a request
             $data = [
@@ -519,15 +517,19 @@ function webserviceMethod(){
             $jsonParams = json_decode(file_get_contents("php://input"),false);
 
             //Validação de campos
-            $validate = ImpetusUtils::validator("'.$primaryKey.'", $jsonParams->'.$primaryKey.', ["type(int)"]);
-            if($validate["status"] == 0){
+            $bodyCheckFields = ImpetusUtils::bodyCheckFields(
+                [
+                    ["'.$primaryKey.'", $jsonParams->'.$primaryKey.', ["type(int)"]],
+                    '.$rules.'
+                ]
+            );
+            if($bodyCheckFields["status"] == 0){
                 $response = [
                     "code" => "400 Bad Request",
-                    "response" => $validate
+                    "response" => $bodyCheckFields
                 ];
                 return (object)$response;
             }
-            '.$rules.'
 
             //Coleta data/hora atual
             $datetime = ImpetusUtils::datetime();
@@ -640,27 +642,21 @@ function webserviceMethod(){
         return (object)$response;
     }
 
-    //Validar ID informado
     $urlParams = ImpetusUtils::urlParams();
-    if(!isset($urlParams["id"])){
-        $response = [
-            "code" => "400 Bad Request",
-            "response" => [
-                "status" => 0,
-                "info" => "Parâmetro (id) não informado"
-            ]
-        ];
-        return (object)$response;
-    }
 
-    $validate = ImpetusUtils::validator("id", $urlParams["id"], ["type(int)"]);
-    if($validate["status"] == 0){
+    //Validação de campos
+    $bodyCheckFields = ImpetusUtils::bodyCheckFields(
+        [
+            ["id", $urlParams["id"], ["type(int)"]]
+        ]
+    );
+    if($bodyCheckFields["status"] == 0){
         $response = [
             "code" => "400 Bad Request",
-            "response" => $validate
+            "response" => $bodyCheckFields
         ];
         return (object)$response;
-    }
+    } 
 
     //Realizar busca
     $deletar = '.$functionName.'::delete'.$functionName.'($urlParams["id"]);
