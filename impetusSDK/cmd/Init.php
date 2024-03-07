@@ -2,15 +2,19 @@
 
 function initBackend()
 {
+    echo "Iniciando instalação... \n";
+    echo "Copiando arquivos... \n";
     recurseCopy("./impetusSDK/cmd/snippets/storage", "./build/storage");
     recurseCopy("./impetusSDK/cmd/snippets/backend", "./build/backend");
-    echo "Instação do backend concluída. \n";
+    echo "\033[1;32m"."Instação do backend concluída. \n". "\033[0m";
 }
 
 function initFrontend()
 {
+    echo "Iniciando instalação... \n";
+    echo "Copiando arquivos... \n";
     recurseCopy("./impetusSDK/cmd/snippets/frontend", "./build/frontend");
-    echo "Instação do frontend concluída. \n";
+    echo "\033[1;32m"."Instação do frontend concluída. \n". "\033[0m";
 }
 
 function recurseCopy(string $sourceDirectory,string $destinationDirectory,string $childFolder = ''): void 
