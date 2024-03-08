@@ -22,6 +22,8 @@ function controller($tableName)
         $createTabs = "";
         $rules = ""; 
         $rulesTab = "\n\t\t\t\t\t";
+        
+        $documentation = [];
 
         foreach($table as $column)
         {
@@ -57,28 +59,38 @@ function controller($tableName)
                 if($type == "int" || $type == "tinyint" || $type == "smallint" || $type == "mediumint" || $type == "bigint"){
                     $ruleArgs = "'type(int)'";
                     $ruleArgs .= ", 'length(".$typeArgs.")'";
+                    array_push($documentation, [$column['Field'], $type, 23]);
                 }elseif($type == "float" || $type == "decimal" || $type == "double" || $type == "real" || $type == "bit" || $type == "serial"){
                     $ruleArgs = "'type(number)'";
                     $ruleArgs .= ", 'length(".$typeArgs.")'";
+                    array_push($documentation, [$column['Field'], $type, 18.2]);
                 }elseif($type == "boolean"){
                     $ruleArgs = "'type(boolean)'";
+                    array_push($documentation, [$column['Field'], $type, true]);
                 }elseif($type == "date"){
                     $ruleArgs = "'type(date)'";
+                    array_push($documentation, [$column['Field'], $type, "2024-01-01"]);
                 }elseif($type == "datetime"){
                     $ruleArgs = "'type(datetime)'";
+                    array_push($documentation, [$column['Field'], $type, "2024-01-01 21:00:00"]);
                 }elseif($type == "tinytext" || $type == "text" || $type == "mediumtext" || $type == "longtext"){
                     $ruleArgs = "'type(string)', 'specialChar'";
                     $ruleArgs .= ", 'length(".$typeArgs.")'";
+                    array_push($documentation, [$column['Field'], $type, "lorem ipsum dolor sit amet consectetur adipiscing elit"]);
                 }elseif($type == "char" || $type == "varchar"){
                     $ruleArgs = "'type(string)', 'uppercase'";
                     $ruleArgs .= ", 'length(".$typeArgs.")'";
+                    array_push($documentation, [$column['Field'], $type, "some string data"]);
                 }elseif($type == "enum"){
                     $ruleArgs = "'type(string)'";
                     $typeArgs = str_replace("'", "", $typeArgs);
                     $typeArgs = str_replace(",", "|", $typeArgs);
                     $ruleArgs .= ", 'enum(".$typeArgs.")'";
+                    $tempDocumentationEnumExample = explode("|", $typeArgs);
+                    array_push($documentation, [$column['Field'], $type, $tempDocumentationEnumExample[0]], $typeArgs);
                 }else{
                     $ruleArgs = "type(string)";
+                    array_push($documentation, [$column['Field'], $type, "some string data"]);
                 }
 
                 if($column["Null"]=="YES"){
@@ -706,6 +718,19 @@ echo json_encode($response->response);
      /**
      * Documentação - README.md
      */
+
+$jsonBody = "";
+$semicolon = ",";
+$count = count($documentation);
+for($i = 0; $i < $count; $i++){
+    if($i+1 < $count){
+    $jsonBody .= '"' . $documentation[$i][0] . '" : "' . $documentation[$i][2] . '"' . $semicolon . '
+    ';
+    }else{
+    $jsonBody .= '"' . $documentation[$i][0] . '" : "' . $documentation[$i][2] . '"';
+    }
+}
+
 $snippet= '# Documentação de API - '.$functionName.'
 
 ## Autenticação
@@ -785,9 +810,7 @@ A autenticação ocorre atráves de JSON Web Token. Faça a autenticação em "/
 
 ```json
 {
-    "teste" : "teste",
-    "teste" : "teste",
-    "teste" : "teste"
+    '.$jsonBody.'
 }
 ```
 
@@ -814,9 +837,7 @@ A autenticação ocorre atráves de JSON Web Token. Faça a autenticação em "/
 ```json
 {
     "id" : 1,
-    "teste" : "teste",
-    "teste" : "teste",
-    "teste" : "teste"
+    '.$jsonBody.'
 }
 ```
 
