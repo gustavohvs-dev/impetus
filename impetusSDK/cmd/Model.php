@@ -17,6 +17,12 @@ function model($tableName)
 
         $functionName = ucfirst(strtolower($tableName));
 
+        if(is_file("build/backend/app/models/$functionName.php")){
+            echo "\nArquivo 'build/backend/app/models/$functionName' já existente.";
+            echo "\033[1;31m"."\nOperação cancelada"."\033[0m";
+            return;
+        }
+
         $pointerCreate = 0;
         $columnNameCreate = [];
         $typeCreate = [];

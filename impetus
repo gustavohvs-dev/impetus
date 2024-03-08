@@ -54,16 +54,16 @@ if(!isset($argv[1])){
         if($argc == 4){
             if($argv[2] == '--model'){
                 model($argv[3]);
-            }elseif($argv[2] == '--controller'){
+            }elseif($argv[2] == '--controller' || $argv[2] == '--controllers'){
                 controller($argv[3]);
             }elseif($argv[2] == '--routes'){
                 routes($argv[3]);
             }elseif($argv[2] == '--all'){
                 build($argv[3]);
             }elseif($argv[2] == '--api'){
-                 api($argv[3]);
+                api($argv[3]);
             }elseif($argv[3] == '--raw-view'){
-                    rawView($argv[2]);
+                rawView($argv[2]);
             }elseif($argv[3] == '--empty-view'){
                 emptyView($argv[2]);
             }elseif($argv[3] == '--view'){

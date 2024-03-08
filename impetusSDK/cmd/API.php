@@ -5,6 +5,14 @@ function api($name)
     require "build/backend/app/config/config.php";
     echo "\nCriando API ({$name})";
 
+    $functionName = ucfirst(strtolower($name));
+
+    if(is_file("build/backend/app/api/$functionName.php")){
+        echo "\nArquivo 'build/backend/app/api/$functionName' já existente.";
+        echo "\033[1;31m"."\nOperação cancelada"."\033[0m";
+        return;
+    }
+
     $snippet = "";
 
 /**
@@ -14,12 +22,12 @@ function api($name)
 $snippet.= '<?php
 
 /**
- * '.$name.' API
+ * '.$functionName.' API
  */
 
 namespace app\api;
 
-class '.$name.'
+class '.$functionName.'
 {
     private $username = "admin";
     private $password = "password-example";
@@ -111,13 +119,13 @@ class '.$name.'
 }
 ';
 
-    $arquivo = fopen("build/backend/app/api/$name.php", 'w');
+    $arquivo = fopen("build/backend/app/api/$functionName.php", 'w');
     if($arquivo == false){
-        return "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar API (".$name.")" . "\033[0m";
+        return "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar API (".$functionName.")" . "\033[0m";
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            return "\033[1;31m"."\n(500 Internal Server Error) Falha ao preencher API (".$name.")" . "\033[0m";
+            return "\033[1;31m"."\n(500 Internal Server Error) Falha ao preencher API (".$functionName.")" . "\033[0m";
         }else{
             echo "\033[1;32m"."\n(200 OK) API '".$name."' criada com sucesso." . "\033[0m";
         }
