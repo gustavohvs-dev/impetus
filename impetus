@@ -27,28 +27,12 @@ if(!isset($argv[1])){
     if($command == 'cmd' || $command == 'help'){
         available($availableCommands);
     }elseif($command == 'migrate'){
-        if($argc == 3){
-            if($argv[2] == '--tables'){
-                tables();
-                echo "\n";
-            }elseif($argv[2] == '--views'){
-                views();
-                echo "\n";
-            }elseif($argv[2] == '--data'){
-                data();
-                echo "\n";
-            }elseif($argv[2] == '--all'){ 
-                migrate();
-                echo "\n";
-            }else{
-                echo "Tipo de comando migrate inexistente. \n\n";
-                echo "Exemplo de comando: php impetus migrate --tables. \n";
-                echo "Opções de migrate: tables, views, populate e all. \n\n";
-            }
+        if($argc == 2){
+            migrateSync();
+            echo "\n";
         }else{
             echo "\nNúmero de argumentos incorretos. \n";
-            echo "Exemplo de comando: php impetus migrate --tables. \n";
-            echo "Opções de migrate: tables, views, populate e all. \n\n";
+            echo "Exemplo de comando: php impetus migrate. \n\n";
         }
     }elseif($command == 'build'){
         if($argc == 4){

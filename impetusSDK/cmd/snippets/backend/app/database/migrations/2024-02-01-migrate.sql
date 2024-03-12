@@ -1,1 +1,0 @@
-ALTER TABLE users ADD companyId INT(30) NOT NULL;
