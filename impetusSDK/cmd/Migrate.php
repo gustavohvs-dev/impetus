@@ -16,7 +16,7 @@ function tables($path = "Migrate00000000_0.php"){
                 echo "\033[1;32m" . $className[0] . ": " . "Table '".$tableName."' created successfuly\n" . "\033[0m";
             }else{
                 $error = $stmt->errorInfo();
-                if($error[1] == 1050 || $error[1] == 1062){
+                if($error[1] == 1050 || $error[1] == 1062 || $error[1] == 1060){
                     echo "\033[1;33m" . $className[0]. ": " . $error[2] .  " on " . "CREATE TABLE " .$tableName . "\n" . "\033[0m";
                 }else{
                     echo "\033[1;31m" . $className[0]. ": " . $error[2] .  " on " . "CREATE TABLE " .$tableName . "\n" . "\033[0m";
@@ -42,7 +42,7 @@ function data($path = "Migrate00000000_0.php"){
                 echo "\033[1;32m" . $className[0] . ": " .$dataName." created successfuly\n" . "\033[0m";
             }else{
                 $error = $stmt->errorInfo();
-                if($error[1] == 1050 || $error[1] == 1062){
+                if($error[1] == 1050 || $error[1] == 1062 || $error[1] == 1060){
                     echo "\033[1;33m" . $className[0]. ": " . $error[2] .  " on " . $data . "\n" . "\033[0m";
                 }else{
                     echo "\033[1;31m" . $className[0]. ": " . $error[2] .  " on " . $data . "\n" . "\033[0m";
@@ -69,7 +69,7 @@ function views($path = "Migrate00000000_0.php"){
                 echo "\033[1;32m" . $className[0] . ": " . "View '".$viewName."' created successfuly\n" . "\033[0m";
             }else{
                 $error = $stmt->errorInfo();
-                if($error[1] == 1050 || $error[1] == 1062){
+                if($error[1] == 1050 || $error[1] == 1062 || $error[1] == 1060){
                     echo "\033[1;33m" . $className[0]. ": " . $error[2] .  " on " . "CREATE VIEW vw_" .$viewName . "\n" . "\033[0m";
                 }else{
                     echo "\033[1;31m" . $className[0]. ": " . $error[2] .  " on " . "CREATE VIEW vw_" .$viewName . "\n" . "\033[0m";
@@ -80,18 +80,39 @@ function views($path = "Migrate00000000_0.php"){
     unset($databaseClass);
 }
 
-function migrate(){
-    tables();
-    views();
-    data();
+function update($path = "Migrate00000000_0.php"){
+    require_once "build/backend/app/database/migrations/".$path;
+    require "build/backend/app/config/config.php";
+    $className = explode(".", $path);
+    $databaseClass = new $className[0];
+    $databaseMethods = get_class_methods($databaseClass);
+    foreach($databaseMethods as $method){
+        if(substr($method, -6) == "Update"){
+            $dataName = substr($method, 0, -6);
+            $data = $databaseClass->$method();
+            $stmt = $conn->prepare($data);
+            if($stmt->execute()){
+                echo "\033[1;32m" . $className[0] . ": " .$dataName." updated successfuly\n" . "\033[0m";
+            }else{
+                $error = $stmt->errorInfo();
+                if($error[1] == 1050 || $error[1] == 1062 || $error[1] == 1060){
+                    echo "\033[1;33m" . $className[0]. ": " . $error[2] .  " on " . $data . "\n" . "\033[0m";
+                }else{
+                    echo "\033[1;31m" . $className[0]. ": " . $error[2] .  " on " . $data . "\n" . "\033[0m";
+                }
+            }
+        }
+    }
+    unset($databaseClass);
 }
 
-function migrateSync(){
+function migrate(){
     $path = "build/backend/app/database/migrations/";
     $diretorio = dir($path);
     while($arquivo = $diretorio -> read()){
         if($arquivo != "." && $arquivo != ".."){
             tables($arquivo);
+            update($arquivo);
             views($arquivo);
             data($arquivo);
         }

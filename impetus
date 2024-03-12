@@ -28,7 +28,7 @@ if(!isset($argv[1])){
         available($availableCommands);
     }elseif($command == 'migrate'){
         if($argc == 2){
-            migrateSync();
+            migrate();
             echo "\n";
         }else{
             echo "\nNúmero de argumentos incorretos. \n";
