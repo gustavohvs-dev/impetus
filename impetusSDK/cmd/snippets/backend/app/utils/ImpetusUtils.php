@@ -140,8 +140,8 @@ class ImpetusUtils
     static function isDate($string)
     {
         $isDate = false;
-        $data = \DateTime::createFromFormat('d/m/Y', $string);
-        if($data && $data->format('d/m/Y') === $string){
+        $data = \DateTime::createFromFormat('Y-m-d', $string);
+        if($data && $data->format('Y-m-d') === $string){
            $isDate = true;
         }
         return $isDate;
@@ -153,8 +153,8 @@ class ImpetusUtils
     static function isDateTime($string)
     {
         $isDate = false;
-        $data = \DateTime::createFromFormat('d/m/Y H:i:s', $string);
-        if($data && $data->format('d/m/Y H:i:s') === $string){
+        $data = \DateTime::createFromFormat('Y-m-d H:i:s', $string);
+        if($data && $data->format('Y-m-d H:i:s') === $string){
            $isDate = true;
         }
         return $isDate;
