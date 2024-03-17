@@ -46,15 +46,22 @@ function controller($tableName)
             }
 
             if($column['Field']<>"id" && $column['Field']<>"createdAt" && $column['Field']<>"updatedAt"){
+
                 $createParams .= $createTabs . '"'.$column['Field'].'" => $jsonParams->'.$column['Field'].',';
                 $createTabs = "\n\t\t\t\t\t\t";
 
                 //Criando regras de validação
                 $columnType = $column["Type"];
-                $columnType = explode("(", $column["Type"]);
-                $type = $columnType[0];
-                $columnType = explode(")", $columnType[1]);
-                $typeArgs = $columnType[0];
+
+                if($columnType == 'date' || $columnType == 'datetime'){
+                    $type = $columnType;
+                    $typeArgs = null;
+                }else{
+                    $columnType = explode("(", $column["Type"]);
+                    $type = $columnType[0];
+                    $columnType = explode(")", $columnType[1]);
+                    $typeArgs = $columnType[0];
+                }
 
                 if($type == "int" || $type == "tinyint" || $type == "smallint" || $type == "mediumint" || $type == "bigint"){
                     $ruleArgs = "'type(int)'";
