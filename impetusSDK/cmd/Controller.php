@@ -87,7 +87,7 @@ function controller($tableName)
                     $typeArgs = str_replace(",", "|", $typeArgs);
                     $ruleArgs .= ", 'enum(".$typeArgs.")'";
                     $tempDocumentationEnumExample = explode("|", $typeArgs);
-                    array_push($documentation, [$column['Field'], $type, $tempDocumentationEnumExample[0]], $typeArgs);
+                    array_push($documentation, [$column['Field'], $type, $tempDocumentationEnumExample[0], $typeArgs]);
                 }else{
                     $ruleArgs = "type(string)";
                     array_push($documentation, [$column['Field'], $type, "some string data"]);

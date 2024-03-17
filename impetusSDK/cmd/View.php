@@ -1,17 +1,230 @@
 <?php
 
-function view($name)
+function view($tableName)
 {
     require "build/backend/app/config/config.php";
-    echo "\nCriando View ({$name})";
+    echo "\nCriando view ({$tableName})";
 
-    $snippet = "";
+    //Busca tabela
+    $query = "DESC $tableName";
+    $stmt = $conn->prepare($query);
+    if($stmt->execute())
+    {
+        $table = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        echo "\nTabela encontrada...";
 
-/**
- * Criando View
- */
+        $functionName = ucfirst(strtolower($tableName));
 
-$snippet.= '<?php
+        $pointerCreate = 0;
+        $columnNameCreate = [];
+        $typeCreate = [];
+        $createParams = "";
+        $createTabs = "";
+        $rules = ""; 
+        $rulesTab = "\n\t\t\t\t\t";
+        
+        $documentation = [];
+
+        foreach($table as $column)
+        {
+            if($column['Key'] == "PRI"){
+                $primaryKey = $column['Field'];
+            }
+
+            if($column['Field']<>"id" && $column['Field']<>"createdAt"){
+                $columnNameCreate[$pointerCreate] = $column["Field"];
+
+                $columnType = explode("(" , $column["Type"]);
+                $columnType = $columnType[0];
+                if($columnType == "int"){
+                    $typeCreate[$pointerCreate] = "PDO::PARAM_INT";
+                }else{
+                    $typeCreate[$pointerCreate] = "PDO::PARAM_STR";
+                }
+
+                $pointerCreate++;
+            }
+
+            if($column['Field']<>"id" && $column['Field']<>"createdAt" && $column['Field']<>"updatedAt"){
+                $createParams .= $createTabs . '"'.$column['Field'].'" => $jsonParams->'.$column['Field'].',';
+                $createTabs = "\n\t\t\t\t\t\t";
+
+                //Criando regras de validação
+                $columnType = $column["Type"];
+                $columnType = explode("(", $column["Type"]);
+                $type = $columnType[0];
+                $columnType = explode(")", $columnType[1]);
+                $typeArgs = $columnType[0];
+
+                if($type == "int" || $type == "tinyint" || $type == "smallint" || $type == "mediumint" || $type == "bigint"){
+                    $ruleArgs = "'type(int)'";
+                    $ruleArgs .= ", 'length(".$typeArgs.")'";
+                    array_push($documentation, [$column['Field'], $type, 23]);
+                }elseif($type == "float" || $type == "decimal" || $type == "double" || $type == "real" || $type == "bit" || $type == "serial"){
+                    $ruleArgs = "'type(number)'";
+                    $ruleArgs .= ", 'length(".$typeArgs.")'";
+                    array_push($documentation, [$column['Field'], $type, 18.2]);
+                }elseif($type == "boolean"){
+                    $ruleArgs = "'type(boolean)'";
+                    array_push($documentation, [$column['Field'], $type, true]);
+                }elseif($type == "date"){
+                    $ruleArgs = "'type(date)'";
+                    array_push($documentation, [$column['Field'], $type, "2024-01-01"]);
+                }elseif($type == "datetime"){
+                    $ruleArgs = "'type(datetime)'";
+                    array_push($documentation, [$column['Field'], $type, "2024-01-01 21:00:00"]);
+                }elseif($type == "tinytext" || $type == "text" || $type == "mediumtext" || $type == "longtext"){
+                    $ruleArgs = "'type(string)', 'specialChar'";
+                    $ruleArgs .= ", 'length(".$typeArgs.")'";
+                    array_push($documentation, [$column['Field'], $type, "lorem ipsum dolor sit amet consectetur adipiscing elit"]);
+                }elseif($type == "char" || $type == "varchar"){
+                    $ruleArgs = "'type(string)', 'uppercase'";
+                    $ruleArgs .= ", 'length(".$typeArgs.")'";
+                    array_push($documentation, [$column['Field'], $type, "some string data"]);
+                }elseif($type == "enum"){
+                    $ruleArgs = "'type(string)'";
+                    $typeArgs = str_replace("'", "", $typeArgs);
+                    $typeArgs = str_replace(",", "|", $typeArgs);
+                    $ruleArgs .= ", 'enum(".$typeArgs.")'";
+                    $tempDocumentationEnumExample = explode("|", $typeArgs);
+                    array_push($documentation, [$column['Field'], $type, $tempDocumentationEnumExample[0], $typeArgs, $tempDocumentationEnumExample]);
+                }else{
+                    $ruleArgs = "type(string)";
+                    array_push($documentation, [$column['Field'], $type, "some string data"]);
+                }
+
+                if($column["Null"]=="YES"){
+                    $ruleArgs .= ", 'nullable'";
+                }
+                
+                $rules .= '["'.$column['Field'].'", $jsonParams->'.$column['Field'].', ['.$ruleArgs.']],'.$rulesTab;
+            }
+
+        }
+
+        $queryCreateColumns = "";
+        $queryCreateBindsTags = "";
+        $queryCreateBindsParams = "";
+        $queryUpdateColumns = "";
+        $queryUpdateBindsParams = "";
+        $comma = "";
+
+        for($i = 0; $i < $pointerCreate; $i++)
+        {
+            if($columnNameCreate[$i] <> "updatedAt"){
+                $queryCreateColumns .= $comma . $columnNameCreate[$i];
+                $queryCreateBindsTags .= $comma . ":" . strtoupper($columnNameCreate[$i]);
+                $queryCreateBindsParams .= '$stmt->bindParam(":'.strtoupper($columnNameCreate[$i]).'", $data["'.$columnNameCreate[$i].'"], '.$typeCreate[$i].');' . "\n\t\t";
+
+                $queryUpdateColumns .= $comma . $columnNameCreate[$i] . " = :" . strtoupper($columnNameCreate[$i]);
+                $queryUpdateBindsParams .= '$stmt->bindParam(":'.strtoupper($columnNameCreate[$i]).'", $data["'.$columnNameCreate[$i].'"], '.$typeCreate[$i].');' . "\n\t\t";
+                $comma = ", ";
+            }else{
+                $queryUpdateColumns .= $comma . $columnNameCreate[$i] . " = :" . strtoupper($columnNameCreate[$i]);
+                $queryUpdateBindsParams .= '$stmt->bindParam(":'.strtoupper($columnNameCreate[$i]).'", $data["'.$columnNameCreate[$i].'"], '.$typeCreate[$i].');' . "\n\t\t";
+                $comma = ", ";
+            }
+        }
+
+        /**
+         * Criar pasta do controller e view
+         */
+        if(!is_dir("build/frontend/app/views/$tableName")){
+            mkdir("build/frontend/app/views/$tableName", 0751);
+            echo "\nPasta 'build/frontend/app/views/$tableName' criada.";
+        }else{
+            /*echo "\nPasta 'build/frontend/app/views/$tableName' já existente.";
+            echo "\033[1;31m"."\nOperação cancelada"."\033[0m";
+            return;*/
+        }
+
+        if(!is_dir("build/frontend/app/controllers/$tableName")){
+            mkdir("build/frontend/app/controllers/$tableName", 0751);
+            echo "\nPasta 'build/frontend/app/controllers/$tableName' criada.";
+        }else{
+            /*echo "\nPasta 'build/frontend/app/controllers/$tableName' já existente.";
+            echo "\033[1;31m"."\nOperação cancelada"."\033[0m";
+            return;*/
+        }
+
+     /**
+     * View
+     */
+
+$jsonBody = "";
+$semicolon = ",";
+$count = count($documentation);
+for($i = 0; $i < $count; $i++){
+    if($i+1 < $count){
+    $jsonBody .= '"' . $documentation[$i][0] . '" : "' . $documentation[$i][2] . '"' . $semicolon . '
+    ';
+    }else{
+    $jsonBody .= '"' . $documentation[$i][0] . '" : "' . $documentation[$i][2] . '"';
+    }
+}
+
+/** Presets */
+$datatableRequest = "";
+$datatableTableView = "";
+$viewRequest = "";
+$viewForm = "";
+$createRequest = "";
+$createForm = "";
+$editRequest = "";
+$editForm = "";
+$updateRequest = "";
+$deleteRequest = "";
+$deleteForm = "";
+$countIterations = 0;
+foreach($documentation as $item)
+{
+    $countIterations++;
+    $itemFirstCharUppercase = ucfirst($item[0]);
+
+    if($countIterations <= 3){
+        $datatableRequest .= "trHTML += '<td>' + item.".$item[0]." + '</td>';
+        ";
+        $datatableTableView .= "<th>".$itemFirstCharUppercase."</th>
+        ";
+    }
+
+    $viewForm .= '
+    <div class="form-group col-md-4 mb-2">
+        <label for="form-view-'.$item[0].'">'.$itemFirstCharUppercase.'</label>
+        <input type="text" id="form-view-'.$item[0].'" class="form-control"
+            value="" readonly>
+    </div>
+    ';
+
+    $viewRequest .= '
+    $("#form-view-'.$item[0].'").val(response.data.data.'.$item[0].')
+    ';
+
+    if(isset($item[4])){
+        $tempEnum = $item[4];
+    }else{
+        $tempEnum = [];
+    }
+    $createForm .= field($item[0], "create", $item[1], $tempEnum);
+    $editForm .= field($item[0], "edit", $item[1], $tempEnum);
+
+    $createRequest .= '
+    '.$item[0].': $("#form-create-'.$item[0].'").val(),
+    ';
+
+    $editRequest .= '
+    $("#form-edit-'.$item[0].'").val(response.data.data.'.$item[0].')
+    ';
+
+    $updateRequest .= '
+    '.$item[0].': $("#form-edit-'.$item[0].'").val(),
+    ';
+
+}
+
+$snippet= '
+
+<?php
 
 use app\components\Core;
 use app\middlewares\Auth;
@@ -41,7 +254,7 @@ $userData = Auth::validateSession([\'admin\']);
 
 					<div class="row mb-2 mb-xl-3">
 						<div class="col-auto d-none d-sm-block">
-							<h3>'.$name.'</h3>
+							<h3>'.$functionName.'</h3>
 						</div>
 
 						<div class="col-auto ms-auto text-end mt-n1">
@@ -70,16 +283,8 @@ $userData = Auth::validateSession([\'admin\']);
 											<form id="datatable-filters" class="collapse">
 												<div class="row">
 													<div class="col-md-3 col-xl-2">
-														<label for="filter-document">Example</label>
-														<input class="form-control" type="text" id="filter-example" value="">
-													</div>
-													<div class="col-md-3 col-xl-2">
-														<label for="filter-status">Status</label>
-														<select class="form-control" id="filter-status">
-															<option value="ACTIVE" selected>Ativo</option>
-															<option value="INACTIVE">Inativo</option>
-															<option value="">Todos</option>
-														</select>
+														<label for="filter-id">ID</label>
+														<input class="form-control" type="number" id="filter-id" value="">
 													</div>
 												</div>
 												<button class="btn btn-primary btn-sm mt-3" type="button" onClick="listDatatable()">Aplicar filtros</button>
@@ -90,7 +295,8 @@ $userData = Auth::validateSession([\'admin\']);
 													class="dataTable table table-sm table-striped table-hover w-100">
 													<thead>
 														<tr>
-															<th>Example</th>
+                                                            <th>ID</th>
+															'.$datatableTableView.'
 															<th>Ações</th>
 														</tr>
 													</thead>
@@ -128,13 +334,14 @@ $userData = Auth::validateSession([\'admin\']);
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
-							<form id="form-view-items">
+							<form id="form-view">
 								<div class="row">
-									<div class="form-group col-md-6 mb-2">
-										<label for="form-view-item-example">Example</label>
-										<input type="text" id="form-view-item-example" class="form-control"
+									<div class="form-group col-md-4 mb-2">
+										<label for="form-view-id">ID</label>
+										<input type="text" id="form-view-id" class="form-control"
 											value="" readonly>
 									</div>
+                                    '.$viewForm.'
 								</div>
 							</form>
 						</div>
@@ -155,13 +362,9 @@ $userData = Auth::validateSession([\'admin\']);
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
-							<form id="form-create-items">
+							<form id="form-create">
 								<div class="row">
-									<div class="form-group col-md-12 mb-2">
-										<label for="form-create-item-example">Example</label>
-										<input type="text" id="form-create-item-example" class="form-control"
-											value="">
-									</div>
+									'.$createForm.'
 								</div>
 							</form>
 						</div>
@@ -183,14 +386,10 @@ $userData = Auth::validateSession([\'admin\']);
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
-							<form id="form-edit-items">
+							<form id="form-edit">
 								<div class="row">
-									<input type="text" id="form-edit-item-id" class="form-control" value="" hidden>
-									<div class="form-group col-md-12 mb-2">
-										<label for="form-edit-item-example">Example</label>
-										<input type="text" id="form-edit-item-example" class="form-control"
-											value="">
-									</div>                     
+									<input type="text" id="form-edit-id" class="form-control" value="" hidden>
+									 '.$editForm.'                    
 								</div>
 							</form>
 						</div>
@@ -213,9 +412,9 @@ $userData = Auth::validateSession([\'admin\']);
 						</div>
 						<div class="modal-body">
 							<p>Você tem certeza que quer apagar este registro?</p>
-							<form id="form-delete-company">
+							<form id="form-delete">
 								<div class="row">
-									<input type="text" id="form-delete-users-id" class="form-control" value="" hidden>
+									<input type="text" id="form-delete-id" class="form-control" value="" hidden>
 								</div>
 							</form>
 						</div>
@@ -237,98 +436,44 @@ $userData = Auth::validateSession([\'admin\']);
 	<?php Core::scriptsJs(); ?>
 
 	<!-- Controller -->
-	<script src="app\controllers\\'.$name.'\script.js"></script>
+	<script src="app\controllers\\'.$tableName.'\\script.js"></script>
 
 </body>
 
 </html>
+
 ';
 
-    if(!is_dir("build/frontend/app/views/$name")){
-        mkdir("build/frontend/app/views/$name", 0751);
-        echo "\nPasta 'build/frontend/app/views/$name' criada.";
-    }else{
-        echo "\nPasta 'build/frontend/app/views/$name' já existente.";
-    }
-
-    $arquivo = fopen("build/frontend/app/views/$name/$name.php", 'w');
+    $arquivo = fopen("build/frontend/app/views/$tableName/$tableName.php", 'w');
     if($arquivo == false){
-        return "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar View (".$name.")" . "\033[0m";
+        echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar ".$tableName.".php)". "\033[0m";
+        return false;
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            return "\033[1;31m"."\n(500 Internal Server Error) Falha ao preencher View (".$name.")" . "\033[0m";
+            echo "\033[1;31m"."\n(500 Internal Server Error)Falha ao preencher ".$tableName.".php)". "\033[0m";
+            return false;
         }else{
-            echo "\033[1;32m"."\n(200 OK) View '".$name."' criada com sucesso." . "\033[0m";
+            echo "\033[1;32m"."\n(200 OK) View ".$tableName." criada com sucesso.". "\033[0m";
         }
     } 
 
-    $routeName = strtolower($name);
+    /**
+     * FIM - View
+     */
 
-    echo "\nCriando rotas ({$name})";
+    /**
+     * Controller
+     */
 
-    if(!is_dir("build/frontend/app/routes/") && !file_exists("build/frontend/app/routes/routes.php")){
-        echo "\n(404 Not found) Arquivo de rotas não encontrado";
-        return null;
-    }else{
-        $arquivo = fopen ('build/frontend/app/routes/routes.php', 'r');
-        $result = [];
-        while(!feof($arquivo)){
-            $result[] = explode("];",fgets($arquivo));
-        }
-        fclose($arquivo);
+$snippet= '
 
-        $snippet = "";
-        $rows = count($result);
-
-        foreach($result as $line){
-            if (--$rows <= 0) {
-                break;
-            }
-            $snippet.= $line[0];
-        }
-
-$snippet .= '    //'.$name.' route
-    "'.$routeName.'" => fn() => Router::get("app/views/'.$routeName.'/'.$routeName.'.php"),
-];
-
-Router::ImpetusRouter($routes);';
-
-        $arquivo = fopen("build/frontend/app/routes/routes.php", 'w');
-        if($arquivo == false){
-            echo "\033[1;31m" . "\n(500 Server Internal Error) Falha ao criar arquivo de rotas" . "\033[0m" ;
-            return null;
-        }else{
-            $escrever = fwrite($arquivo, $snippet);
-            if($escrever == false){
-                echo "\033[1;31m" . "\n(500 Server Internal Error) Falha ao preencher arquivo de rotas" . "\033[0m";
-                return null;
-            }else{
-                echo "\033[1;32m" . "\n(200 OK) Rota criada com sucesso" . "\033[0m";
-            }
-        } 
-    }
-
-/**
- * Criando arquivo controller JS
- */
-
- echo "\nCriando Controller JS ({$name})";
-
-    $snippet = "";
-
-/**
- * Criando View
- */
-
-$snippet.= '//Init function
 $(document).ready(function () {
+    //Carregar tabela
     listDatatable()
 })
 
-//Render datatable */
 listDatatable = (currentPage = 1) => {
-    console.log("Carregando tabela...")
 
     //Limpar tabela
     $("#datatable-body").empty();
@@ -340,12 +485,11 @@ listDatatable = (currentPage = 1) => {
     $(\'#datatable-error\').append(trHTML);
 
     //Buscar dados
-    axios.get($("#endPoint").val() + `example/method`, {
+    axios.get($("#endPoint").val() + `'.$tableName.'/list`, {
         params: {
             currentPage : currentPage,
             dataPerPage : 10,
-            name: $(\'#filter-example\').val(),
-            status: $(\'#filter-status\').val(),
+            id: $("#filter-id").val()
         },
         headers: { 
             Authorization : `Bearer ` + $("#sessionToken").val()
@@ -362,14 +506,12 @@ listDatatable = (currentPage = 1) => {
                 text: \'Falha ao carregar tabela\',
             })
         } else {
-            console.log(response.data)
             //Renderiza os dados da tabela  
             var trHTML = \'\';
             $.each(response.data.data, function (i, item) {
                 trHTML += \'<tr>\';
-                trHTML += \'<td>\' + item.username + \'</td>\';
-                trHTML += \'<td>\' + item.name + \'</td>\';
-                trHTML += \'<td>\' + item.permission + \'</td>\';
+                trHTML += \'<td>\' + item.id + \'</td>\';
+                '.$datatableRequest.'
                 trHTML += `<td class="table-action">
                                 <a href="#"><i class="align-middle" data-feather="eye"
                                         onclick="readItems(` + item.id + `)"></i></a>
@@ -424,17 +566,14 @@ listDatatable = (currentPage = 1) => {
     
 }
 
-//Open create modal
 createItems = () => {
     $(".form-control").val(null)
     $(\'#create-items\').modal(\'show\')
 }
 
-//Send create request
 storeItems = () => {
-    axios.post($("#endPoint").val() + `example/method`, {
-        name: $("#form-create-item-example").val(),
-        status: \'ACTIVE\'
+    axios.post($("#endPoint").val() + `'.$tableName.'/create`, {
+        '.$createRequest.'
     }, {
         headers: { 
             Authorization : `Bearer ` + $("#sessionToken").val()
@@ -464,9 +603,8 @@ storeItems = () => {
     });
 }
 
-//Open view modal
 readItems = (id) => {
-    axios.get($("#endPoint").val() + `example/method`, {
+    axios.get($("#endPoint").val() + `'.$tableName.'/get`, {
         params: {
             id: id
         },
@@ -481,7 +619,8 @@ readItems = (id) => {
                 text: \'Algo deu errado!\',
             })
         } else {
-            $("#form-view-item-example").val(response.data.data.example)
+            $("#form-view-id").val(response.data.data.id)
+            '.$viewRequest.'
             $("#view-items").modal("show")
         }
     }).catch((error) => {
@@ -493,10 +632,9 @@ readItems = (id) => {
     });
 }
 
-//Open edit modal
 editItems = (id) => {
     setTimeout(() => {
-        axios.get($("#endPoint").val() + `example/method`, {
+        axios.get($("#endPoint").val() + `'.$tableName.'/get`, {
             params: {
                 id: id
             },
@@ -511,7 +649,8 @@ editItems = (id) => {
                     text: \'Algo deu errado!\',
                 })
             } else {
-                $("#form-edit-item-id").val(response.data.data.id)
+                $("#form-edit-id").val(response.data.data.id)
+                '.$editRequest.'
                 $("#edit-items").modal("show")
             }
         }).catch((error) => {
@@ -524,10 +663,10 @@ editItems = (id) => {
     }, 100);
 }
 
-//Send update request
 updateItems = () => {
-    axios.put($("#endPoint").val() + `example/method`, {
-        id: $("#form-edit-item-id").val(),
+    axios.put($("#endPoint").val() + `'.$tableName.'/update`, {
+        id: $("#form-edit-id").val(),
+        '.$updateRequest.'
     }, {
         headers: { 
             Authorization : `Bearer ` + $("#sessionToken").val()
@@ -557,17 +696,15 @@ updateItems = () => {
     });
 }
 
-//Open delete modal
 deleteItems = (id) => {
-    $("#form-delete-item-id").val(id)
+    $("#form-delete-id").val(id)
     $(\'#delete-items\').modal(\'show\')
 }
 
-//Send delete request
 destroyItems = () => {
-    axios.delete($("#endPoint").val() + `example/method`, { 
+    axios.delete($("#endPoint").val() + `'.$tableName.'/delete`, { 
         params: {
-            id: $("#form-delete-item-id").val()
+            id: $("#form-delete-id").val()
         },
         headers: { 
             Authorization : `Bearer ` + $("#sessionToken").val()
@@ -596,25 +733,150 @@ destroyItems = () => {
         })
     });
 }
+
 ';
 
-    if(!is_dir("build/frontend/app/controllers/$name")){
-        mkdir("build/frontend/app/controllers/$name", 0751);
-        echo "\nPasta 'build/frontend/app/controllers/$name' criada.";
-    }else{
-        echo "\nPasta 'build/frontend/app/controllers/$name' já existente.";
-    }
-
-    $arquivo = fopen("build/frontend/app/controllers/$name/script.js", 'w');
+    $arquivo = fopen("build/frontend/app/controllers/$tableName/script.js", 'w');
     if($arquivo == false){
-        return "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar Controller JS (".$name.")" . "\033[0m";
+        echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar ".$tableName.".js)". "\033[0m";
+        return false;
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            return "\033[1;31m"."\n(500 Internal Server Error) Falha ao preencher Controller JS(".$name.")" . "\033[0m";
+            echo "\033[1;31m"."\n(500 Internal Server Error)Falha ao preencher ".$tableName.".js)". "\033[0m";
+            return false;
         }else{
-            echo "\033[1;32m"."\n(200 OK) Controller JS '".$name."' criado com sucesso." . "\033[0m";
+            echo "\033[1;32m"."\n(200 OK) Controller ".$tableName." criado com sucesso.". "\033[0m";
         }
     } 
 
+     /**
+      * Fim - Controller
+      */
+
+    /**
+     * Routes
+     */
+
+     $routeName = strtolower($tableName);
+
+    echo "\nCriando rotas ({$tableName})";
+
+    if(!is_dir("build/frontend/app/routes/") && !file_exists("build/frontend/app/routes/routes.php")){
+        echo "\n(404 Not found) Arquivo de rotas não encontrado";
+        return null;
+    }else{
+        $arquivo = fopen ('build/frontend/app/routes/routes.php', 'r');
+        $result = [];
+        while(!feof($arquivo)){
+            $result[] = explode("];",fgets($arquivo));
+        }
+        fclose($arquivo);
+
+        $snippet = "";
+        $rows = count($result);
+
+        foreach($result as $line){
+            if (--$rows <= 0) {
+                break;
+            }
+            $snippet.= $line[0];
+        }
+
+$snippet .= '    //'.$tableName.' View
+    "'.$routeName.'" => fn() => Router::get("app/views/'.$routeName.'/'.$routeName.'.php"),
+];
+
+Router::ImpetusRouter($routes);';
+
+        $arquivo = fopen("build/frontend/app/routes/routes.php", 'w');
+        if($arquivo == false){
+            echo "\033[1;31m" . "\n(500 Server Internal Error) Falha ao criar arquivo de rotas" . "\033[0m" ;
+            return null;
+        }else{
+            $escrever = fwrite($arquivo, $snippet);
+            if($escrever == false){
+                echo "\033[1;31m" . "\n(500 Server Internal Error) Falha ao preencher arquivo de rotas" . "\033[0m";
+                return null;
+            }else{
+                echo "\033[1;32m" . "\n(200 OK) Rota criada com sucesso" . "\033[0m";
+                return null;
+            }
+        } 
+    }
+    
+  
+    }else{
+        $error = $stmt->errorInfo();
+        $error = $error[2];
+        echo "\033[1;31m"."\n(500 Internal Server Error) ". $error ."\033[0m";
+        return false;
+    }
+
+}
+
+function field($fieldName, $tag, $type, $enum = [])
+{
+    $firstCharUppercase = ucfirst($fieldName);
+    if($type == "int" || $type == "tinyint" || $type == "smallint" || $type == "mediumint" || $type == "bigint"){
+        return '
+        <div class="form-group col-md-4 mb-2">
+            <label for="form-'.$tag.'-'.$fieldName.'">'.$firstCharUppercase.'</label>
+            <input type="number" id="form-'.$tag.'-'.$fieldName.'" class="form-control" value="">
+        </div>
+        ';
+    }elseif($type == "float" || $type == "decimal" || $type == "double" || $type == "real" || $type == "bit" || $type == "serial"){
+        return '
+        <div class="form-group col-md-4 mb-2">
+            <label for="form-'.$tag.'-'.$fieldName.'">'.$firstCharUppercase.'</label>
+            <input type="number" step="0.01" id="form-'.$tag.'-'.$fieldName.'" class="form-control" value="">
+        </div>
+        ';
+    }elseif($type == "boolean"){
+        return '
+        <div class="form-group col-md-4 mb-2">
+            <label for="form-'.$tag.'-'.$fieldName.'">'.$firstCharUppercase.'</label>
+            <select class="form-control" id="form-'.$tag.'-'.$fieldName.'">
+                <option value="1">True</option>
+                <option value="0">False</option>
+            </select>
+        </div>
+        ';
+    }elseif($type == "date"){
+        return '
+        <div class="form-group col-md-4 mb-2">
+            <label for="form-'.$tag.'-'.$fieldName.'">'.$firstCharUppercase.'</label>
+            <input type="date" step="0.01" id="form-'.$tag.'-'.$fieldName.'" class="form-control" value="">
+        </div>
+        ';
+    }elseif($type == "datetime"){
+        return '
+        <div class="form-group col-md-4 mb-2">
+            <label for="form-'.$tag.'-'.$fieldName.'">'.$firstCharUppercase.'</label>
+            <input type="datetime-local" id="form-'.$tag.'-'.$fieldName.'" class="form-control" value="">
+        </div>
+        ';
+    }elseif($type == "enum"){
+        $tempOptions = "";
+        foreach($enum as $option){
+            $firstCharUppercaseOption = ucfirst($option);
+            $tempOptions .= '<option value="'.$option.'">'.$firstCharUppercaseOption.'</option>';
+        }
+        return '
+        <div class="form-group col-md-4 mb-2">
+            <label for="form-'.$tag.'-'.$fieldName.'">'.$firstCharUppercase.'</label>
+            <select class="form-control" id="form-'.$tag.'-'.$fieldName.'">
+                '. $tempOptions.'
+            </select>
+        </div>
+        ';
+    }else{
+        return '
+        <div class="form-group col-md-4 mb-2">
+            <label for="form-'.$tag.'-'.$fieldName.'">'.$firstCharUppercase.'</label>
+            <input type="text" id="form-'.$tag.'-'.$fieldName.'" class="form-control" value="">
+        </div>
+        ';
+    }
+    
 }

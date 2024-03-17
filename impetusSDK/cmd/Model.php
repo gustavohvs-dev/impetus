@@ -132,12 +132,12 @@ class '.$functionName.'
         $query = "SELECT * FROM '.$tableName.' ";
 
         //Filtros
-        /**$clausule = "WHERE ";
-        if(isset($data["status"]) && !empty($data["status"])) {
-            $query .= $clausule . "status = \'".$data["status"]."\'";
+        $clausule = "WHERE ";
+        if(isset($data["id"]) && !empty($data["id"])) {
+            $query .= $clausule . "id = \'".$data["id"]."\'";
             $clausule = " AND ";
         }
-        if(isset($data["name"]) && !empty($data["name"])) {
+        /**if(isset($data["name"]) && !empty($data["name"])) {
             $query .= $clausule . "name LIKE \'%".$data["name"]."%\'";
             $clausule = " AND ";
         }*/
