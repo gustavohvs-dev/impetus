@@ -157,9 +157,12 @@ class ImpetusUtils
         if($data && $data->format('Y-m-d H:i:s') === $string){
            $isDate = true;
         }
+        $data = \DateTime::createFromFormat('Y-m-d H:i', $string);
+        if($data && $data->format('Y-m-d H:i') === $string){
+            $isDate = true;
+        }
         return $isDate;
     }
-
     /**
      * isEmail
      */
