@@ -261,6 +261,32 @@ class '.$functionName.'
         return (object)$response;
     }
 
+    static function select'.$functionName.'($queryParams)
+    {
+        require "app/config/config.php";
+        $searchField = \'name\';
+        $query = "SELECT id AS id, ".$searchField." AS text FROM '.$tableName.' ";
+        $clausule = "WHERE ";
+        if (isset($queryParams[$searchField]) && !empty($queryParams[$searchField])) {
+            $query .= $clausule . $searchField . " LIKE \'%$queryParams[$searchField]%\'";
+            $clausule = " AND ";
+        }
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+
+        $data = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        if ($data <> null) {
+            return $data;
+        } else {
+            $response = [
+                "status" => 0,
+                "error" => "Nenhum dado encontrado!"
+            ];
+            return $response;
+        }
+    }
+
 }
 ';
 

@@ -30,9 +30,11 @@ function routes($tableName)
 $snippet .= '    //'.$functionName.' routes
     "'.$tableName.'/get" => fn() => Router::get("app/controllers/'.$tableName.'/get'.$functionName.'.php"),
     "'.$tableName.'/list" => fn() => Router::get("app/controllers/'.$tableName.'/list'.$functionName.'.php"),
+    "'.$tableName.'/select" => fn() => Router::get("app/controllers/'.$tableName.'/select'.$functionName.'.php"),
     "'.$tableName.'/create" => fn() => Router::post("app/controllers/'.$tableName.'/create'.$functionName.'.php"),
     "'.$tableName.'/update" => fn() => Router::put("app/controllers/'.$tableName.'/update'.$functionName.'.php"),
     "'.$tableName.'/delete" => fn() => Router::delete("app/controllers/'.$tableName.'/delete'.$functionName.'.php"),
+    
 ];
 
 Router::ImpetusRouter($routes);';
