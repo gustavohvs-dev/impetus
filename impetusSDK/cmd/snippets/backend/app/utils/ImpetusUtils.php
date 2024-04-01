@@ -521,7 +521,7 @@ class ImpetusUtils
             $string = strtolower($string);
         }
 
-        if($enumParam == true){
+        if($enumParam == true && $string != null){
             $validate = false;
             $list = explode("|", $enumParamValue);
             $itens = "";
