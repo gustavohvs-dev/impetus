@@ -52,7 +52,7 @@ function view($tableName)
                 //Criando regras de validação
                 $columnType = $column["Type"];
 
-                if($columnType == 'date' || $columnType == 'datetime'){
+                if($columnType == 'date' || $columnType == 'datetime' || $columnType == 'text' || $columnType == 'longtext' || $columnType == 'mediumtext' || $columnType == 'tinytext'){
                     $type = $columnType;
                     $typeArgs = null;
                 }else{
@@ -80,6 +80,17 @@ function view($tableName)
                     $ruleArgs = "'type(datetime)'";
                     array_push($documentation, [$column['Field'], $type, "2024-01-01 21:00:00"]);
                 }elseif($type == "tinytext" || $type == "text" || $type == "mediumtext" || $type == "longtext"){
+                    if($type == "tinytext"){
+                        $typeArgs = 255;
+                    }elseif($type == "text"){
+                        $typeArgs = 65535;
+                    }elseif($type == "mediumtext"){
+                        $typeArgs = 16777215;
+                    }elseif($type == "longtext"){
+                        $typeArgs = 4294967295;
+                    }else{
+                        $typeArgs = 65535; 
+                    }
                     $ruleArgs = "'type(string)', 'specialChar'";
                     $ruleArgs .= ", 'length(".$typeArgs.")'";
                     array_push($documentation, [$column['Field'], $type, "lorem ipsum dolor sit amet consectetur adipiscing elit"]);
