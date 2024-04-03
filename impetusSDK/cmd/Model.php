@@ -231,6 +231,39 @@ class '.$functionName.'
     static function delete'.$functionName.'($id)
     {
         require "app/config/config.php";
+        $stmt = $conn->prepare("UPDATE '.$tableName.' SET status = \'INACTIVE\' WHERE '.$primaryKey.' = :ID");
+        $stmt->bindParam(":ID", $id, \PDO::PARAM_INT);
+        if ($stmt->execute()) {
+            if($stmt->rowCount() != 0){
+                $response = [
+                    "status" => 1,
+                    "code" => 200,
+                    "info" => "Registro inativado com sucesso",
+                ];
+            }else{
+                $response = [
+                    "status" => 0,
+                    "code" => 404,
+                    "info" => "Falha ao inativar registro",
+                    "error" => "Not found entry (".$id.") for key (id)"
+                ];
+            }
+        } else {
+            $error = $stmt->errorInfo();
+            $error = $error[2];
+            $response = [
+                "status" => 0,
+                "code" => 404,
+                "info" => "Falha ao inativar registro",
+                "error" => $error
+            ];  
+        }
+        return (object)$response;
+    }
+
+    static function inactive'.$functionName.'($id)
+    {
+        require "app/config/config.php";
         $stmt = $conn->prepare("DELETE FROM '.$tableName.' WHERE '.$primaryKey.' = :ID");
         $stmt->bindParam(":ID", $id, \PDO::PARAM_INT);
         if ($stmt->execute()) {
