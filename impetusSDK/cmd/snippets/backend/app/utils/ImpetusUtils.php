@@ -19,6 +19,14 @@ class ImpetusUtils
     }
 
     /**
+     * dateToken
+     */
+    static public function dateToken($prefix = '', $sufix = '')
+    {
+        return $prefix . date('Y') . "." . date('m') . "." . date('d') . "." . date('h') . date('i') . date('s') . rand(10,99) .  $sufix;
+    }
+
+    /**
      * token
      */
     static public function token($size = 10, $config = null)
