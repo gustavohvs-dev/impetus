@@ -262,12 +262,17 @@ class Core
         ';
     }
 
-    static function select($permission, $title, $idForm, $endpoint, $params, $size = 12, $hideToClient = 0)
+    static function select($title, $idForm, $endpoint, $params, $size = 12, $permissionsAllowed = null, $permission = null)
     {
-        if($hideToClient == 1){
-            $hide = ($permission == "user") ? "hidden" : "";
-        }else{
-            $hide = "";
+        $hide = "";
+        if($permissionsAllowed != null){
+            $hide = "hidden";
+            foreach($permissionsAllowed as $permissionCheck)
+            {
+                if($permissionCheck == $permission){
+                    $hide = "";
+                }
+            }
         }
 
         $select = $idForm . "-filter";

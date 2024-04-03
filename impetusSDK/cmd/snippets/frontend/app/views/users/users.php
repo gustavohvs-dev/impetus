@@ -68,7 +68,7 @@ $userData = Auth::validateSession(['admin']);
 															<option value="">Todos</option>
 														</select>
 													</div>
-													<?php Core::select("ADMIN", "Empresa", "filter-companyid", "companies/select", "status: 'ACTIVE',corporateName: this.value", 8);?>
+													<?php Core::select("Empresa", "filter-companyid", "companies/select", "status: 'ACTIVE',corporateName: this.value", 8);?>
 												</div>
 												<button class="btn btn-primary btn-sm mt-3" type="button" onClick="listDatatable()">Aplicar filtros</button>
 												<hr>
@@ -179,7 +179,7 @@ $userData = Auth::validateSession(['admin']);
 										<input type="email" id="form-create-users-email" class="form-control"
 											value="">
 									</div>
-									<?php Core::select("ADMIN", "Empresa", "form-create-users-companyid", "companies/select", "status: 'ACTIVE',corporateName: this.value");?>
+									<?php Core::select("Empresa", "form-create-users-companyid", "companies/select", "status: 'ACTIVE',corporateName: this.value");?>
 									<!-- Fim Select -->
 									<div class="form-group col-md-12 mb-2">
 										<label for="form-create-users-username">Usuário</label>
@@ -235,7 +235,7 @@ $userData = Auth::validateSession(['admin']);
 										<label for="form-edit-users-name">E-mail</label>
 										<input type="text" id="form-edit-users-email" class="form-control" value="">
 									</div>
-									<?php Core::select("ADMIN", "Empresa", "form-edit-users-companyid", "companies/select", "status: 'ACTIVE',corporateName: this.value");?>
+									<?php Core::select("Empresa", "form-edit-users-companyid", "companies/select", "status: 'ACTIVE',corporateName: this.value");?>
 									<div class="form-group col-md-12 mb-2">
 										<label for="form-edit-users-permission">Permissão</label>
 										<select id="form-edit-users-permission" class="form-control">
