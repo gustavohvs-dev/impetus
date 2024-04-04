@@ -24,10 +24,18 @@
 
 ::-webkit-scrollbar{
     background-color: white;
-    width: 5px;
+    width: 7px;
 }
 
 ::-webkit-scrollbar-thumb{
     background-color: #55a9e1;
-    width: 5px;
+    width: 7px;
+}
+
+body[data-theme=colored] .sidebar-content {
+    background: linear-gradient(135deg, #0e3b80, #195cc0 40%, #3268b9)
+}
+
+body[data-theme=colored] .sidebar {
+    background: linear-gradient(135deg, #0e3b80, #195cc0 40%, #3268b9)
 }

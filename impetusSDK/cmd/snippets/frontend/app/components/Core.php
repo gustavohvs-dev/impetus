@@ -205,7 +205,7 @@ class Core
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-icon pe-md-0 dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                            <img src="app/public/assets/avatar.jpg" class="avatar img-fluid rounded" alt="User photo" />
+                            <i class="align-middle" data-feather="user"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <!--<a class="dropdown-item" href="503"><i class="align-middle me-1" data-feather="user"></i> Perfil</a>
