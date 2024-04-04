@@ -34,6 +34,16 @@ Caso queria construir apenas a interface de usuário, utilize a opção abaixo:
 php impetus init --frontend
 ```
 
+Após rodar o comando init, crie um banco de dados para a aplicação e configure o arquivo config.php (situado em ./build/backend/config) utilizando as credenciais e caminho de acesso ao banco de dados.
+
+Feito a configuração do banco de dados execute o comando abaixo para criar as tabelas do sistema.
+
+```shell
+php impetus migrate --up
+```
+
+Após esses passos sua aplicação já estará disponível para utilização.
+
 <hr>
 
 ### Guia de Comandos (CLI)
