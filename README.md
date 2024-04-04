@@ -2,7 +2,7 @@
 ImpetusPHP - Framework de Desenvolvimento de Aplicações Web
 
 ### Sobre
-O ImpetusPHP é um framework que permite a criação de aplicações web no padrão MVC, proporcionando maior velocidade no processo de desenvolvimento e garantindo a qualidade e a segurança do software. O framework conta com funções que permitem a automatização da criação de web services e interfaces do usuário, além de disponibilizar funções utilitárias comumente utilizadas no dia a dia do programador.
+O ImpetusPHP é um framework que permite a criação de aplicações web no padrão cliente-servidor, proporcionando maior velocidade no processo de desenvolvimento e garantindo a qualidade e a segurança do software. O framework conta com funções que permitem a automatização da criação de web services e interfaces do usuário, além de disponibilizar funções utilitárias comumente utilizadas no dia a dia do programador.
 
 ### Guia de Instalação
 Primeiramente realize a instação do PHP, MySQL/MariaDB e Composer. Após a instalação destes softwares, prossiga com o clone do framework pelo Github ou Composer.
