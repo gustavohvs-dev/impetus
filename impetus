@@ -27,9 +27,18 @@ if(!isset($argv[1])){
     if($command == 'cmd' || $command == 'help'){
         available($availableCommands);
     }elseif($command == 'migrate'){
-        if($argc == 2){
-            migrate();
-            echo "\n";
+        if($argc == 3){
+            if($argv[2] == '--up' || $argv[2] == '--sync'){
+                migrate();
+                echo "\n";
+            }elseif($argv[2] == '--create'){
+                migrateCreateExamples();
+                echo "\n";
+            }else{
+                echo "Tipo de comando migrate inexistente. \n";
+                echo "Exemplo de comando: php impetus migrate --arg. \n";
+                echo "Opções de migrate: up, sync e create. \n\n";
+            }
         }else{
             echo "\nNúmero de argumentos incorretos. \n";
             echo "Exemplo de comando: php impetus migrate. \n\n";
