@@ -51,7 +51,7 @@ if(!isset($argv[1])){
                 controller($argv[3]);
             }elseif($argv[2] == '--routes'){
                 routes($argv[3]);
-            }elseif($argv[2] == '--all'){
+            }elseif($argv[2] == '--webservice'){
                 build($argv[3]);
             }elseif($argv[2] == '--api'){
                 api($argv[3]);
@@ -64,12 +64,12 @@ if(!isset($argv[1])){
             }else{
                 echo "Tipo de comando build inexistente. \n";
                 echo "Exemplo de comando: php impetus build --arg tablename. \n";
-                echo "Opções de build: model, controller, routes, all, api, view, raw-view, empty-view. \n\n";
+                echo "Opções de build: model, controller, routes, webservice, api, view, raw-view, empty-view. \n\n";
             }
         }else{
             echo "\nNúmero de argumentos incorretos. \n";
             echo "Exemplo de comando: php impetus build --arg tablename. \n";
-            echo "Opções de build: model, controller, routes, all, api, view, raw-view, empty-view. \n\n";
+            echo "Opções de build: model, controller, routes, webservice, api, view, raw-view, empty-view. \n\n";
         }
     }elseif($command == 'init'){
         if($argc == 3 || $argc == 2){

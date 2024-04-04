@@ -4,6 +4,7 @@ use app\utils\ImpetusJWT;
 use app\utils\ImpetusUtils;
 use app\models\Companies;
 use app\models\Auth;
+use app\models\Log;
 
 function webserviceMethod(){
 
@@ -106,9 +107,9 @@ function webserviceMethod(){
             $data = [
                 "id" => $jsonParams->id,
                 "status" => $jsonParams->status,
-						"corporateName" => $jsonParams->corporateName,
-						"name" => $jsonParams->name,
-						"document" => $jsonParams->document,
+                "corporateName" => $jsonParams->corporateName,
+                "name" => $jsonParams->name,
+                "document" => $jsonParams->document,
                 "updatedAt" => $datetime
             ];
 
@@ -119,14 +120,25 @@ function webserviceMethod(){
                     "code" => "400 Bad request",
                     "response" => $request
                 ];
-                return (object)$response;
             }else{
                 $response = [
                     "code" => "200 OK",
                     "response" => $request
-                ];
-                return (object)$response;
+                ];  
             }
+
+            //Registrar log
+            Log::createLog([
+                "tag" => "companies",
+                "endpoint" => "companies/update",
+                "method" => "PUT",
+                "request" => json_encode($jsonParams),
+                "response" => json_encode($response),
+                "description" => $request->info,
+                "userId" => $jwt->payload->id
+            ]);
+
+            return (object)$response;
         }
     }
 

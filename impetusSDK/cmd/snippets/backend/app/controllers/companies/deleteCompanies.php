@@ -4,6 +4,7 @@ use app\utils\ImpetusJWT;
 use app\utils\ImpetusUtils;
 use app\models\Companies;
 use app\models\Auth;
+use app\models\Log;
 
 function webserviceMethod(){
 
@@ -80,14 +81,25 @@ function webserviceMethod(){
             "code" => "400 Bad request",
             "response" => $deletar
         ];
-        return (object)$response;
     }else{
         $response = [
             "code" => "200 OK",
             "response" => $deletar
         ];
-        return (object)$response;
     }
+
+    //Registrar log
+    Log::createLog([
+        "tag" => "companies",
+        "endpoint" => "companies/delete",
+        "method" => "DELETE",
+        "request" => json_encode($urlParams),
+        "response" => json_encode($response),
+        "description" => $deletar->info,
+        "userId" => $jwt->payload->id
+    ]);
+
+    return (object)$response;
     
 }
 

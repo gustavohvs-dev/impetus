@@ -4,6 +4,7 @@ use app\utils\ImpetusJWT;
 use app\utils\ImpetusUtils;
 use app\models\Users;
 use app\models\Auth;
+use app\models\Log;
 
 function webserviceMethod(){
 
@@ -138,14 +139,25 @@ function webserviceMethod(){
                     "code" => "400 Bad request",
                     "response" => $request
                 ];
-                return (object)$response;
             }else{
                 $response = [
                     "code" => "200 OK",
                     "response" => $request
                 ];
-                return (object)$response;
             }
+
+            //Registrar log
+            Log::createLog([
+                "tag" => "users",
+                "endpoint" => "users/update",
+                "method" => "PUT",
+                "request" => json_encode($jsonParams),
+                "response" => json_encode($response),
+                "description" => $request->info,
+                "userId" => $jwt->payload->id
+            ]);
+
+            return (object)$response;
         }
     }
 

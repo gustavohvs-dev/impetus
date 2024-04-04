@@ -38,9 +38,12 @@ class Migrate00000000_0
     {
         $table = "(
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            tag VARCHAR(512) NOT NULL,
+            endpoint TEXT(2000) NOT NULL,
             method VARCHAR(512) NOT NULL,
             request TEXT(8000) NOT NULL,
             response TEXT(8000) NOT NULL,
+            description TEXT(8000) NOT NULL,
             userId INT NOT NULL,
             createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
             FOREIGN KEY (userId) REFERENCES users(id)
@@ -73,7 +76,10 @@ class Migrate00000000_0
         $view = "
             LOG.id, 
             LOG.userId, 
-            USER.username, 
+            USER.username,
+            LOG.tag, 
+            LOG.description, 
+            LOG.endpoint,
             LOG.method, 
             LOG.request, 
             LOG.response, 

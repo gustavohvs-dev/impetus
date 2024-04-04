@@ -22,8 +22,10 @@ $routes = [
     "companies/update" => fn() => Router::put("app/controllers/companies/updateCompanies.php"),
     "companies/delete" => fn() => Router::delete("app/controllers/companies/deleteCompanies.php"),
 
-    //Teste
-    "test/impetus/filemanager" => fn() => Router::get("app/utils/ImpetusFileManager.php"),
+    //Log routes
+    "log/get" => fn() => Router::get("app/controllers/log/getLog.php"),
+    "log/list" => fn() => Router::get("app/controllers/log/listLog.php"),
+    "log/create" => fn() => Router::post("app/controllers/log/createLog.php"),
 ];
 
 Router::ImpetusRouter($routes);
