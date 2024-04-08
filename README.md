@@ -5,36 +5,51 @@ ImpetusPHP - Framework de Desenvolvimento de Aplicações Web
 O ImpetusPHP é um framework que permite a criação de aplicações web no padrão cliente-servidor, proporcionando maior velocidade no processo de desenvolvimento e garantindo a qualidade e a segurança do software. O framework conta com funções que permitem a automatização da criação de web services e interfaces do usuário, além de disponibilizar funções utilitárias comumente utilizadas no dia a dia do programador.
 
 ### Guia de Instalação
-Primeiramente realize a instação do PHP, MySQL/MariaDB e Composer. Após a instalação destes softwares, prossiga com o clone do framework pelo Github ou Composer.
 
-```shell
-composer require impetus/impetus
-```
-ou
+#### Dependências
+Antes de realizar a instação do framework, é necessário instalar a seguintes dependências:
+
+- Apache 2.4^;
+- PHP 7.^;
+- MariaDB 10.4.27^;
+- Composer 2.6.6^;
+
+Para facilitar a instalação das dependências, recomendamos a instalação do Xampp 7.^. O XAMPP é um pacote com os principais servidores de código aberto do mercado, nele já está incluído o Apache, MariaDB e o PHP. Para fazer o download clique no link abaixo:
+
+https://sourceforge.net/projects/xampp/files/
+
+Por fim faça o download do gerenciador de dependências Composer utilizando o link abaixo:
+
+https://getcomposer.org/
+
+#### Instalação do framework
+Com todas as dependências instaladas, realize o clone do projeto.
+
+Observação: Caso esteja usando o Xampp, faça o clone do projeto em 'xampp/htdocs'. Esta é a pasta raiz de todos os projetos no Xampp.
 
 ```shell
 git clone https://github.com/gustavohvs-dev/impetus
 ```
 
-Após realizar o clone do projeto, execute um dos comandos abaixo para gerar os arquivos iniciais de sua aplicação web.
-
-Caso queria construir uma aplicação completa com web service (backend) e interface de usuário (UI/Frontend), utilize a opção abaixo:
+Após realizar o clone do projeto, execute o comando abaixo para gerar os arquivos iniciais de sua aplicação web. O comando irá gerar um web service (backend) e uma interface de usuário (UI/frontend).
 
 ```shell
 php impetus init
 ```
-Caso queira construir apenas um web service ou microserviço, utilize a opção abaixo:
+
+Após rodar o comando init, crie um banco de dados para a aplicação e configure o arquivo config.php (situado em ./build/backend/config) utilizando as credenciais e caminho de acesso ao banco de dados. Segue abaixo um exemplo dos campos que você irá alterar do seu arquivo config.php:
 
 ```shell
-php impetus init --backend
+"database" => [
+        "type" => "mariadb",
+        "server" => "localhost",
+        "username" => "usuarioDoDatabase",
+        "password" => "senhaDoDatabase",
+        "database" => "nomeDoDatabase"
+        ],
 ```
-Caso queria construir apenas a interface de usuário, utilize a opção abaixo:
 
-```shell
-php impetus init --frontend
-```
-
-Após rodar o comando init, crie um banco de dados para a aplicação e configure o arquivo config.php (situado em ./build/backend/config) utilizando as credenciais e caminho de acesso ao banco de dados.
+Observação: Caso esteja utilizando o Xampp, abra o painel de controle do Xampp (localizado em xampp/xampp-control.exe) e inicie o módulo Apache e MySQL. Feito isso abra seu navegador e acesse http://localhost/phpMyAdmin, será aberto o phpMyAdmin, uma interface gráfica para a criação e gerenciamento de bancos de dados.
 
 Feito a configuração do banco de dados execute o comando abaixo para criar as tabelas do sistema.
 
@@ -42,13 +57,27 @@ Feito a configuração do banco de dados execute o comando abaixo para criar as 
 php impetus migrate --up
 ```
 
-Após esses passos sua aplicação já estará disponível para utilização.
+Após esses passos sua aplicação já estará disponível para utilização. Caso esteja utilizando o Xampp, acesse no seu navegador http://localhost/impetus/frontend e faça login no sistema utilizando o usuário padrão.
+
+#### Credenciais do usuário padrão
+
+Usuário: admin <br>
+Senha: admin
 
 <hr>
 
 ### Guia de Comandos (CLI)
 
 Lista de comandos que podem ser utilizados via terminal para automatizar tarefas.
+
+#### Init
+
+O comando 'init' inicia uma nova aplicação web com todos os recursos e funcionalidades que framework oferece.
+
+```shell
+php impetus migrate --arg
+```
+Argumentos disponíveis: --backend, --frontend.
 
 #### Migrate
 
@@ -81,32 +110,33 @@ O ImpetusUtils é uma classe que possui diversas funções comumente utilizadas 
 
 Lista de funções:
 
-- urlParams:
-- dateToken:
-- token:
-- isEmpty:
-- isLongString:
-- isShortString:
-- isNumber:
-- isInt:
-- enum:
-- isDate:
-- isDateTime:
-- isEmail:
-- isBoolean:
-- isPassword:
-- isStrongPassword:
-- isGreaterThan:
-- isLessThan:
-- isLessThanOrEqual:
-- isBetween:
-- purifyString:
-- validator:
-- bodyCheckFields:
-- base64UrlEncode:
-- base64UrlDecode:
-- getBearerToken:
-- datetime:
+- urlParams: Coleta parâmetros de uma URL;
+- dateToken: Cria um token único com base na data e hora do servidor;
+- token: Cria um token com base nos parâmetros informados;
+- isEmpty: Verifica se uma variável está vazia;
+- isLongString: Verifica se uma variável é longa com base no limite informado;
+- isShortString: Verifica se uma variável é curta com base no limite informado;
+- isNumber: Verifica se a variável é um número;
+- isInt: Verifica se a variável é um número inteiro;
+- enum: Verifica se a variável informada está presente em uma lista de opções disponíveis;
+- isDate: Verifica se a variável é uma data;
+- isDateTime: Verifica se a variável é um datetime (data e hora);
+- isEmail: Verifica se a variável é um email;
+- isBoolean: Verifica se a variável é um booleano;
+- isPassword: Verifica se a variável é uma senha segura;
+- isStrongPassword: Verifica se a variável é uma senha muito segura;
+- isGreaterThan: Verifica se a variável numérica é maior que outra variável numérica;
+- isGreaterThanOrEqual: Verifica se a variável numérica é maior ou igual que outra variável numérica;
+- isLessThan: Verifica se a variável númerica é menor que outra variável numérica;
+- isLessThanOrEqual: Verifica se a variável númerica é menor ou igual que outra variável numérica;
+- isBetween: Verifica se a variável númerica está entre duas outras variáveis numéricas;
+- purifyString: Realiza a limpeza de uma variável, substituindo caracteres especiais, removendo símbolos e outros tipos de caracteres de acordo com os parâmetros informados;
+- validator: Valida uma variável, utilizando diversos critérios definidos nos parâmetros, essa função foi feita para validar dados informados no corpo JSON de requisições feitas por APIs externas.
+- bodyCheckFields: Realiza a verificação de todos os dados informados no corpo JSON de requisições feitas por APIs externas, verificando de cada campo corresponde aos requisitos estabecidos.
+- base64UrlEncode: Criptografa um arquivo na base64;
+- base64UrlDecode: Descriptografa um arquivo em base64;
+- getBearerToken: Coleta o Bearer token de uma requisição;
+- datetime: Retorna a data e hora no fuso horário e formato solicitado.
 
 #### ImpetusJWT
 
