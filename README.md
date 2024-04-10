@@ -49,7 +49,7 @@ Após rodar o comando init, crie um banco de dados para a aplicação e configur
         ],
 ```
 
-Observação: Caso esteja utilizando o Xampp, abra o painel de controle do Xampp (localizado em xampp/xampp-control.exe) e inicie o módulo Apache e MySQL. Feito isso abra seu navegador e acesse http://localhost/phpMyAdmin, será aberto o phpMyAdmin, uma interface gráfica para a criação e gerenciamento de bancos de dados.
+Observação: Caso esteja utilizando o Xampp, abra o painel de controle do Xampp (localizado em xampp/xampp-control.exe) e inicie o módulo Apache e MySQL. Feito isso, abra seu navegador e acesse http://localhost/phpMyAdmin, será aberto o phpMyAdmin, uma interface gráfica para a criação e gerenciamento de bancos de dados.
 
 Feito a configuração do banco de dados execute o comando abaixo para criar as tabelas do sistema.
 
@@ -75,9 +75,14 @@ Lista de comandos que podem ser utilizados via terminal para automatizar tarefas
 O comando 'init' inicia uma nova aplicação web com todos os recursos e funcionalidades que framework oferece.
 
 ```shell
-php impetus migrate --arg
+php impetus init --arg
 ```
 Argumentos disponíveis: --backend, --frontend.
+
+- --backend: Cria apenas o web service do projeto, recomendado para projetos onde não será necessário uma interface de usuário.
+- --frontend: Cria apenas a interface gráfica da aplicação, recomendado para projetos que irão se conectar a um web service externo.
+
+Caso não seja informado nenhum argumento, o framework irá criar tanto o backend quanto o frontend da aplicação.
 
 #### Migrate
 
@@ -88,15 +93,34 @@ php impetus migrate --arg
 ```
 Argumentos disponíveis: --up, --sync, --create.
 
+- --up ou --sync: Sincroniza todas as migrations localizadas em './build/backend/database/migrations' com o seu banco de dados local;
+- --create: Cria uma nova migration na pasta './build/backend/database/migrations', essa migration vem com uma série de exemplos de como incluir tabelas e views no banco de dados, fazer alterações na estrutura de tabela e inserir dados.
+
 #### Build
 
 O comando 'build' automatiza diversas tarefas rotineiras no dia a dia do programador, leia atentamente cada uma de suas variações para saber como e quando usar.
 
 ```shell
-php impetus build --arg tableName
+php impetus build --arg param
 ```
 
-Argumentos disponíveis: --webservice, --model, --controler, --route, --api, --view, --raw-view, --empty-view.
+Argumentos disponíveis: --webservice, --model, --controllers, --routes, --api, --view, --raw-view, --empty-view.
+
+- --webservice: Utizando uma tabela no banco de dados definida em "param", o ImpetusPHP irá criar todos os arquivos necessários para disponilizar uma série de funcionalidades ao web service da aplicação. O framework cria a Model, Controllers e rotas disponibilizando os seguintes métodos: Criar, atualizar, buscar, listar, selecionar e deletar registros da tabela;
+
+- --model: Cria uma model tendo como base a tabela informada em "param";
+
+- --controllers: Cria os controllers tendo como base a tabela informada em "param";
+
+- --routes: Cria as rotas tendo como base a tabela informada em "param";
+
+- --api: Gera um arquivo contendo o boilerplate de uma API Client, o nome desse arquivo é definido em "param";
+
+- --view: Utilizando uma tabela no banco de dados definida em "param", o framework cria uma página inteiramente funcional com a possibilidade de criar, atualizar, buscar, listar, selecionar e deletar dados da tabela. Recomendamos utilizar o --view juntamente ao --webservice, para garantir o funcionamento completo da página, sem precisar de adaptações manuais no código;
+
+- --empty-view: Cria uma página vazia no sistema com o nome definido em "param", ela possui apenas os componentes básicos do sistema, tais como sidebar, topbar, footer e etc, porém não possui nenhuma funcionalidade pré-definida;
+
+- --raw-view: Cria uma página HTML vazia com o nome definido em "param";
 
 <hr>
 
