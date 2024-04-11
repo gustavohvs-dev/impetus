@@ -32,7 +32,7 @@ class Core
         <meta name="author" content="' . $headerParamsAuthor . '">
         <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
-        <title>'.$headerParamsTitle.'</title>
+        <title>' . $headerParamsTitle . '</title>
 
         <!-- Favicon -->
         <link rel="icon" type="image/x-icon" href="app/public/assets/favicon.png"> 
@@ -50,7 +50,6 @@ class Core
         <link class="js-stylesheet" href="app/public/css/custom.css" rel="stylesheet">
         
         ';
-
     }
 
     static function headerLogin($headerParams = [])
@@ -72,7 +71,7 @@ class Core
         <meta name="author" content="' . $headerParamsAuthor . '">
         <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
-        <title>'.$headerParamsTitle.'</title>
+        <title>' . $headerParamsTitle . '</title>
 
         <!-- Favicon -->
         <link rel="icon" type="image/x-icon" href="app/public/assets/favicon.png"> 
@@ -93,7 +92,6 @@ class Core
         </script>
         
         ';
-
     }
 
     static function scriptsJs()
@@ -119,48 +117,59 @@ class Core
     static function sidebar($userData)
     {
 
-        echo '
-        <nav id="sidebar" class="sidebar js-sidebar">
-			<div class="sidebar-content js-simplebar">
-                <a class="sidebar-brand" href="index">
-					<span class="sidebar-brand-text align-middle">
-					<img src="app/public/assets/sidebarLogo.png" alt="Logo" width="200"/>
-					</span>
-				</a>
-				<ul class="sidebar-nav">
-					<li class="sidebar-header">Cadastros</li>';
+        $menuJson = file_get_contents('app/components/menu/menu.json');
+        $menu = json_decode($menuJson);
 
-        if ($userData->permission == 'admin') {
+        echo '<nav id="sidebar" class="sidebar js-sidebar">
+        <div class="sidebar-content js-simplebar">
+            <a class="sidebar-brand" href="index">
+                <span class="sidebar-brand-text align-middle">
+                <img src="app/public/assets/sidebarLogo.png" alt="Logo" width="200"/>
+                </span>
+            </a>
+            <ul class="sidebar-nav">';
 
-            echo '
+        foreach($menu as $header)
+        {
+            if(isset($header->permissions) && in_array($userData->permission, $header->permissions) && $header->children){
 
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="users">
-                                <i class="align-middle" data-feather="users"></i> <span class="align-middle">Usuários</span>
+                echo '
+                <li class="sidebar-header">'.$header->title.'</li>';
+
+                foreach($header->children as $menuItem){
+                    if(isset($menuItem->permissions) && in_array($userData->permission, $menuItem->permissions)){
+                        if(isset($menuItem->pathname)){
+                            echo '<li class="sidebar-item">
+                            <a class="sidebar-link" href="'. $menuItem->pathname.'">
+                                <i class="align-middle" data-feather="'. $menuItem->icon.'"></i> <span class="align-middle">'. $menuItem->name.'</span>
                             </a>
-                        </li>
-                        <li class="sidebar-item">
-						<a data-bs-target="#pages" data-bs-toggle="collapse" class="sidebar-link collapsed">
-							<i class="align-middle" data-feather="briefcase"></i> <span class="align-middle">Empresas</span>
-						</a>
-						<ul id="pages" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
-							<li class="sidebar-item"><a class="sidebar-link" href="companies">Lista de empresas</a></li>
-						</ul>
-					</li>
+                            </li>';
+                        }elseif(isset($menuItem->children)){
+                            $tempToken = uniqid();
+                            echo '<li class="sidebar-item">
+                            <a data-bs-target="#p-'.$tempToken.'" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                                <i class="align-middle" data-feather="'. $menuItem->icon.'"></i> <span class="align-middle">'. $menuItem->name.'</span>
+                            </a>
+                            <ul id="p-'.$tempToken.'" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">';
+                            foreach($menuItem->children as $subMenuItem){
+                                if(isset($subMenuItem->permissions) && in_array($userData->permission, $subMenuItem->permissions)){
+                                    echo '<li class="sidebar-item"><a class="sidebar-link" href="'.$subMenuItem->pathname.'">'.$subMenuItem->name.'</a></li>';
+                                }
+                            }
+                            echo '</ul></li>';
+                        }
+                    }
+                }
 
-                        ';
+            }
 
         }
-
-        echo '
-
-				</ul>
-
-			</div>
-		</nav>
         
-        ';
+        echo '</ul>
 
+            </div>
+        </nav>
+        ';
     }
 
     static function topbar()
@@ -266,11 +275,10 @@ class Core
     static function select($title, $idForm, $endpoint, $params, $size = 12, $permissionsAllowed = null, $permission = null)
     {
         $hide = "";
-        if($permissionsAllowed != null){
+        if ($permissionsAllowed != null) {
             $hide = "hidden";
-            foreach($permissionsAllowed as $permissionCheck)
-            {
-                if($permissionCheck == $permission){
+            foreach ($permissionsAllowed as $permissionCheck) {
+                if ($permissionCheck == $permission) {
                     $hide = "";
                 }
             }
@@ -284,39 +292,39 @@ class Core
         $functionSelect = "dropdownSelect" . uniqid();
 
         echo '
-            <div class="form-group col-md-'.$size.' mb-2" '.$hide.'>
-                <label for="'.$idForm.'">'.$title.'</label>
-                <input id="'.$idForm.'" type="text" hidden />
-                <input id="'.$select.'" placeholder="Digite três caracteres para buscar..." type="text" autocomplete="off" class="form-control" onFocus="'.$functionDropdown.'(1)" onBlur="'.$functionDropdown.'(0)"/>
-                <div id="'.$selectShowDropdown.'" class="select-dropDown">
-                    <div id="'.$selectDropdown.'" class="select-listDropDown">
-                        <p class="'.$selectItem.'">Digite 3 caracteres para realizar a busca<p>
+            <div class="form-group col-md-' . $size . ' mb-2" ' . $hide . '>
+                <label for="' . $idForm . '">' . $title . '</label>
+                <input id="' . $idForm . '" type="text" hidden />
+                <input id="' . $select . '" placeholder="Digite três caracteres para buscar..." type="text" autocomplete="off" class="form-control" onFocus="' . $functionDropdown . '(1)" onBlur="' . $functionDropdown . '(0)"/>
+                <div id="' . $selectShowDropdown . '" class="select-dropDown">
+                    <div id="' . $selectDropdown . '" class="select-listDropDown">
+                        <p class="' . $selectItem . '">Digite 3 caracteres para realizar a busca<p>
                     </div>
                 </div>
             </div>
             <script>
-                document.querySelector("#'.$select.'").addEventListener("keyup", function () {
-                    document.querySelector("#'.$select.'").value = this.value;
-                    selectListDropDown = document.getElementById("'.$selectDropdown.'");
+                document.querySelector("#' . $select . '").addEventListener("keyup", function () {
+                    document.querySelector("#' . $select . '").value = this.value;
+                    selectListDropDown = document.getElementById("' . $selectDropdown . '");
                     if (this.value.length < 3) {
-                        selectListDropDown.innerHTML = `<p class="'.$selectItem.'">Digite 3 caracteres para realizar a busca<p>`;
+                        selectListDropDown.innerHTML = `<p class="' . $selectItem . '">Digite 3 caracteres para realizar a busca<p>`;
                     } else {
-                        selectListDropDown.innerHTML = `<p class="'.$selectItem.'">Carregando...<p>`;
-                        axios.get($("#endPoint").val() + `'.$endpoint.'`, {
+                        selectListDropDown.innerHTML = `<p class="' . $selectItem . '">Carregando...<p>`;
+                        axios.get($("#endPoint").val() + `' . $endpoint . '`, {
                             params: {
-                                '.$params.'
+                                ' . $params . '
                             },
                             headers: {
                                 Authorization: `Bearer ` + $("#sessionToken").val()
                             }
                         }).then((response) => {
                             if (response.data.status == 0) {
-                                selectListDropDown.innerHTML = `<p class="'.$selectItem.'">Nenhum resultado encontrado<p>`;
+                                selectListDropDown.innerHTML = `<p class="' . $selectItem . '">Nenhum resultado encontrado<p>`;
                             } else {
                                 selectListDropDown.innerHTML = ``;
                                 var htmlData = ""
                                 response.data.forEach(function (obj){
-                                htmlData += `<div class="'.$selectItem.'" id="'.$selectItem.'-`+obj.id+`" onMouseDown="'.$functionSelect.'(`+obj.id+`)">`+obj.text+`</div>`
+                                htmlData += `<div class="' . $selectItem . '" id="' . $selectItem . '-`+obj.id+`" onMouseDown="' . $functionSelect . '(`+obj.id+`)">`+obj.text+`</div>`
                                     console.log(obj);
                                 });
                                 selectListDropDown.innerHTML = htmlData;
@@ -330,27 +338,27 @@ class Core
                         });
                     }
                 });
-                function '.$functionDropdown.'(param) {
+                function ' . $functionDropdown . '(param) {
                     show = ["none", "block"];
-                    document.getElementById("'.$selectShowDropdown.'").style.display = show[param]
+                    document.getElementById("' . $selectShowDropdown . '").style.display = show[param]
                 }
-                function '.$functionSelect.'(param) {
-                    var item = document.getElementById("'.$selectItem.'-" + param).innerHTML;
-                    document.getElementById("'.$select.'").value = item;
-                    document.getElementById("'.$idForm.'").value = param;
+                function ' . $functionSelect . '(param) {
+                    var item = document.getElementById("' . $selectItem . '-" + param).innerHTML;
+                    document.getElementById("' . $select . '").value = item;
+                    document.getElementById("' . $idForm . '").value = param;
                 }
             </script>
             ';
     }
 
-    static function urlParams(){
+    static function urlParams()
+    {
         $urlComponents = parse_url($_SERVER['REQUEST_URI']);
-        if(isset($urlComponents['query'])){
+        if (isset($urlComponents['query'])) {
             parse_str($urlComponents['query'], $urlQuery);
             return $urlQuery;
-        }else{
+        } else {
             return null;
         }
-      }
-
+    }
 }

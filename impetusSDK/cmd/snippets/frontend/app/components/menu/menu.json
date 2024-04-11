@@ -1,0 +1,26 @@
+[
+    {
+        "title": "Cadastros",
+        "permissions": ["admin"],
+        "children": [
+            {
+                "name": "Usuários",
+                "pathname": "users",
+                "icon": "users",
+                "permissions": ["admin"]
+            },
+            {
+                "name": "Empresas",
+                "icon": "briefcase",
+                "permissions": ["admin"],
+                "children": [
+                    {
+                        "name": "Lista de empresas",
+                        "pathname": "companies",
+                        "permissions": ["admin"]
+                    }
+                ]
+            }
+        ]
+    }
+]
