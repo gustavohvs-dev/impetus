@@ -1,32 +1,26 @@
 <?php
 
-require_once "./impetusSDK/cmd/ImpetusCommands.php";
-require_once "./impetusSDK/cmd/Init.php";
-require_once "./impetusSDK/cmd/Migrate.php";
-require_once "./impetusSDK/cmd/Build.php";
-require_once "./impetusSDK/cmd/Controller.php";
-require_once "./impetusSDK/cmd/Model.php";
-require_once "./impetusSDK/cmd/Route.php";
-require_once "./impetusSDK/cmd/ImpetusCommands.php";
-require_once "./impetusSDK/cmd/API.php";
-require_once "./impetusSDK/cmd/RawView.php";
-require_once "./impetusSDK/cmd/View.php";
-require_once "./impetusSDK/cmd/EmptyView.php";
-require_once "./impetusSDK/cmd/Menu.php";
-
-$availableCommands = [
-    ["init", "Realiza a configuração inicial da aplicação", "php impetus init --arg", "--backend, --frontend"],
-    ["migrate", "Realiza a criação do banco de dados e migração de dados", "php impetus migrate --arg", "--all, --tables, --views, --data"],
-    ["build", "Cria uma estrutura de model, controller e routes com base em uma tabela", "php impetus build --arg tablename", "--all, --model, --controller, --routes, --api, --view, --raw-view, --empty-view"],
-];
+require_once "./impetusSDK/cli/ImpetusCommands.php";
+require_once "./impetusSDK/cli/Init.php";
+require_once "./impetusSDK/cli/Migrate.php";
+require_once "./impetusSDK/cli/Build.php";
+require_once "./impetusSDK/cli/Controller.php";
+require_once "./impetusSDK/cli/Model.php";
+require_once "./impetusSDK/cli/Route.php";
+require_once "./impetusSDK/cli/ImpetusCommands.php";
+require_once "./impetusSDK/cli/API.php";
+require_once "./impetusSDK/cli/RawView.php";
+require_once "./impetusSDK/cli/View.php";
+require_once "./impetusSDK/cli/EmptyView.php";
+require_once "./impetusSDK/cli/Menu.php";
 
 if(!isset($argv[1])){
-    available($availableCommands);
+    available();
 }else{
     $command = $argv[1];
 
-    if($command == 'cmd' || $command == 'help'){
-        available($availableCommands);
+    if($command == 'cmd' || $command == 'help' || $command == 'commands'){
+        available();
     }elseif($command == 'migrate'){
         if($argc == 3){
             if($argv[2] == '--up' || $argv[2] == '--sync'){
@@ -79,11 +73,14 @@ if(!isset($argv[1])){
         if($argc == 3 || $argc == 2){
             if(isset($argv[2])){
                 if($argv[2] == '--backend'){
+                    initWelcome();
                     initBackend();
                 }elseif($argv[2] == '--frontend'){
+                    initWelcome();
                     initFrontend();
                 }
             }else{
+                initWelcome();
                 initBackend();
                 initFrontend();
             }

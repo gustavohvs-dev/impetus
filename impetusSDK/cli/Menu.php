@@ -53,15 +53,15 @@ function menu($name)
 
     $arquivo = fopen("build/frontend/app/components/menu/menu.json", 'w');
     if($arquivo == false){
-        echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao reescrever arquivo menu.json)". "\033[0m";
+        echo "\033[1;31m"."\nFalha ao reescrever arquivo menu.json\n". "\033[0m";
         return false;
     }else{
         $escrever = fwrite($arquivo, $newMenu);
         if($escrever == false){
-            echo "\033[1;31m"."\n(500 Internal Server Error)Falha ao preencher arquivo menu.json)". "\033[0m";
+            echo "\033[1;31m"."\nFalha ao preencher arquivo menu.json\n". "\033[0m";
             return false;
         }else{
-            echo "\033[1;32m"."\n(200 OK) Menu reescrito". "\033[0m";
+            echo "\033[1;32m"."\nMenu reescrito\n\n". "\033[0m";
         }
     } 
 

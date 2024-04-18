@@ -152,7 +152,7 @@ function controller($tableName)
             echo "\nPasta 'build/backend/app/controllers/$tableName' criada.";
         }else{
             echo "\nPasta 'build/backend/app/controllers/$tableName' já existente.";
-            echo "\033[1;31m"."\nOperação cancelada"."\033[0m";
+            echo "\033[1;31m"."\nOperação cancelada\n"."\033[0m";
             return;
         }
 
@@ -262,15 +262,15 @@ echo json_encode($response->response);
 
     $arquivo = fopen("build/backend/app/controllers/$tableName/get$functionName.php", 'w');
     if($arquivo == false){
-        echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar controller (get".$functionName.")". "\033[0m";
+        echo "\033[1;31m"."\nFalha ao criar controller (get".$functionName.")\n". "\033[0m";
         return false;
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao preencher controller (get".$functionName.")". "\033[0m";
+            echo "\033[1;31m"."\nFalha ao preencher controller (get".$functionName.")\n". "\033[0m";
             return false;
         }else{
-            echo "\033[1;32m"."\n(200 OK) Controller get".$functionName." criado com sucesso.". "\033[0m";
+            echo "\033[1;32m"."\nController get".$functionName." criado com sucesso.". "\033[0m";
         }
     } 
 
@@ -345,15 +345,15 @@ echo json_encode($response->response);
 
     $arquivo = fopen("build/backend/app/controllers/$tableName/list$functionName.php", 'w');
     if($arquivo == false){
-        echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar controller (list".$functionName.")". "\033[0m";
+        echo "\033[1;31m"."\nFalha ao criar controller (list".$functionName.")\n". "\033[0m";
         return false;
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao preencher controller (list".$functionName.")". "\033[0m";
+            echo "\033[1;31m"."\nFalha ao preencher controller (list".$functionName.")\n". "\033[0m";
             return false;
         }else{
-            echo "\033[1;32m"."\n(200 OK) Controller list".$functionName." criado com sucesso.". "\033[0m";
+            echo "\033[1;32m"."\nController list".$functionName." criado com sucesso.". "\033[0m";
         }
     } 
 
@@ -482,15 +482,15 @@ echo json_encode($response->response);
 
     $arquivo = fopen("build/backend/app/controllers/$tableName/create$functionName.php", 'w');
     if($arquivo == false){
-        echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar controller (create".$functionName.")". "\033[0m";
+        echo "\033[1;31m"."\nFalha ao criar controller (create".$functionName.")\n". "\033[0m";
         return false;
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao preencher controller (create".$functionName.")". "\033[0m";
+            echo "\033[1;31m"."\nFalha ao preencher controller (create".$functionName.")\n". "\033[0m";
             return false;
         }else{
-            echo "\033[1;32m"."\n(200 OK) Controller create".$functionName." criado com sucesso.". "\033[0m";
+            echo "\033[1;32m"."\nController create".$functionName." criado com sucesso.". "\033[0m";
         }
     } 
 
@@ -625,15 +625,15 @@ echo json_encode($response->response);
 
     $arquivo = fopen("build/backend/app/controllers/$tableName/update$functionName.php", 'w');
     if($arquivo == false){
-        echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar controller (update".$functionName.")". "\033[0m";
+        echo "\033[1;31m"."\nFalha ao criar controller (update".$functionName.")\n". "\033[0m";
         return false;
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao preencher controller (update".$functionName.")". "\033[0m";
+            echo "\033[1;31m"."\nFalha ao preencher controller (update".$functionName.")\n". "\033[0m";
             return false;
         }else{
-            echo "\033[1;32m"."\n(200 OK) Controller update".$functionName." criado com sucesso.". "\033[0m";
+            echo "\033[1;32m"."\nController update".$functionName." criado com sucesso.". "\033[0m";
         }
     } 
 
@@ -753,15 +753,15 @@ echo json_encode($response->response);
 
     $arquivo = fopen("build/backend/app/controllers/$tableName/delete$functionName.php", 'w');
     if($arquivo == false){
-        echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar controller (delete".$functionName.")". "\033[0m";
+        echo "\033[1;31m"."\nFalha ao criar controller (delete".$functionName.")\n". "\033[0m";
         return false;
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao preencher controller (delete".$functionName.")". "\033[0m";
+            echo "\033[1;31m"."\nFalha ao preencher controller (delete".$functionName.")\n". "\033[0m";
             return false;
         }else{
-            echo "\033[1;32m"."\n(200 OK) Controller delete".$functionName." criado com sucesso.". "\033[0m";
+            echo "\033[1;32m"."\nController delete".$functionName." criado com sucesso.". "\033[0m";
         }
     } 
 
@@ -861,15 +861,15 @@ echo json_encode($response->response);
 
     $arquivo = fopen("build/backend/app/controllers/$tableName/select$functionName.php", 'w');
     if($arquivo == false){
-        echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar controller (delete".$functionName.")". "\033[0m";
+        echo "\033[1;31m"."\nFalha ao criar controller (delete".$functionName.")\n". "\033[0m";
         return false;
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao preencher controller (delete".$functionName.")". "\033[0m";
+            echo "\033[1;31m"."\nFalha ao preencher controller (delete".$functionName.")\n". "\033[0m";
             return false;
         }else{
-            echo "\033[1;32m"."\n(200 OK) Controller select".$functionName." criado com sucesso.". "\033[0m";
+            echo "\033[1;32m"."\nController select".$functionName." criado com sucesso.". "\033[0m";
         }
     } 
 
@@ -1035,15 +1035,15 @@ A autenticação ocorre atráves de JSON Web Token. Faça a autenticação em "/
 
     $arquivo = fopen("build/backend/app/controllers/$tableName/README.md", 'w');
     if($arquivo == false){
-        echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar README.md (".$functionName.")". "\033[0m";
+        echo "\033[1;31m"."\nFalha ao criar README.md (".$functionName.")\n". "\033[0m";
         return false;
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao preencher README.md (".$functionName.")". "\033[0m";
+            echo "\033[1;31m"."\nFalha ao preencher README.md (".$functionName.")\n". "\033[0m";
             return false;
         }else{
-            echo "\033[1;32m"."\n(200 OK) Documentação (README.md) criada com sucesso.". "\033[0m";
+            echo "\033[1;32m"."\nDocumentação (README.md) criada com sucesso.\n". "\033[0m";
             return true;
         }
     } 
@@ -1055,7 +1055,7 @@ A autenticação ocorre atráves de JSON Web Token. Faça a autenticação em "/
     }else{
         $error = $stmt->errorInfo();
         $error = $error[2];
-        echo "\033[1;31m"."\n(500 Internal Server Error) ". $error ."\033[0m";
+        echo "\033[1;31m"."\n". $error ."\033[0m";
         return false;
     }
 

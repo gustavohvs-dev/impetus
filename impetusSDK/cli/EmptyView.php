@@ -1,25 +1,78 @@
 <?php
 
-function rawView($name)
+function emptyView($name)
 {
     require "build/backend/app/config/config.php";
-    echo "\nCriando Raw View ({$name})";
+    echo "\nCriando Empty View ({$name})";
 
     $snippet = "";
 
 /**
- * Criando Raw View
+ * Criando View
  */
 
 $snippet.= '<?php
 
-/**
- * '.$name.' View
- */
+use app\components\Core;
+use app\middlewares\Auth;
 
-echo "'.$name.' View";
+$userData = Auth::validateSession([\'admin\']);
 
 ?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<?php Core::header(); ?>
+</head>
+
+<body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
+	<div class="wrapper">
+
+		<?php Core::sidebar($userData); ?>
+
+		<div class="main">
+
+			<?php Core::topbar(); ?>
+
+			<main class="content">
+				<div class="container-fluid p-0">
+
+					<div class="row mb-2 mb-xl-3">
+						<div class="col-auto d-none d-sm-block">
+							<h3>Empty view</h3>
+						</div>
+
+						<div class="col-auto ms-auto text-end mt-n1">
+							<button type="button" class="btn btn-primary">Example button</button>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-body">
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</main>
+
+			<?php Core::footer(); ?>
+
+		</div>
+	</div>
+
+	<?php Core::credentials($userData); ?>
+	<?php Core::scriptsJs(); ?>
+
+</body>
+
+</html>
 ';
 
     if(!is_dir("build/frontend/app/views/$name")){
@@ -31,13 +84,13 @@ echo "'.$name.' View";
 
     $arquivo = fopen("build/frontend/app/views/$name/$name.php", 'w');
     if($arquivo == false){
-        return "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar Raw View (".$name.")" . "\033[0m";
+        return "\033[1;31m"."\nFalha ao criar Empty View (".$name.")\n" . "\033[0m";
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            return "\033[1;31m"."\n(500 Internal Server Error) Falha ao preencher Raw View (".$name.")" . "\033[0m";
+            return "\033[1;31m"."\nFalha ao preencher Empty View (".$name.")\n" . "\033[0m";
         }else{
-            echo "\033[1;32m"."\n(200 OK) Raw View '".$name."' criada com sucesso." . "\033[0m";
+            echo "\033[1;32m"."\nEmpty View '".$name."' criada com sucesso.\n" . "\033[0m";
         }
     } 
 
@@ -74,15 +127,15 @@ Router::ImpetusRouter($routes);';
 
         $arquivo = fopen("build/frontend/app/routes/routes.php", 'w');
         if($arquivo == false){
-            echo "\033[1;31m" . "\n(500 Server Internal Error) Falha ao criar arquivo de rotas" . "\033[0m" ;
+            echo "\033[1;31m" . "\nFalha ao criar arquivo de rotas\n" . "\033[0m" ;
             return null;
         }else{
             $escrever = fwrite($arquivo, $snippet);
             if($escrever == false){
-                echo "\033[1;31m" . "\n(500 Server Internal Error) Falha ao preencher arquivo de rotas" . "\033[0m";
+                echo "\033[1;31m" . "\nFalha ao preencher arquivo de rotas\n" . "\033[0m";
                 return null;
             }else{
-                echo "\033[1;32m" . "\n(200 OK) Rota criada com sucesso" . "\033[0m";
+                echo "\033[1;32m" . "\nRota criada com sucesso\n" . "\033[0m";
                 return null;
             }
         } 

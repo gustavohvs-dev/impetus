@@ -7,7 +7,7 @@ function routes($tableName)
     echo "\nCriando rotas ({$tableName})";
 
     if(!is_dir("build/backend/app/routes/") && !file_exists("build/backend/app/routes/routes.php")){
-        echo "\n(404 Not found) Arquivo de rotas não encontrado";
+        echo "\nArquivo de rotas não encontrado\n";
         return null;
     }else{
         $arquivo = fopen ('build/backend/app/routes/routes.php', 'r');
@@ -41,15 +41,15 @@ Router::ImpetusRouter($routes);';
 
         $arquivo = fopen("build/backend/app/routes/routes.php", 'w');
         if($arquivo == false){
-            echo "\033[1;31m" . "\n(500 Server Internal Error) Falha ao criar arquivo de rotas" . "\033[0m" ;
+            echo "\033[1;31m" . "\nFalha ao criar arquivo de rotas\n" . "\033[0m" ;
             return null;
         }else{
             $escrever = fwrite($arquivo, $snippet);
             if($escrever == false){
-                echo "\033[1;31m" . "\n(500 Server Internal Error) Falha ao preencher arquivo de rotas" . "\033[0m";
+                echo "\033[1;31m" . "\nFalha ao preencher arquivo de rotas\n" . "\033[0m";
                 return null;
             }else{
-                echo "\033[1;32m" . "\n(200 OK) Rotas criadas com sucesso" . "\033[0m";
+                echo "\033[1;32m" . "\nRotas criadas com sucesso\n" . "\033[0m";
                 return null;
             }
         } 

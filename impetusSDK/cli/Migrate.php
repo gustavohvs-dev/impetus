@@ -109,6 +109,7 @@ function update($path = "Migrate00000000_0.php"){
 function migrate(){
     $path = "build/backend/app/database/migrations/";
     $diretorio = dir($path);
+    echo "\n";
     while($arquivo = $diretorio -> read()){
         if($arquivo != "." && $arquivo != ".."){
             tables($arquivo);
@@ -221,15 +222,15 @@ class '.$migrationName.'
 
     $arquivo = fopen("build/backend/app/database/migrations/$migrationName.php", 'w');
     if($arquivo == false){
-        echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar migration example (".$migrationName.")" . "\033[0m";
+        echo "\033[1;31m"."\nFalha ao criar migration de exemplo (".$migrationName.")" . "\033[0m";
         return;
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao preencher migration example (".$migrationName.")" . "\033[0m";
+            echo "\033[1;31m"."\nFalha ao preencher migration de exemplo (".$migrationName.")\n" . "\033[0m";
             return;
         }else{
-            echo "\033[1;32m"."\n(200 OK) Migration example '".$migrationName."' criada com sucesso." . "\033[0m";
+            echo "\033[1;32m"."\nMigration de exemplo '".$migrationName."' criada com sucesso.\n" . "\033[0m";
         }
     } 
 

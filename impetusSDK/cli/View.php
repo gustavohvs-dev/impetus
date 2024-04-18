@@ -150,18 +150,18 @@ function view($tableName)
             mkdir("build/frontend/app/views/$tableName", 0751);
             echo "\nPasta 'build/frontend/app/views/$tableName' criada.";
         }else{
-            /*echo "\nPasta 'build/frontend/app/views/$tableName' já existente.";
-            echo "\033[1;31m"."\nOperação cancelada"."\033[0m";
-            return;*/
+            echo "\nPasta 'build/frontend/app/views/$tableName' já existente.";
+            echo "\033[1;31m"."\nOperação cancelada\n"."\033[0m";
+            return;
         }
 
         if(!is_dir("build/frontend/app/controllers/$tableName")){
             mkdir("build/frontend/app/controllers/$tableName", 0751);
             echo "\nPasta 'build/frontend/app/controllers/$tableName' criada.";
         }else{
-            /*echo "\nPasta 'build/frontend/app/controllers/$tableName' já existente.";
-            echo "\033[1;31m"."\nOperação cancelada"."\033[0m";
-            return;*/
+            echo "\nPasta 'build/frontend/app/controllers/$tableName' já existente.";
+            echo "\033[1;31m"."\nOperação cancelada\n"."\033[0m";
+            return;
         }
 
      /**
@@ -463,15 +463,15 @@ $userData = Auth::validateSession([\'admin\']);
 
     $arquivo = fopen("build/frontend/app/views/$tableName/$tableName.php", 'w');
     if($arquivo == false){
-        echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar ".$tableName.".php)". "\033[0m";
+        echo "\033[1;31m"."\nFalha ao criar ".$tableName.".php)\n". "\033[0m";
         return false;
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            echo "\033[1;31m"."\n(500 Internal Server Error)Falha ao preencher ".$tableName.".php)". "\033[0m";
+            echo "\033[1;31m"."\nFalha ao preencher ".$tableName.".php)\n". "\033[0m";
             return false;
         }else{
-            echo "\033[1;32m"."\n(200 OK) View ".$tableName." criada com sucesso.". "\033[0m";
+            echo "\033[1;32m"."\nView ".$tableName." criada com sucesso.". "\033[0m";
         }
     } 
 
@@ -755,15 +755,15 @@ destroyItems = () => {
 
     $arquivo = fopen("build/frontend/app/controllers/$tableName/script.js", 'w');
     if($arquivo == false){
-        echo "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar ".$tableName.".js)". "\033[0m";
+        echo "\033[1;31m"."\nFalha ao criar ".$tableName.".js)\n". "\033[0m";
         return false;
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            echo "\033[1;31m"."\n(500 Internal Server Error)Falha ao preencher ".$tableName.".js)". "\033[0m";
+            echo "\033[1;31m"."\nFalha ao preencher ".$tableName.".js)\n". "\033[0m";
             return false;
         }else{
-            echo "\033[1;32m"."\n(200 OK) Controller ".$tableName." criado com sucesso.". "\033[0m";
+            echo "\033[1;32m"."\nScripts JS ".$tableName." criado com sucesso.\n". "\033[0m";
         }
     } 
 
@@ -780,7 +780,7 @@ destroyItems = () => {
     echo "\nCriando rotas ({$tableName})";
 
     if(!is_dir("build/frontend/app/routes/") && !file_exists("build/frontend/app/routes/routes.php")){
-        echo "\n(404 Not found) Arquivo de rotas não encontrado";
+        echo "\nArquivo de rotas não encontrado\n";
         return null;
     }else{
         $arquivo = fopen ('build/frontend/app/routes/routes.php', 'r');
@@ -808,15 +808,15 @@ Router::ImpetusRouter($routes);';
 
         $arquivo = fopen("build/frontend/app/routes/routes.php", 'w');
         if($arquivo == false){
-            echo "\033[1;31m" . "\n(500 Server Internal Error) Falha ao criar arquivo de rotas" . "\033[0m" ;
+            echo "\033[1;31m" . "\nFalha ao criar arquivo de rotas\n" . "\033[0m" ;
             return null;
         }else{
             $escrever = fwrite($arquivo, $snippet);
             if($escrever == false){
-                echo "\033[1;31m" . "\n(500 Server Internal Error) Falha ao preencher arquivo de rotas" . "\033[0m";
+                echo "\033[1;31m" . "\nFalha ao preencher arquivo de rotas\n" . "\033[0m";
                 return null;
             }else{
-                echo "\033[1;32m" . "\n(200 OK) Rota criada com sucesso" . "\033[0m";
+                echo "\033[1;32m" . "\nRota criada com sucesso\n" . "\033[0m";
                 return null;
             }
         } 
@@ -826,7 +826,7 @@ Router::ImpetusRouter($routes);';
     }else{
         $error = $stmt->errorInfo();
         $error = $error[2];
-        echo "\033[1;31m"."\n(500 Internal Server Error) ". $error ."\033[0m";
+        echo "\033[1;31m"."\n". $error ."\n \033[0m";
         return false;
     }
 

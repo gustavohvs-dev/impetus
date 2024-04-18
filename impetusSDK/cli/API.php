@@ -9,7 +9,7 @@ function api($name)
 
     if(is_file("build/backend/app/api/$functionName.php")){
         echo "\nArquivo 'build/backend/app/api/$functionName' já existente.";
-        echo "\033[1;31m"."\nOperação cancelada"."\033[0m";
+        echo "\033[1;31m"."\nOperação cancelada\n"."\033[0m";
         return;
     }
 
@@ -121,13 +121,13 @@ class '.$functionName.'
 
     $arquivo = fopen("build/backend/app/api/$functionName.php", 'w');
     if($arquivo == false){
-        return "\033[1;31m"."\n(500 Internal Server Error) Falha ao criar API (".$functionName.")" . "\033[0m";
+        return "\033[1;31m"."\nFalha ao criar API de exemplo (".$functionName.")\n" . "\033[0m";
     }else{
         $escrever = fwrite($arquivo, $snippet);
         if($escrever == false){
-            return "\033[1;31m"."\n(500 Internal Server Error) Falha ao preencher API (".$functionName.")" . "\033[0m";
+            return "\033[1;31m"."\nFalha ao preencher API de exemplo (".$functionName.")\n" . "\033[0m";
         }else{
-            echo "\033[1;32m"."\n(200 OK) API '".$name."' criada com sucesso." . "\033[0m";
+            echo "\033[1;32m"."\nAPI de exemplo '".$name."' criada com sucesso.\n" . "\033[0m";
         }
     } 
 
