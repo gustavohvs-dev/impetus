@@ -98,25 +98,34 @@ Argumentos disponíveis: --up, --sync, --create.
 
 #### Build
 
-O comando 'build' automatiza diversas tarefas rotineiras no dia a dia do programador, leia atentamente cada uma de suas variações para saber como e quando usar.
+O comando 'build' realiza a leitura de uma tabela no banco de dados e automatiza a criação de códigos ... no dia a dia do programador, leia atentamente cada uma de suas variações para saber como e quando usar.
 
 ```shell
-php impetus build --arg param
+php impetus build --arg tableName
 ```
 
 Argumentos disponíveis: --webservice, --model, --controllers, --routes, --api, --view, --raw-view, --empty-view.
 
-- --webservice: Utizando uma tabela no banco de dados definida em "param", o ImpetusPHP irá criar todos os arquivos necessários para disponilizar uma série de funcionalidades ao web service da aplicação. O framework cria a Model, Controllers e rotas disponibilizando os seguintes métodos: Criar, atualizar, buscar, listar, selecionar e deletar registros da tabela;
+- --webservice: Utizando uma tabela no banco de dados definida em "tableName", o ImpetusPHP irá criar todos os arquivos necessários para disponilizar uma série de funcionalidades ao web service da aplicação. O framework cria a Model, Controllers e rotas disponibilizando os seguintes métodos: Criar, atualizar, buscar, listar, selecionar e deletar registros da tabela;
 
-- --model: Cria uma model tendo como base a tabela informada em "param";
+- --model: Cria uma model tendo como base a tabela informada em "tableName";
 
-- --controllers: Cria os controllers tendo como base a tabela informada em "param";
+- --controllers: Cria os controllers tendo como base a tabela informada em "tableName";
 
-- --routes: Cria as rotas tendo como base a tabela informada em "param";
+- --routes: Cria as rotas tendo como base a tabela informada em "tableName";
+
+- --view: Utilizando uma tabela no banco de dados definida em "tableName", o framework cria uma página inteiramente funcional com a possibilidade de criar, atualizar, buscar, listar, selecionar e deletar dados da tabela. Recomendamos utilizar o --view juntamente ao --webservice, para garantir o funcionamento completo da página, sem precisar de adaptações manuais no código;
+
+#### Template
+
+O comando build cria templates de códigos recorentemente utilizados no desenvolvimento web.
+
+```shell
+php impetus template --arg param
+```
+Argumentos disponíveis: --api, --raw-view, --empty-view.
 
 - --api: Gera um arquivo contendo o boilerplate de uma API Client, o nome desse arquivo é definido em "param";
-
-- --view: Utilizando uma tabela no banco de dados definida em "param", o framework cria uma página inteiramente funcional com a possibilidade de criar, atualizar, buscar, listar, selecionar e deletar dados da tabela. Recomendamos utilizar o --view juntamente ao --webservice, para garantir o funcionamento completo da página, sem precisar de adaptações manuais no código;
 
 - --empty-view: Cria uma página vazia no sistema com o nome definido em "param", ela possui apenas os componentes básicos do sistema, tais como sidebar, topbar, footer e etc, porém não possui nenhuma funcionalidade pré-definida;
 

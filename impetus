@@ -48,7 +48,22 @@ if(!isset($argv[1])){
                 routes($argv[3]);
             }elseif($argv[2] == '--webservice'){
                 build($argv[3]);
-            }elseif($argv[2] == '--api'){
+            }elseif($argv[2] == '--view'){
+                view($argv[3]);
+                menu($argv[3]);
+            }else{
+                echo "Tipo de comando build inexistente. \n";
+                echo "Exemplo de comando: php impetus build --arg tablename. \n";
+                echo "Opções de build: model, controllers, routes, webservice, view. \n\n";
+            }
+        }else{
+            echo "\nNúmero de argumentos incorretos. \n";
+            echo "Exemplo de comando: php impetus build --arg tablename. \n";
+            echo "Opções de build: model, controllers, routes, webservice, view. \n\n";
+        }
+    }elseif($command == 'template'){
+        if($argc == 4){
+            if($argv[2] == '--api'){
                 api($argv[3]);
             }elseif($argv[2] == '--raw-view'){
                 rawView($argv[3]);
@@ -56,18 +71,15 @@ if(!isset($argv[1])){
             }elseif($argv[2] == '--empty-view'){
                 emptyView($argv[3]);
                 menu($argv[3]);
-            }elseif($argv[2] == '--view'){
-                view($argv[3]);
-                menu($argv[3]);
             }else{
-                echo "Tipo de comando build inexistente. \n";
-                echo "Exemplo de comando: php impetus build --arg tablename. \n";
-                echo "Opções de build: model, controller, routes, webservice, api, view, raw-view, empty-view. \n\n";
+                echo "Tipo de comando template inexistente. \n";
+                echo "Exemplo de comando: php impetus template --arg param. \n";
+                echo "Opções de build: api, raw-view, empty-view. \n\n";
             }
         }else{
             echo "\nNúmero de argumentos incorretos. \n";
             echo "Exemplo de comando: php impetus build --arg tablename. \n";
-            echo "Opções de build: model, controller, routes, webservice, api, view, raw-view, empty-view. \n\n";
+            echo "Opções de build: api, raw-view, empty-view. \n\n";
         }
     }elseif($command == 'init'){
         if($argc == 3 || $argc == 2){
