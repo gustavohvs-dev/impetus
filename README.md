@@ -171,15 +171,6 @@ Lista de funções:
 - encode: Cria um JWT utilizando um código secreto informado, este JWT armazenará os dados informados em $params e possuirá um tempo de expiração em horas informado em $time;
 - decode: Valida um JWT informado em $token, verificando se o código secreto utilizado na sua criação bate com o código secreto do sistema. Durante o decode é validado também o tempo de expiração do token.
 
-#### ImpetusMaths
-
-O ImpetusMaths é uma classe que permite a realização de certas operações matemáticas não existentes por padrão na linguagem PHP.
-
-Lista de funções:
-
-- factorial: Calcula o fatorial de um número;
-- isPrime: Verifica se o número é primo ou não;
-
 #### ImpetusFileManager
 
 O ImpetusFileManager é uma classe que permite o envio e gerenciamento de arquivos para a pasta storage (local padrão de armazenamento de arquivos do framework).
