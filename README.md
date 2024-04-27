@@ -98,7 +98,7 @@ Argumentos disponíveis: --up, --sync, --create.
 
 #### Build
 
-O comando 'build' realiza a leitura de uma tabela no banco de dados e automatiza a criação de códigos ... no dia a dia do programador, leia atentamente cada uma de suas variações para saber como e quando usar.
+O comando 'build' realiza a leitura de uma tabela no banco de dados e automatiza a criação de códigos frequentemente desenvolvidos no dia a dia do programador, leia atentamente cada uma de suas variações para saber como e quando usar.
 
 ```shell
 php impetus build --arg tableName
