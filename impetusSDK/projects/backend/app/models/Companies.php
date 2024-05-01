@@ -91,7 +91,7 @@ class Companies
                 "dataPerPage" => (INT)$rowsPerPage,
                 "info" => "Nenhum resultado encontrado"
             ];
-            return (object)$response;
+            return $response;
         }
     }
 
