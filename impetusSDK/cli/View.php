@@ -257,7 +257,7 @@ $userData = Auth::validateSession([\'admin\']);
 	<?php Core::header(); ?>
 </head>
 
-<body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
+<body data-theme="colored" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
 	<div class="wrapper">
 
 		<?php Core::sidebar($userData); ?>

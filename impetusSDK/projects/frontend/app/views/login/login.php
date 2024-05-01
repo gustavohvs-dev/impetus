@@ -36,14 +36,14 @@
                     <input type="password" id="password" name="password" class="form-control form-control-lg">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary shadow-primary btn-lg w-100">Entrar</button>
+                <button type="submit" class="btn btn-info shadow-info btn-lg w-100">Entrar</button>
             </form>
             <?php 
               $urlParams = Core::urlParams();
               if(isset($urlParams['error'])){
                 echo '<div class="alert alert-danger mt-3" role="alert">Falha ao autenticar, verifique o usuário e senha</div>';
               }else{
-                echo '<div class="alert alert-primary mt-3" role="alert">Informe seu usuário e senha para se autenticar</div>';
+                echo '<div class="alert alert-info mt-3" role="alert">Informe seu usuário e senha para se autenticar</div>';
               }
             ?>
             <!--<a href="#" class="btn btn-link btn-lg w-100 text-primary">Esqueceu sua senha?</a>-->
