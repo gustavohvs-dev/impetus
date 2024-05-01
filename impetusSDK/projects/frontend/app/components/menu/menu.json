@@ -22,5 +22,17 @@
                 ]
             }
         ]
+    },
+    {
+        "title": "Relatórios",
+        "permissions": ["admin"],
+        "children": [
+            {
+                "name": "Log de auditoria",
+                "pathname": "log",
+                "icon": "file-text",
+                "permissions": ["admin"]
+            }
+        ]
     }
 ]

@@ -38,6 +38,7 @@ class Migrate00000000_0
     {
         $table = "(
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            code VARCHAR(512) NOT NULL,
             tag VARCHAR(512) NOT NULL,
             endpoint TEXT(2000) NOT NULL,
             method VARCHAR(512) NOT NULL,
@@ -76,6 +77,7 @@ class Migrate00000000_0
         $view = "
             LOG.id, 
             LOG.userId, 
+            LOG.code, 
             USER.username,
             LOG.tag, 
             LOG.description, 

@@ -46,18 +46,18 @@ class Log
         $numberOfPages = ceil($rowCount["count"]/$rowsPerPage);
         
         //Requisição
-        $query = "SELECT id, tag, description, username FROM vw_log ";
+        $query = "SELECT id, tag, code, endpoint, method, description, username FROM vw_log ";
 
         //Filtros
         $clausule = "WHERE ";
-        if(isset($data["id"]) && !empty($data["id"])) {
-            $query .= $clausule . "id = '".$data["id"]."'";
+        if(isset($data["code"]) && !empty($data["code"])) {
+            $query .= $clausule . "code = '".$data["code"]."'";
             $clausule = " AND ";
         }
-        /**if(isset($data["name"]) && !empty($data["name"])) {
-            $query .= $clausule . "name LIKE '%".$data["name"]."%'";
+        if(isset($data["tag"]) && !empty($data["tag"])) {
+            $query .= $clausule . "tag LIKE '%".$data["tag"]."%'";
             $clausule = " AND ";
-        }*/
+        }
 
         if (isset($data["currentPage"]) && !empty($data["currentPage"]) && $data["currentPage"]>0) {
             $query .= " ORDER BY id LIMIT ".($data["currentPage"]-1)*$rowsPerPage.", " . $rowsPerPage;
@@ -98,7 +98,7 @@ class Log
     static function createLog($data)
     {
         require "app/config/config.php";
-        $stmt = $conn->prepare("INSERT INTO log (tag, endpoint, method, request, response, description, userId) VALUES(:TAG, :ENDPOINT, :METHOD, :REQUEST, :RESPONSE, :DESCRIPTION, :USERID)");
+        $stmt = $conn->prepare("INSERT INTO log (tag, endpoint, method, request, response, description, userId, code) VALUES(:TAG, :ENDPOINT, :METHOD, :REQUEST, :RESPONSE, :DESCRIPTION, :USERID, :CODE)");
         $stmt->bindParam(":TAG", $data["tag"], \PDO::PARAM_STR);
 		$stmt->bindParam(":ENDPOINT", $data["endpoint"], \PDO::PARAM_STR);
 		$stmt->bindParam(":METHOD", $data["method"], \PDO::PARAM_STR);
@@ -106,6 +106,7 @@ class Log
 		$stmt->bindParam(":RESPONSE", $data["response"], \PDO::PARAM_STR);
 		$stmt->bindParam(":DESCRIPTION", $data["description"], \PDO::PARAM_STR);
 		$stmt->bindParam(":USERID", $data["userId"], \PDO::PARAM_INT);
+        $stmt->bindParam(":CODE", $data["code"], \PDO::PARAM_STR);
 		 
         if ($stmt->execute()) {
             $response = [

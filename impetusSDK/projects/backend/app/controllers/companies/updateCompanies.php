@@ -130,6 +130,7 @@ function webserviceMethod(){
             //Registrar log
             Log::createLog([
                 "tag" => "companies",
+                "code" => $jsonParams->id,
                 "endpoint" => "companies/update",
                 "method" => "PUT",
                 "request" => json_encode($jsonParams),

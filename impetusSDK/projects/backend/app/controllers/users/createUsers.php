@@ -146,6 +146,7 @@ function webserviceMethod(){
             //Registrar log
             Log::createLog([
                 "tag" => "users",
+                "code" => $request->id,
                 "endpoint" => "users/create",
                 "method" => "POST",
                 "request" => json_encode($jsonParams),

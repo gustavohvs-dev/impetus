@@ -33,9 +33,9 @@
 }
 
 body[data-theme=colored] .sidebar-content {
-    background: linear-gradient(135deg, #0e3b80, #195cc0 40%, #3268b9)
+    background: linear-gradient(135deg, #0e4d3a, #0f635c 40%, #074140)
 }
 
 body[data-theme=colored] .sidebar {
-    background: linear-gradient(135deg, #0e3b80, #195cc0 40%, #3268b9)
+    background: linear-gradient(135deg, #0e4d3a, #0f635c 40%, #074140)
 }

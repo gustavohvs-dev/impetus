@@ -91,6 +91,7 @@ function webserviceMethod(){
     //Registrar log
     Log::createLog([
         "tag" => "users",
+        "code" => $urlParams["id"],
         "endpoint" => "users/delete",
         "method" => "DELETE",
         "request" => json_encode($urlParams),

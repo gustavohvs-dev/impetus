@@ -460,6 +460,7 @@ function webserviceMethod(){
             //Registrar log
             Log::createLog([
                 "tag" => "'.$tableName.'",
+                "code" => $request->id,
                 "endpoint" => "'.$tableName.'/create",
                 "method" => "POST",
                 "request" => json_encode($jsonParams),
@@ -603,6 +604,7 @@ function webserviceMethod(){
             //Registrar log
             Log::createLog([
                 "tag" => "'.$tableName.'",
+                "code" => $jsonParams->id,
                 "endpoint" => "'.$tableName.'/update",
                 "method" => "PUT",
                 "request" => json_encode($jsonParams),
@@ -732,6 +734,7 @@ function webserviceMethod(){
     //Registrar log
     Log::createLog([
         "tag" => "'.$tableName.'",
+        "code" => $urlParams["id"]
         "endpoint" => "'.$tableName.'/delete",
         "method" => "DELETE",
         "request" => json_encode($urlParams),
