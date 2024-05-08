@@ -92,6 +92,7 @@ function webserviceMethod(){
                 "companyId" => $jsonParams->companyId,
                 "updatedAt" => $datetime
             ];
+            $data = ImpetusUtils::sanitizeArray($data);
 
             //Atualiza dados
             $request = Users::updateUsers($data);

@@ -442,6 +442,7 @@ function webserviceMethod(){
             $data = [
                 '.$createParams.'
             ];
+            $data = ImpetusUtils::sanitizeArray($data);
 
             //Criar dados
             $request = '.$functionName.'::create'.$functionName.'($data);
@@ -586,6 +587,7 @@ function webserviceMethod(){
                 '.$createParams.'
                 "updatedAt" => $datetime
             ];
+            $data = ImpetusUtils::sanitizeArray($data);
 
             //Atualiza dados
             $request = '.$functionName.'::update'.$functionName.'($data);

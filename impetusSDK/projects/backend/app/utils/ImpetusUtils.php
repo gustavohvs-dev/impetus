@@ -691,4 +691,13 @@ class ImpetusUtils
         return $datetime;
     }
 
+    /**
+     * Realiza a limpeza de uma variável, afim de evitar possíveis ataques como XSS DOM/Reflected/Stored, SQL Injection e Command Injection
+     */
+    static public function sanitizeArray($value)
+    {
+        $value = is_array($value) ? array_map('self::sanitizeArray', $value) : htmlspecialchars(stripslashes(trim($value)));
+        return $value;
+    }
+
 }

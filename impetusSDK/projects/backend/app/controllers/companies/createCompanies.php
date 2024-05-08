@@ -81,6 +81,7 @@ function webserviceMethod(){
                 "name" => $jsonParams->name,
                 "document" => $jsonParams->document,
             ];
+            $data = ImpetusUtils::sanitizeArray($data);
 
             //Criar dados
             $request = Companies::createCompanies($data);
