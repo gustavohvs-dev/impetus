@@ -261,7 +261,7 @@ class '.$functionName.'
         return (object)$response;
     }
 
-    static function inactive'.$functionName.'($id)
+    static function destroy'.$functionName.'($id)
     {
         require "app/config/config.php";
         $stmt = $conn->prepare("DELETE FROM '.$tableName.' WHERE '.$primaryKey.' = :ID");

@@ -58,46 +58,28 @@ function webserviceMethod(){
             $jsonParams = json_decode(file_get_contents("php://input"),false);
 
             //Validação de campos
-            $validate = ImpetusUtils::validator("status", $jsonParams->status, ['type(string)', 'uppercase', 'length(256)']);
-                    if($validate["status"] == 0){
-                        $response = [
-                            "code" => "400 Bad Request",
-                            "response" => $validate
-                        ];
-                        return (object)$response;
-                    }
-					$validate = ImpetusUtils::validator("corporateName", $jsonParams->corporateName, ['type(string)', 'uppercase', 'length(2048)']);
-                    if($validate["status"] == 0){
-                        $response = [
-                            "code" => "400 Bad Request",
-                            "response" => $validate
-                        ];
-                        return (object)$response;
-                    }
-					$validate = ImpetusUtils::validator("name", $jsonParams->name, ['type(string)', 'uppercase', 'length(2048)']);
-                    if($validate["status"] == 0){
-                        $response = [
-                            "code" => "400 Bad Request",
-                            "response" => $validate
-                        ];
-                        return (object)$response;
-                    }
-					$validate = ImpetusUtils::validator("document", $jsonParams->document, ['type(string)', 'uppercase', 'length(256)']);
-                    if($validate["status"] == 0){
-                        $response = [
-                            "code" => "400 Bad Request",
-                            "response" => $validate
-                        ];
-                        return (object)$response;
-                    }
-					
+            $bodyCheckFields = ImpetusUtils::bodyCheckFields(
+                [
+                    ["status", $jsonParams->status, ['type(string)', 'uppercase', 'length(256)']],
+                    ["corporateName", $jsonParams->corporateName, ['type(string)', 'uppercase', 'length(2048)']],
+					["name", $jsonParams->name, ['type(string)', 'uppercase', 'length(2048)']],
+					["document", $jsonParams->document, ['type(string)', 'uppercase', 'length(256)']],			
+                ]
+            );
+            if($bodyCheckFields["status"] == 0){
+                $response = [
+                    "code" => "400 Bad Request",
+                    "response" => $bodyCheckFields
+                ];
+                return (object)$response;
+            }
 
             //Organizando dados para a request
             $data = [
                 "status" => $jsonParams->status,
-						"corporateName" => $jsonParams->corporateName,
-						"name" => $jsonParams->name,
-						"document" => $jsonParams->document,
+                "corporateName" => $jsonParams->corporateName,
+                "name" => $jsonParams->name,
+                "document" => $jsonParams->document,
             ];
 
             //Criar dados

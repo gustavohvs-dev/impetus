@@ -58,63 +58,24 @@ function webserviceMethod(){
             $jsonParams = json_decode(file_get_contents("php://input"),false);
 
             //Validação de campos
-            $validate = ImpetusUtils::validator("id", $jsonParams->id, ["type(int)"]);
-            if($validate["status"] == 0){
+            $bodyCheckFields = ImpetusUtils::bodyCheckFields(
+                [
+                    ["id", $jsonParams->id, ["type(int)"]],
+                    ["status", $jsonParams->status, ['type(string)', 'uppercase', 'length(256)']],
+					["name", $jsonParams->name, ['type(string)', 'uppercase', 'length(1024)']],
+					["username", $jsonParams->username, ['type(string)', 'uppercase', 'length(256)']],
+                    ["email", $jsonParams->email, ['type(string)', 'uppercase', 'length(1024)']],
+                    ["password", $jsonParams->password, ['type(strongPassword)', 'uppercase', 'length(256)']],
+                    ["permission", $jsonParams->permission, ['type(string)', 'enum(admin|user)']]	
+                ]
+            );
+            if($bodyCheckFields["status"] == 0){
                 $response = [
                     "code" => "400 Bad Request",
-                    "response" => $validate
+                    "response" => $bodyCheckFields
                 ];
                 return (object)$response;
-            }
-            $validate = ImpetusUtils::validator("status", $jsonParams->status, ['type(string)', 'uppercase', 'length(256)']);
-                    if($validate["status"] == 0){
-                        $response = [
-                            "code" => "400 Bad Request",
-                            "response" => $validate
-                        ];
-                        return (object)$response;
-                    }
-					$validate = ImpetusUtils::validator("name", $jsonParams->name, ['type(string)', 'uppercase', 'length(1024)']);
-                    if($validate["status"] == 0){
-                        $response = [
-                            "code" => "400 Bad Request",
-                            "response" => $validate
-                        ];
-                        return (object)$response;
-                    }
-					$validate = ImpetusUtils::validator("email", $jsonParams->email, ['type(string)', 'uppercase', 'length(1024)']);
-                    if($validate["status"] == 0){
-                        $response = [
-                            "code" => "400 Bad Request",
-                            "response" => $validate
-                        ];
-                        return (object)$response;
-                    }
-					$validate = ImpetusUtils::validator("username", $jsonParams->username, ['type(string)', 'uppercase', 'length(256)']);
-                    if($validate["status"] == 0){
-                        $response = [
-                            "code" => "400 Bad Request",
-                            "response" => $validate
-                        ];
-                        return (object)$response;
-                    }
-					$validate = ImpetusUtils::validator("password", $jsonParams->password, ['type(string)', 'uppercase', 'length(256)']);
-                    if($validate["status"] == 0){
-                        $response = [
-                            "code" => "400 Bad Request",
-                            "response" => $validate
-                        ];
-                        return (object)$response;
-                    }
-					$validate = ImpetusUtils::validator("permission", $jsonParams->permission, ['type(string)', 'enum(admin|user)']);
-                    if($validate["status"] == 0){
-                        $response = [
-                            "code" => "400 Bad Request",
-                            "response" => $validate
-                        ];
-                        return (object)$response;
-                    }
-					
+            }		
 
             //Coleta data/hora atual
             $datetime = ImpetusUtils::datetime();

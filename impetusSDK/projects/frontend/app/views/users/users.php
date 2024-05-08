@@ -190,6 +190,7 @@ $userData = Auth::validateSession(['admin']);
 										<label for="form-create-users-password">Senha</label>
 										<input type="password" id="form-create-users-password" class="form-control"
 											value="">
+										<small>*A senha deve conter um caracter especial, uma letra, um número e 8 dígitos.</small>
 									</div>
                                     <div class="form-group col-md-12 mb-2">
 										<label for="form-create-users-permission">Permissão</label>
@@ -254,6 +255,7 @@ $userData = Auth::validateSession(['admin']);
 										<label for="form-edit-users-password">Senha</label>
 										<input type="password" id="form-edit-users-password" class="form-control"
 											value="">
+										<small>*A senha deve conter um caracter especial, uma letra, um número e 8 dígitos.</small>
 									</div>                      
 								</div>
 							</form>

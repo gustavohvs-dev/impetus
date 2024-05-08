@@ -322,6 +322,7 @@ class ImpetusUtils
 
         //Parâmetros
         $typeParam = false;
+        $typeParamValue = false;
         $nullableParam = false;
         $lengthParam = false;
         $enumParam = false;
@@ -411,6 +412,15 @@ class ImpetusUtils
             $string = htmlspecialchars($string);
         }else{
             $string = $request;
+        }
+
+        //Verificando se a variável é nula
+        if($nullableParam == true && ($string == "" || $string == null)){
+            return [
+                "status" => 1,
+                "info" => "Todos as regras validadas com sucesso",
+                "data" => $string
+            ];
         }
 
         //Realizar verificações

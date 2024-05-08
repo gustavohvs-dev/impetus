@@ -107,13 +107,12 @@ class ImpetusFileManager extends ImpetusUtils
             ];
             return $response;
         }else{
-            //Remover o ponto do path para salvar no database
-            $file = substr($file, 1);
+            $pathDatabase = $path . DIRECTORY_SEPARATOR . $name . $token . '.' . $filetype;
             $response = [
                 "status" => 1,
                 "info" => "Arquivo enviado",
                 "name" => $name . '.' . $filetype,
-                "path" => $path
+                "path" => $pathDatabase
             ];
             return $response;
         }
@@ -129,7 +128,6 @@ class ImpetusFileManager extends ImpetusUtils
         foreach($folders as $folder)
         {
             $currentPath .= DIRECTORY_SEPARATOR . $folder;
-            var_dump($currentPath);
             //Cria diretório caso não exista
             if(!is_dir($currentPath)){
                 mkdir($currentPath, 0751);
