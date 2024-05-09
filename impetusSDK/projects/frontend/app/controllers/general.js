@@ -47,6 +47,21 @@ jQuery.fn.extend({
 })
 
 /**
+ * Remove Html Special Chars
+ */
+function sanitize(text) {
+    var map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    };
+    
+    return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+  }
+
+/**
  * Altera o ícone da foto de perfil
  */
 /*$(document).ready(function () {
