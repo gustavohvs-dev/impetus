@@ -46,7 +46,7 @@ class Log
         $numberOfPages = ceil($rowCount["count"]/$rowsPerPage);
         
         //Requisição
-        $query = "SELECT id, tag, code, endpoint, method, description, username FROM vw_log ";
+        $query = "SELECT id, tag, code, endpoint, method, description, username, createdAt FROM vw_log ";
 
         //Filtros
         $clausule = "WHERE ";

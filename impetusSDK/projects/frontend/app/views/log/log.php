@@ -76,6 +76,7 @@ $userData = Auth::validateSession(['admin']);
 															<th>Tag</th>
 															<th>Endpoint</th>
 															<th>Method</th>
+															<th>Datetime</th>
 															<th>Ações</th>
 														</tr>
 													</thead>
@@ -115,21 +116,27 @@ $userData = Auth::validateSession(['admin']);
 						<div class="modal-body">
 							<form id="form-view">
 								<div class="row">
-									<div class="form-group col-md-4 mb-2">
+									<div class="form-group col-md-3 mb-2">
 										<label for="form-view-id">Nº de log</label>
 										<input type="text" id="form-view-id" class="form-control"
 											value="" readonly>
 									</div>
 
-									<div class="form-group col-md-4 mb-2">
+									<div class="form-group col-md-3 mb-2">
 										<label for="form-view-code">ID/Code</label>
 										<input type="text" id="form-view-code" class="form-control"
 											value="" readonly>
 									</div>
                                     
-									<div class="form-group col-md-4 mb-2">
+									<div class="form-group col-md-3 mb-2">
 										<label for="form-view-tag">Tag</label>
 										<input type="text" id="form-view-tag" class="form-control"
+											value="" readonly>
+									</div>
+
+									<div class="form-group col-md-3 mb-2">
+										<label for="form-view-tag">Datetime</label>
+										<input type="text" id="form-view-createdAt" class="form-control"
 											value="" readonly>
 									</div>
 									

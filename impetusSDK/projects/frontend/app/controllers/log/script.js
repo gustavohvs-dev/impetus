@@ -46,6 +46,7 @@ listDatatable = (currentPage = 1) => {
                 trHTML += '<td>' + item.tag + '</td>';
                 trHTML += '<td>' + item.endpoint + '</td>';
                 trHTML += '<td>' + item.method + '</td>';
+                trHTML += '<td>' + item.createdAt + '</td>';
         
                 trHTML += `<td class="table-action">
                                 <a href="#"><i class="align-middle" data-feather="eye"
@@ -130,6 +131,8 @@ readItems = (id) => {
             $("#form-view-description").val(response.data.data.description)
             
             $("#form-view-userId").val(response.data.data.username)
+
+            $("#form-view-createdAt").val(response.data.data.createdAt)
     
             $("#view-items").modal("show")
         }
