@@ -1,8 +1,8 @@
 <?php
 
 function tables($path = "Migrate00000000_0.php"){
-    require_once "build/backend/app/database/migrations/".$path;
-    require "build/backend/app/config/config.php";
+    require_once "build/ws/app/database/migrations/".$path;
+    require "build/config.php";
     $className = explode(".", $path);
     $databaseClass = new $className[0];
     $databaseMethods = get_class_methods($databaseClass);
@@ -10,7 +10,7 @@ function tables($path = "Migrate00000000_0.php"){
         if(substr($method, -5) == "Table"){
             $tableName = substr($method, 0, -5);
             $tableData = $databaseClass->$method();
-            $table = "CREATE TABLE ".$tableName." ".$tableData;
+            $table = $tableData;
             $stmt = $conn->prepare($table);
             if($stmt->execute()){
                 echo "\033[1;32m" . $className[0] . ": " . "Table '".$tableName."' created successfuly\n" . "\033[0m";
@@ -28,8 +28,8 @@ function tables($path = "Migrate00000000_0.php"){
 }
 
 function data($path = "Migrate00000000_0.php"){
-    require_once "build/backend/app/database/migrations/".$path;
-    require "build/backend/app/config/config.php";
+    require_once "build/ws/app/database/migrations/".$path;
+    require "build/config.php";
     $className = explode(".", $path);
     $databaseClass = new $className[0];
     $databaseMethods = get_class_methods($databaseClass);
@@ -54,8 +54,8 @@ function data($path = "Migrate00000000_0.php"){
 }
 
 function views($path = "Migrate00000000_0.php"){
-    require_once "build/backend/app/database/migrations/".$path;
-    require "build/backend/app/config/config.php";
+    require_once "build/ws/app/database/migrations/".$path;
+    require "build/config.php";
     $className = explode(".", $path);
     $databaseClass = new $className[0];
     $databaseMethods = get_class_methods($databaseClass);
@@ -63,7 +63,7 @@ function views($path = "Migrate00000000_0.php"){
         if(substr($method, -4) == "View"){
             $viewName = substr($method, 0, -4);
             $viewData = $databaseClass->$method();
-            $view = "CREATE VIEW vw_".$viewName." AS SELECT " . $viewData;
+            $view = $viewData;
             $stmt = $conn->prepare($view);
             if($stmt->execute()){
                 echo "\033[1;32m" . $className[0] . ": " . "View '".$viewName."' created successfuly\n" . "\033[0m";
@@ -81,8 +81,8 @@ function views($path = "Migrate00000000_0.php"){
 }
 
 function update($path = "Migrate00000000_0.php"){
-    require_once "build/backend/app/database/migrations/".$path;
-    require "build/backend/app/config/config.php";
+    require_once "build/ws/app/database/migrations/".$path;
+    require "build/config.php";
     $className = explode(".", $path);
     $databaseClass = new $className[0];
     $databaseMethods = get_class_methods($databaseClass);
@@ -107,7 +107,7 @@ function update($path = "Migrate00000000_0.php"){
 }
 
 function migrate(){
-    $path = "build/backend/app/database/migrations/";
+    $path = "build/ws/app/database/migrations/";
     $diretorio = dir($path);
     echo "\n";
     while($arquivo = $diretorio -> read()){
@@ -128,7 +128,7 @@ function migrateCreateExamples(){
     
     while($migrationFound){
         $migrationName =  $migrationDate . "_" . $migrationDayNumber;
-        if(!is_file("build/backend/app/database/migrations/$migrationName.php")){
+        if(!is_file("build/ws/app/database/migrations/$migrationName.php")){
             $migrationFound = false;
         }else{
             $migrationDayNumber++;
@@ -142,21 +142,20 @@ class '.$migrationName.'
 
     /**
      * Exemplo de criação de tabela
-     * Utilize o sufixo Table para indicar que é uma tabela.
+     * Utilize o sufixo Table no nome da função para indicar que será feita a inclusão de uma nova tabela
      * Os campos "id", "createdAt", "updatedAt" são padronizados não remova esses campos.
+     * Substitua os demais campos (field) para criar uma tabela que se enquadre na regra de negócio da sua aplicação.
+     * Substitua o "tb_name" para o nome de tabela que desejar.
      */
-    public function exampleUsersTable()
+    public function exampleNewTable()
     {
-        $table = "(
+        $table = "CREATE TABLE tb_name(
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            status VARCHAR(256) NOT NULL DEFAULT \'ACTIVE\',
-            name VARCHAR(1024) NOT NULL,
-            email VARCHAR(1024) NOT NULL,
-            username VARCHAR(256) NOT NULL UNIQUE,
-            password VARCHAR(256) NOT NULL,
-            permission ENUM(\'admin\',\'user\') NOT NULL,
-            isConfirmedEmail BOOLEAN DEFAULT 0,
-            companyId INT(30) NOT NULL,
+            status ENUM(\'ACTIVE\',\'INACTIVE\') NOT NULL DEFAULT \'ACTIVE\',
+            field1 VARCHAR(1024) NOT NULL,
+            field2 VARCHAR(256) NOT NULL UNIQUE,
+            field3 ENUM(\'option1\',\'option2\') NOT NULL,
+            field4 BOOLEAN DEFAULT 0,
             createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
             updatedAt DATETIME
             )";
@@ -167,9 +166,9 @@ class '.$migrationName.'
      * Exemplo de criação de view
      * Utilize o sufixo View para indicar a criação de uma view.
      */
-    public function examplesUsersView()
+    public function examplesNewView()
     {
-        $view = "
+        $view = "CREATE VIEW vw_name AS SELECT 
             USERS.id,
             USERS.status,
             USERS.name,
@@ -191,9 +190,9 @@ class '.$migrationName.'
      * Exemplo de inserção de dados
      * Utilize o sufixo Data para indicar a criação de dados.
      */
-    public function impetusCompaniesData()
+    public function impetusNewData()
     {
-        $data = "INSERT INTO companies (corporateName, name, document) VALUES(\'IMPETUS FRAMEWORK\', \'IMPETUS\', \'11.111.111/0001-11\')";
+        $data = "INSERT INTO tb_name (corporateName, name, document) VALUES(\'IMPETUS FRAMEWORK\', \'IMPETUS\', \'11.111.111/0001-11\')";
         return $data;
     }
 
@@ -220,7 +219,7 @@ class '.$migrationName.'
 }
 ';
 
-    $arquivo = fopen("build/backend/app/database/migrations/$migrationName.php", 'w');
+    $arquivo = fopen("build/ws/app/database/migrations/$migrationName.php", 'w');
     if($arquivo == false){
         echo "\033[1;31m"."\nFalha ao criar migration de exemplo (".$migrationName.")" . "\033[0m";
         return;

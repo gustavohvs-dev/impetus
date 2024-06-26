@@ -4,13 +4,13 @@ function routes($tableName)
 {
     $functionName = ucfirst(strtolower($tableName));
 
-    echo "\nCriando rotas ({$tableName})";
+    echo "\nCriando rotas no backend ({$tableName})";
 
-    if(!is_dir("build/backend/app/routes/") && !file_exists("build/backend/app/routes/routes.php")){
+    if(!is_dir("build/ws/app/routes/") && !file_exists("build/ws/app/routes/routes.php")){
         echo "\nArquivo de rotas não encontrado\n";
         return null;
     }else{
-        $arquivo = fopen ('build/backend/app/routes/routes.php', 'r');
+        $arquivo = fopen ('build/ws/app/routes/routes.php', 'r');
         $result = [];
         while(!feof($arquivo)){
             $result[] = explode("];",fgets($arquivo));
@@ -39,7 +39,7 @@ $snippet .= '    //'.$functionName.' routes
 
 Router::ImpetusRouter($routes);';
 
-        $arquivo = fopen("build/backend/app/routes/routes.php", 'w');
+        $arquivo = fopen("build/ws/app/routes/routes.php", 'w');
         if($arquivo == false){
             echo "\033[1;31m" . "\nFalha ao criar arquivo de rotas\n" . "\033[0m" ;
             return null;

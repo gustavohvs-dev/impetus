@@ -6,6 +6,5 @@ function build($tableName)
     $controllerStatus = controller($tableName);
     if($controllerStatus){
         routes($tableName);
-    }
-    echo "\n\n";
+    };
 }

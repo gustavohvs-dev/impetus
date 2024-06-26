@@ -51,15 +51,20 @@ if(!isset($argv[1])){
             }elseif($argv[2] == '--view'){
                 view($argv[3]);
                 menu($argv[3]);
+            }elseif($argv[2] == '--all'){
+                build($argv[3]);
+                view($argv[3]);
+                echo "\nAdicionando novo item ao menu (sidebar)";
+                menu($argv[3]);
             }else{
                 echo "Tipo de comando build inexistente. \n";
                 echo "Exemplo de comando: php impetus build --arg tablename. \n";
-                echo "Opções de build: model, controllers, routes, webservice, view. \n\n";
+                echo "Opções de build: model, controllers, routes, webservice, view, all. \n\n";
             }
         }else{
             echo "\nNúmero de argumentos incorretos. \n";
             echo "Exemplo de comando: php impetus build --arg tablename. \n";
-            echo "Opções de build: model, controllers, routes, webservice, view. \n\n";
+            echo "Opções de build: model, controllers, routes, webservice, view, all. \n\n";
         }
     }elseif($command == 'template'){
         if($argc == 4){
@@ -83,23 +88,11 @@ if(!isset($argv[1])){
         }
     }elseif($command == 'init'){
         if($argc == 3 || $argc == 2){
-            if(isset($argv[2])){
-                if($argv[2] == '--backend'){
-                    initWelcome();
-                    initBackend();
-                }elseif($argv[2] == '--frontend'){
-                    initWelcome();
-                    initFrontend();
-                }
-            }else{
-                initWelcome();
-                initBackend();
-                initFrontend();
-            }
+            initWelcome();
+            initInstall();
         }else{
             echo "\nNúmero de argumentos incorretos. \n";
-            echo "Exemplo de comando: php impetus init --arg. \n";
-            echo "Opções de init: --backend, --frontend. \n\n";
+            echo "Exemplo de comando: php impetus init. \n";
         }
     }else{
         echo "\nComando não encontrado. \n";

@@ -2,13 +2,13 @@
 
 function api($name)
 {
-    require "build/backend/app/config/config.php";
+    require "build/config.php";
     echo "\nCriando API ({$name})";
 
     $functionName = ucfirst(strtolower($name));
 
-    if(is_file("build/backend/app/api/$functionName.php")){
-        echo "\nArquivo 'build/backend/app/api/$functionName' já existente.";
+    if(is_file("build/ws/app/api/$functionName.php")){
+        echo "\nArquivo 'build/ws/app/api/$functionName' já existente.";
         echo "\033[1;31m"."\nOperação cancelada\n"."\033[0m";
         return;
     }
@@ -119,7 +119,7 @@ class '.$functionName.'
 }
 ';
 
-    $arquivo = fopen("build/backend/app/api/$functionName.php", 'w');
+    $arquivo = fopen("build/ws/app/api/$functionName.php", 'w');
     if($arquivo == false){
         return "\033[1;31m"."\nFalha ao criar API de exemplo (".$functionName.")\n" . "\033[0m";
     }else{

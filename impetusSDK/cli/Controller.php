@@ -2,7 +2,7 @@
 
 function controller($tableName)
 {
-    require "build/backend/app/config/config.php";
+    require "build/config.php";
     echo "\nCriando controllers ({$tableName})";
 
     //Busca tabela
@@ -147,11 +147,11 @@ function controller($tableName)
         /**
          * Criar pasta do controller
          */
-        if(!is_dir("build/backend/app/controllers/$tableName")){
-            mkdir("build/backend/app/controllers/$tableName", 0751);
-            echo "\nPasta 'build/backend/app/controllers/$tableName' criada.";
+        if(!is_dir("build/ws/app/controllers/$tableName")){
+            mkdir("build/ws/app/controllers/$tableName", 0751);
+            echo "\nPasta 'build/ws/app/controllers/$tableName' criada.";
         }else{
-            echo "\nPasta 'build/backend/app/controllers/$tableName' já existente.";
+            echo "\nPasta 'build/ws/app/controllers/$tableName' já existente.";
             echo "\033[1;31m"."\nOperação cancelada\n"."\033[0m";
             return;
         }
@@ -169,7 +169,7 @@ use app\models\Auth;
 
 function webserviceMethod(){
 
-    require "app/config/config.php";
+    require "../config.php";
     $secret = $systemConfig["api"]["token"];
 
     //Coletar bearer token
@@ -260,7 +260,7 @@ echo json_encode($response->response);
 
 ';
 
-    $arquivo = fopen("build/backend/app/controllers/$tableName/get$functionName.php", 'w');
+    $arquivo = fopen("build/ws/app/controllers/$tableName/get$functionName.php", 'w');
     if($arquivo == false){
         echo "\033[1;31m"."\nFalha ao criar controller (get".$functionName.")\n". "\033[0m";
         return false;
@@ -291,7 +291,7 @@ use app\models\Auth;
 
 function webserviceMethod(){
 
-    require "app/config/config.php";
+    require "../config.php";
     $secret = $systemConfig["api"]["token"];
 
     
@@ -343,7 +343,7 @@ header("Content-Type: application/json");
 echo json_encode($response->response);
 ';
 
-    $arquivo = fopen("build/backend/app/controllers/$tableName/list$functionName.php", 'w');
+    $arquivo = fopen("build/ws/app/controllers/$tableName/list$functionName.php", 'w');
     if($arquivo == false){
         echo "\033[1;31m"."\nFalha ao criar controller (list".$functionName.")\n". "\033[0m";
         return false;
@@ -375,7 +375,7 @@ use app\models\Log;
 
 function webserviceMethod(){
 
-    require "app/config/config.php";
+    require "../config.php";
     $secret = $systemConfig["api"]["token"];
 
     //Coletar bearer token
@@ -482,7 +482,7 @@ header("Content-Type: application/json");
 echo json_encode($response->response);
 ';
 
-    $arquivo = fopen("build/backend/app/controllers/$tableName/create$functionName.php", 'w');
+    $arquivo = fopen("build/ws/app/controllers/$tableName/create$functionName.php", 'w');
     if($arquivo == false){
         echo "\033[1;31m"."\nFalha ao criar controller (create".$functionName.")\n". "\033[0m";
         return false;
@@ -514,7 +514,7 @@ use app\models\Log;
 
 function webserviceMethod(){
 
-    require "app/config/config.php";
+    require "../config.php";
     $secret = $systemConfig["api"]["token"];
 
     //Coletar bearer token
@@ -627,7 +627,7 @@ header("Content-Type: application/json");
 echo json_encode($response->response);
 ';
 
-    $arquivo = fopen("build/backend/app/controllers/$tableName/update$functionName.php", 'w');
+    $arquivo = fopen("build/ws/app/controllers/$tableName/update$functionName.php", 'w');
     if($arquivo == false){
         echo "\033[1;31m"."\nFalha ao criar controller (update".$functionName.")\n". "\033[0m";
         return false;
@@ -659,7 +659,7 @@ use app\models\Log;
 
 function webserviceMethod(){
 
-    require "app/config/config.php";
+    require "../config.php";
     $secret = $systemConfig["api"]["token"];
     
     //Coletar bearer token
@@ -756,7 +756,7 @@ echo json_encode($response->response);
 
 ';
 
-    $arquivo = fopen("build/backend/app/controllers/$tableName/delete$functionName.php", 'w');
+    $arquivo = fopen("build/ws/app/controllers/$tableName/delete$functionName.php", 'w');
     if($arquivo == false){
         echo "\033[1;31m"."\nFalha ao criar controller (delete".$functionName.")\n". "\033[0m";
         return false;
@@ -787,7 +787,7 @@ use app\models\Auth;
 
 function webserviceMethod(){
 
-    require "app/config/config.php";
+    require "../config.php";
     $secret = $systemConfig["api"]["token"];
     
     //Coletar bearer token
@@ -864,7 +864,7 @@ echo json_encode($response->response);
 
 ';
 
-    $arquivo = fopen("build/backend/app/controllers/$tableName/select$functionName.php", 'w');
+    $arquivo = fopen("build/ws/app/controllers/$tableName/select$functionName.php", 'w');
     if($arquivo == false){
         echo "\033[1;31m"."\nFalha ao criar controller (delete".$functionName.")\n". "\033[0m";
         return false;
@@ -1038,7 +1038,7 @@ A autenticação ocorre atráves de JSON Web Token. Faça a autenticação em "/
 
 ';
 
-    $arquivo = fopen("build/backend/app/controllers/$tableName/README.md", 'w');
+    $arquivo = fopen("build/ws/app/controllers/$tableName/README.md", 'w');
     if($arquivo == false){
         echo "\033[1;31m"."\nFalha ao criar README.md (".$functionName.")\n". "\033[0m";
         return false;

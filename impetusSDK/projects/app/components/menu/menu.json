@@ -1,0 +1,34 @@
+[
+    {
+        "title": "Cadastros",
+        "permissions": [
+            "admin"
+        ],
+        "children": [
+            {
+                "name": "Usu\u00e1rios",
+                "pathname": "users",
+                "icon": "users",
+                "permissions": [
+                    "admin"
+                ]
+            },
+            {
+                "name": "Pessoas",
+                "icon": "briefcase",
+                "permissions": [
+                    "admin"
+                ],
+                "children": [
+                    {
+                        "name": "Pessoas f\u00edsicas e jur\u00eddicas",
+                        "pathname": "pessoas",
+                        "permissions": [
+                            "admin"
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

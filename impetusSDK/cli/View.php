@@ -2,7 +2,7 @@
 
 function view($tableName)
 {
-    require "build/backend/app/config/config.php";
+    require "build/config.php";
     echo "\nCriando view ({$tableName})";
 
     //Busca tabela
@@ -146,20 +146,20 @@ function view($tableName)
         /**
          * Criar pasta do controller e view
          */
-        if(!is_dir("build/frontend/app/views/$tableName")){
-            mkdir("build/frontend/app/views/$tableName", 0751);
-            echo "\nPasta 'build/frontend/app/views/$tableName' criada.";
+        if(!is_dir("build/app/views/$tableName")){
+            mkdir("build/app/views/$tableName", 0751);
+            echo "\nPasta 'build/app/views/$tableName' criada.";
         }else{
-            echo "\nPasta 'build/frontend/app/views/$tableName' já existente.";
+            echo "\nPasta 'build/app/views/$tableName' já existente.";
             echo "\033[1;31m"."\nOperação cancelada\n"."\033[0m";
             return;
         }
 
-        if(!is_dir("build/frontend/app/controllers/$tableName")){
-            mkdir("build/frontend/app/controllers/$tableName", 0751);
-            echo "\nPasta 'build/frontend/app/controllers/$tableName' criada.";
+        if(!is_dir("build/app/controllers/$tableName")){
+            mkdir("build/app/controllers/$tableName", 0751);
+            echo "\nPasta 'build/app/controllers/$tableName' criada.";
         }else{
-            echo "\nPasta 'build/frontend/app/controllers/$tableName' já existente.";
+            echo "\nPasta 'build/app/controllers/$tableName' já existente.";
             echo "\033[1;31m"."\nOperação cancelada\n"."\033[0m";
             return;
         }
@@ -461,7 +461,7 @@ $userData = Auth::validateSession([\'admin\']);
 
 ';
 
-    $arquivo = fopen("build/frontend/app/views/$tableName/$tableName.php", 'w');
+    $arquivo = fopen("build/app/views/$tableName/$tableName.php", 'w');
     if($arquivo == false){
         echo "\033[1;31m"."\nFalha ao criar ".$tableName.".php)\n". "\033[0m";
         return false;
@@ -502,7 +502,7 @@ listDatatable = (currentPage = 1) => {
     $(\'#datatable-error\').append(trHTML);
 
     //Buscar dados
-    axios.get($("#endPoint").val() + `'.$tableName.'/list`, {
+    axios.get($("#webservicePath").val() + `'.$tableName.'/list`, {
         params: {
             currentPage : currentPage,
             dataPerPage : 10,
@@ -589,7 +589,7 @@ createItems = () => {
 }
 
 storeItems = () => {
-    axios.post($("#endPoint").val() + `'.$tableName.'/create`, {
+    axios.post($("#webservicePath").val() + `'.$tableName.'/create`, {
         '.$createRequest.'
     }, {
         headers: { 
@@ -621,7 +621,7 @@ storeItems = () => {
 }
 
 readItems = (id) => {
-    axios.get($("#endPoint").val() + `'.$tableName.'/get`, {
+    axios.get($("#webservicePath").val() + `'.$tableName.'/get`, {
         params: {
             id: id
         },
@@ -651,7 +651,7 @@ readItems = (id) => {
 
 editItems = (id) => {
     setTimeout(() => {
-        axios.get($("#endPoint").val() + `'.$tableName.'/get`, {
+        axios.get($("#webservicePath").val() + `'.$tableName.'/get`, {
             params: {
                 id: id
             },
@@ -681,7 +681,7 @@ editItems = (id) => {
 }
 
 updateItems = () => {
-    axios.put($("#endPoint").val() + `'.$tableName.'/update`, {
+    axios.put($("#webservicePath").val() + `'.$tableName.'/update`, {
         id: $("#form-edit-id").val(),
         '.$updateRequest.'
     }, {
@@ -719,7 +719,7 @@ deleteItems = (id) => {
 }
 
 destroyItems = () => {
-    axios.delete($("#endPoint").val() + `'.$tableName.'/delete`, { 
+    axios.delete($("#webservicePath").val() + `'.$tableName.'/delete`, { 
         params: {
             id: $("#form-delete-id").val()
         },
@@ -753,7 +753,7 @@ destroyItems = () => {
 
 ';
 
-    $arquivo = fopen("build/frontend/app/controllers/$tableName/script.js", 'w');
+    $arquivo = fopen("build/app/controllers/$tableName/script.js", 'w');
     if($arquivo == false){
         echo "\033[1;31m"."\nFalha ao criar ".$tableName.".js)\n". "\033[0m";
         return false;
@@ -777,13 +777,13 @@ destroyItems = () => {
 
      $routeName = strtolower($tableName);
 
-    echo "\nCriando rotas ({$tableName})";
+    echo "\nCriando rotas no frontend ({$tableName})";
 
-    if(!is_dir("build/frontend/app/routes/") && !file_exists("build/frontend/app/routes/routes.php")){
+    if(!is_dir("build/app/routes/") && !file_exists("build/app/routes/routes.php")){
         echo "\nArquivo de rotas não encontrado\n";
         return null;
     }else{
-        $arquivo = fopen ('build/frontend/app/routes/routes.php', 'r');
+        $arquivo = fopen ('build/app/routes/routes.php', 'r');
         $result = [];
         while(!feof($arquivo)){
             $result[] = explode("];",fgets($arquivo));
@@ -806,7 +806,7 @@ $snippet .= '    //'.$tableName.' View
 
 Router::ImpetusRouter($routes);';
 
-        $arquivo = fopen("build/frontend/app/routes/routes.php", 'w');
+        $arquivo = fopen("build/app/routes/routes.php", 'w');
         if($arquivo == false){
             echo "\033[1;31m" . "\nFalha ao criar arquivo de rotas\n" . "\033[0m" ;
             return null;

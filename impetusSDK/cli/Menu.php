@@ -3,12 +3,12 @@
 function menu($name)
 {
 
-    if(!file_exists("build/frontend/app/components/menu/menu.json")){
+    if(!file_exists("build/app/components/menu/menu.json")){
         echo "\n(404 Not found) Arquivo de menu não encontrado";
         return null;
     }
 
-    $menuJson = file_get_contents('build/frontend/app/components/menu/menu.json');
+    $menuJson = file_get_contents('build/app/components/menu/menu.json');
     $menu = json_decode($menuJson);
 
     $isHeaderPaginasExist = false;
@@ -51,7 +51,7 @@ function menu($name)
 
     $newMenu = json_encode($menu, JSON_PRETTY_PRINT);   
 
-    $arquivo = fopen("build/frontend/app/components/menu/menu.json", 'w');
+    $arquivo = fopen("build/app/components/menu/menu.json", 'w');
     if($arquivo == false){
         echo "\033[1;31m"."\nFalha ao reescrever arquivo menu.json\n". "\033[0m";
         return false;
@@ -61,7 +61,7 @@ function menu($name)
             echo "\033[1;31m"."\nFalha ao preencher arquivo menu.json\n". "\033[0m";
             return false;
         }else{
-            echo "\033[1;32m"."\nMenu reescrito\n\n". "\033[0m";
+            echo "\033[1;32m"."\nMenu atualizado\n\n". "\033[0m";
         }
     } 
 

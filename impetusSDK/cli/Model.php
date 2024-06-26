@@ -2,7 +2,7 @@
 
 function model($tableName)
 {
-    require "build/backend/app/config/config.php";
+    require "build/config.php";
     echo "\nCriando model ({$tableName})";
 
     $snippet = "";
@@ -17,8 +17,8 @@ function model($tableName)
 
         $functionName = ucfirst(strtolower($tableName));
 
-        if(is_file("build/backend/app/models/$functionName.php")){
-            echo "\nArquivo 'build/backend/app/models/$functionName' já existente.";
+        if(is_file("build/ws/app/models/$functionName.php")){
+            echo "\nArquivo 'build/ws/app/models/$functionName' já existente.";
             echo "\033[1;31m"."\nOperação cancelada"."\n \033[0m";
             return;
         }
@@ -89,7 +89,7 @@ class '.$functionName.'
 {
     static function get'.$functionName.'($id)
     {
-        require "app/config/config.php";
+        require "../config.php";
         $stmt = $conn->prepare("SELECT * FROM '.$tableName.' WHERE '.$primaryKey.' = :ID");
         $stmt->bindParam(":ID", $id, \PDO::PARAM_INT);
         $stmt->execute();
@@ -113,7 +113,7 @@ class '.$functionName.'
 
     static function list'.$functionName.'($data)
     {
-        require "app/config/config.php";
+        require "../config.php";
 
         //Quantidade de dados
         $stmt = $conn->prepare("SELECT COUNT(id) count FROM '.$tableName.'");
@@ -180,7 +180,7 @@ class '.$functionName.'
 
     static function create'.$functionName.'($data)
     {
-        require "app/config/config.php";
+        require "../config.php";
         $stmt = $conn->prepare("INSERT INTO '.$tableName.' ('.$queryCreateColumns.') VALUES('.$queryCreateBindsTags.')");
         '.$queryCreateBindsParams.' 
         if ($stmt->execute()) {
@@ -205,7 +205,7 @@ class '.$functionName.'
 
     static function update'.$functionName.'($data)
     {
-        require "app/config/config.php";
+        require "../config.php";
         $stmt = $conn->prepare("UPDATE '.$tableName.' SET '.$queryUpdateColumns.' WHERE '.$primaryKey.' = :ID");
         $stmt->bindParam(":ID", $data["'.$primaryKey.'"], \PDO::PARAM_INT);
         '.$queryUpdateBindsParams.'
@@ -230,7 +230,7 @@ class '.$functionName.'
 
     static function delete'.$functionName.'($id)
     {
-        require "app/config/config.php";
+        require "../config.php";
         $stmt = $conn->prepare("UPDATE '.$tableName.' SET status = \'INACTIVE\' WHERE '.$primaryKey.' = :ID");
         $stmt->bindParam(":ID", $id, \PDO::PARAM_INT);
         if ($stmt->execute()) {
@@ -263,7 +263,7 @@ class '.$functionName.'
 
     static function destroy'.$functionName.'($id)
     {
-        require "app/config/config.php";
+        require "../config.php";
         $stmt = $conn->prepare("DELETE FROM '.$tableName.' WHERE '.$primaryKey.' = :ID");
         $stmt->bindParam(":ID", $id, \PDO::PARAM_INT);
         if ($stmt->execute()) {
@@ -296,7 +296,7 @@ class '.$functionName.'
 
     static function select'.$functionName.'($queryParams)
     {
-        require "app/config/config.php";
+        require "../config.php";
         $searchField = \'name\';
         $query = "SELECT id AS id, ".$searchField." AS text FROM '.$tableName.' ";
         $clausule = "WHERE ";
@@ -323,7 +323,7 @@ class '.$functionName.'
 }
 ';
 
-    $arquivo = fopen("build/backend/app/models/$functionName.php", 'w');
+    $arquivo = fopen("build/ws/app/models/$functionName.php", 'w');
     if($arquivo == false){
         echo "\033[1;31m"."\nFalha ao criar model (".$functionName.")\n" . "\033[0m";
         return;
