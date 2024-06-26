@@ -17,12 +17,12 @@ class LoginTest extends TestCase
 
     public function testLoginSuccess()
     {
-        require dirname(__FILE__, 3) . "/app/config/config.php";
+        require dirname(__FILE__, 4) . "/config.php";
         $data = [
             'username' => "admin",
             'password' => 'admin'
         ];
-        $response = $this->http->post($systemConfig['path']."login", [
+        $response = $this->http->post($systemConfig['webservicePath']."login", [
             'body' => json_encode($data)
         ]);
         $this->assertEquals(200, $response->getStatusCode());
@@ -30,12 +30,12 @@ class LoginTest extends TestCase
 
     public function testLoginErrorWrongCredentials()
     {
-        require dirname(__FILE__, 3) . "/app/config/config.php";
+        require dirname(__FILE__, 4) . "/config.php";
         $data = [
             'username' => '#non-existUsername',
             'password' => 'FHA*(!&#asdf7819'
         ];
-        $response = $this->http->post($systemConfig['path']."login", [
+        $response = $this->http->post($systemConfig['webservicePath']."login", [
             'body' => json_encode($data)
         ]);
         $this->assertEquals(401, $response->getStatusCode());
@@ -43,8 +43,8 @@ class LoginTest extends TestCase
 
     public function testLoginErrorWithoutCredentials()
     {
-        require dirname(__FILE__, 3) . "/app/config/config.php";
-        $response = $this->http->post($systemConfig['path']."login");
+        require dirname(__FILE__, 4) . "/config.php";
+        $response = $this->http->post($systemConfig['webservicePath']."login");
         $this->assertEquals(401, $response->getStatusCode());
     }
 
