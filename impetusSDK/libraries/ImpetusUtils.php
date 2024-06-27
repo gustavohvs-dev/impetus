@@ -233,19 +233,18 @@ class ImpetusUtils
         if (strlen($string) < 8) {
             $isStrongPassword = false;
         }
-        if (!preg_match("#[0-9]+#", $string)) {
+        if (!preg_match('/\d/', $string)) {
             $isStrongPassword = false;
         }
-        if (!preg_match("#[a-zA-Z]+#", $string)) {
+        if (!preg_match('/[a-zA-Z]/', $string)) {
             $isStrongPassword = false;
         }   
-        if (preg_match('/^[a-zA-Z0-9]+/', $string)) {
+        if (!preg_match('/[\W_]/', $string)) {
             $isStrongPassword = false;
         }  
     
         return $isStrongPassword;
     }
-
     /**
      * isGreaterThan
      */
