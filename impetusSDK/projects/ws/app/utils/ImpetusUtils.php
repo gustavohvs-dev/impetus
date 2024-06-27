@@ -67,6 +67,9 @@ class ImpetusUtils
      */
     static public function isEmpty($string)
     {
+        if ($string === null) {
+            return true;
+        }
         $string = trim($string);
         if ($string <> null && !empty($string)) {
             return false;

@@ -3,7 +3,7 @@
 use app\utils\ImpetusJWT;
 use PHPUnit\Framework\TestCase;
 
-class UtilsTest extends TestCase
+class JWTTest extends TestCase
 {
 
     public function testCreateAndValidateToken()
