@@ -29,6 +29,7 @@ class UsersTest extends TestCase
             ],
         ]);
         $loginData = json_decode($loginResponse->getBody(), true);
+        $this->assertEquals(200, $loginResponse->getStatusCode());
         $bearerToken = $loginData['token'];
         $data = [
             "name" => "Texto de Exemplo",
@@ -67,6 +68,7 @@ class UsersTest extends TestCase
             ],
         ]);
         $loginData = json_decode($loginResponse->getBody(), true);
+        $this->assertEquals(200, $loginResponse->getStatusCode());
         $bearerToken = $loginData['token'];
         $data = [
             "name" => "",

@@ -17,7 +17,7 @@ function webserviceMethod(){
 
     if($jwt->status == 0){
         $response = [
-            "code" => "400 Bad request",
+            "code" => "401 Unauthorized",
             "response" => [
                 "status" => 0,
                 "code" => 400,
@@ -43,7 +43,7 @@ function webserviceMethod(){
     //Validar permissão de usuário
     if($auth->data["permission"] != "admin"){
         $response = [
-            "code" => "401 Unauthorized",
+            "code" => "403 Forbidden",
             "response" => [
                 "status" => 1,
                 "info" => "Usuário não possui permissão para realizar ação"

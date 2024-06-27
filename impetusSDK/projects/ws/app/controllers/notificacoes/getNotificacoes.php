@@ -16,7 +16,7 @@ function webserviceMethod(){
 
     if($jwt->status == 0){
         $response = [
-            "code" => "400 Bad request",
+            "code" => "401 Unauthorized",
             "response" => [
                 "status" => 0,
                 "code" => 400,
@@ -28,7 +28,7 @@ function webserviceMethod(){
         $auth = Auth::validate($jwt->payload->id, $jwt->payload->username);
         if($auth->status == 0){
             $response = [
-                "code" => "401 Unauthorized",
+                "code" => "403 Forbidden",
                 "response" => [
                     "status" => 0,
                     "code" => 401,
