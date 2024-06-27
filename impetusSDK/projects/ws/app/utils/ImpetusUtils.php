@@ -173,10 +173,12 @@ class ImpetusUtils
             $isDate = true;
         }
         $dataArray = explode("T", $string);
-        $string = $dataArray[0] . " " . $dataArray[1];
-        $data = \DateTime::createFromFormat('Y-m-d H:i', $string);
-        if($data && $data->format('Y-m-d H:i') === $string){
-            $isDate = true;
+        if(isset($dataArray[1])){
+            $string = $dataArray[0] . " " . $dataArray[1];
+            $data = \DateTime::createFromFormat('Y-m-d H:i', $string);
+            if($data && $data->format('Y-m-d H:i') === $string){
+                $isDate = true;
+            }
         }
         return $isDate;
     }
