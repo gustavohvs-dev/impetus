@@ -17,7 +17,7 @@ function webserviceMethod(){
 
     if($jwt->status == 0){
         $response = [
-            "code" => "400 Bad request",
+            "code" => "401 Unauthorized",
             "response" => [
                 "status" => 0,
                 "code" => 400,
