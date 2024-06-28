@@ -16,7 +16,7 @@ class ObservacoesTest extends TestCase
         $this->http = null;
     }
 
-    public function OestCreateobservacoesSuccess()
+    public function testCreateobservacoesSuccess()
     {
         require dirname(__FILE__, 4) . "/config.php";
         $loginResponse = $this->http->post($systemConfig['webservicePath'] . "login", [
@@ -32,6 +32,8 @@ class ObservacoesTest extends TestCase
         $this->assertEquals(200, $loginResponse->getStatusCode());
         $bearerToken = $loginData['token'];
         $data = [
+            "status" => "ACTIVE",
+            "usuarioId" => "1",
             "entidade" => "pessoas",
             "entidadeId" => "1",
             "texto" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
@@ -52,7 +54,7 @@ class ObservacoesTest extends TestCase
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function OestCreateobservacoesError()
+    public function testCreateobservacoesError()
     {
         require dirname(__FILE__, 4) . "/config.php";
         $loginResponse = $this->http->post($systemConfig['webservicePath'] . "login", [
@@ -86,7 +88,7 @@ class ObservacoesTest extends TestCase
         $this->assertEquals(400, $response->getStatusCode());
     }
 
-    public function OestReadobservacoesSuccess()
+    public function testReadobservacoesSuccess()
     {
         require dirname(__FILE__, 4) . "/config.php";
         $loginResponse = $this->http->post($systemConfig['webservicePath'] . "login", [
@@ -114,7 +116,7 @@ class ObservacoesTest extends TestCase
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function OestReadobservacoesError()
+    public function testReadobservacoesError()
     {
         require dirname(__FILE__, 4) . "/config.php";
         $loginResponse = $this->http->post($systemConfig['webservicePath'] . "login", [
@@ -142,7 +144,7 @@ class ObservacoesTest extends TestCase
         $this->assertEquals(400, $response->getStatusCode());
     }
 
-    public function OestUpdateobservacoesSuccess()
+    public function testUpdateobservacoesSuccess()
     {
         require dirname(__FILE__, 4) . "/config.php";
         $loginResponse = $this->http->post($systemConfig['webservicePath'] . "login", [
@@ -159,6 +161,8 @@ class ObservacoesTest extends TestCase
         $bearerToken = $loginData['token'];
         $data = [
             "id" => ObservacoesTest::$observacaoId,
+            "status" => "ACTIVE",
+            "usuarioId" => "1",
             "entidade" => "pessoas",
             "entidadeId" => "1",
             "texto" => "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."
@@ -177,7 +181,7 @@ class ObservacoesTest extends TestCase
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function OestUpdateobservacoesError()
+    public function testUpdateobservacoesError()
     {
         require dirname(__FILE__, 4) . "/config.php";
         $loginResponse = $this->http->post($systemConfig['webservicePath'] . "login", [
@@ -212,7 +216,7 @@ class ObservacoesTest extends TestCase
         $this->assertEquals(400, $response->getStatusCode());
     }
 
-    public function OestDeleteobservacoesSuccess()
+    public function testDeleteobservacoesSuccess()
     {
         require dirname(__FILE__, 4) . "/config.php";
         $loginResponse = $this->http->post($systemConfig['webservicePath'] . "login", [
@@ -240,7 +244,7 @@ class ObservacoesTest extends TestCase
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function OestDeleteobservacoesError()
+    public function testDeleteobservacoesError()
     {
         require dirname(__FILE__, 4) . "/config.php";
         $loginResponse = $this->http->post($systemConfig['webservicePath'] . "login", [

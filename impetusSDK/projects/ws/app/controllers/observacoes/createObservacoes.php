@@ -60,9 +60,9 @@ function webserviceMethod(){
             //Validação de campos
             $bodyCheckFields = ImpetusUtils::bodyCheckFields(
                 [
-					["entidade", $jsonParams->entidade, ['type(string)', 'uppercase', 'length(1024)', 'nullable']],
-					["entidadeId", $jsonParams->entidadeId, ['type(int)', 'length(30)', 'nullable']],
-					["texto", $jsonParams->texto, ['type(string)', 'specialChar', 'length(65535)', 'nullable']],			
+					["entidade", $jsonParams->entidade, ['type(string)', 'uppercase', 'length(1024)']],
+					["entidadeId", $jsonParams->entidadeId, ['type(int)', 'length(30)']],
+					["texto", $jsonParams->texto, ['type(string)', 'specialChar', 'length(65535)']],			
                 ]
             );
             if($bodyCheckFields["status"] == 0){
