@@ -11,16 +11,27 @@
         </testsuite>
     </testsuites>
 
-    <filter>
-        <whitelist>
+    <coverage>
+        <include>
             <directory suffix=".php">app/utils</directory>
-        </whitelist>
-    </filter>
+        </include>
+        <report>
+            <!--<clover outputFile="tests/_reports/clover.xml"/>
+            <crap4j outputFile="tests/_reports/crap4j.xml" threshold="50"/>-->
+            <html outputDirectory="tests/_reports/html-coverage" lowUpperBound="50" highLowerBound="75"/>
+            <php outputFile="tests/_reports/coverage.php"/>
+            <text outputFile="tests/_reports/coverage.txt" showUncoveredFiles="false" showOnlySummary="true"/>
+            <!--<xml outputDirectory="tests/_reports/xml-coverage"/>-->
+        </report>
+    </coverage>
 
     <logging>
-        <log type="coverage-html" target="tests/_reports/coverage" charset="UTF-8" yui="true" highlight="true" lowUpperBound="35" highLowerBound="70" />
-        <log type="testdox-text" target="tests/_reports/testdox/executed.txt"/>
-        <!--<log type="coverage-clover" target="tests/_reports/logs/clover.xml"/>-->
-        <!--<log type="coverage-text" target="php://stdout" showUncoveredFiles="true"/>-->
+        <junit outputFile="tests/_reports/junit.xml"/>
+        <!--<teamcity outputFile="tests/_reports/teamcity.txt"/>
+        <testdoxHtml outputFile="tests/_reports/testdox.html"/>
+        <testdoxText outputFile="tests/_reports/testdox.txt"/>
+        <testdoxXml outputFile="tests/_reports/testdox.xml"/>
+        <text outputFile="tests/_reports/logfile.txt"/>-->
     </logging>
+
 </phpunit>
